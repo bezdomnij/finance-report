@@ -42,7 +42,7 @@ class Queue:
 
 
 if __name__ == '__main__':
-    my_queue = Queue(1)
+    my_queue = Queue()
     my_queue.enqueue(2)
     print(my_queue.dequeue())
     print(my_queue.dequeue())

@@ -1,11 +1,10 @@
 # Press ⌃R to execute it or replace it with your code.
 # Press Double ⇧ to search everywhere for classes, files, tool windows, actions, and settings.
-from google_audio import rw_ga
 import urllib
+from sys import argv
 from urllib import request
 from smb.SMBHandler import SMBHandler
-from sys import argv
-import queue
+from google_audio import rw_ga
 
 
 def discover(to_find):
@@ -44,6 +43,6 @@ if __name__ == '__main__':
         print(argv)
         discover(argv[1:])
         print_hi('PyCharm')
-        report()
+    report()
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
