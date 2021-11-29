@@ -4,6 +4,12 @@ from google_audio import rw_ga
 import urllib
 from urllib import request
 from smb.SMBHandler import SMBHandler
+from sys import argv
+import queue
+
+
+def discover(to_find):
+    print(type(to_find))
 
 
 def print_hi(name):
@@ -31,7 +37,13 @@ def report():
 
 
 if __name__ == '__main__':
-    # print_hi('PyCharm')
-    report()
+    print_hi('PyCharm')
+    if len(argv) == 1:
+        print("Nincs mire nézni!")
+    else:
+        print(argv)
+        discover(argv[1:])
+        print_hi('PyCharm')
+        report()
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
