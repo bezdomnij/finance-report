@@ -1,7 +1,8 @@
-import smbclient
-from urllib import request
 import urllib
+from urllib import request
+
 from smb.SMBHandler import SMBHandler
+
 
 def main():
     opener = urllib.request.build_opener(SMBHandler)

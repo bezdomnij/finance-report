@@ -18,9 +18,7 @@ def write_to_db(df, table_name, hova='19'):
         connection.close()
 
 
-def google_audio(table, hova='19'):
-    if table is None:
-        table = 'stg_fin2_20012_google_audio'
+def google_audio(table='stg_fin2_20012_google_audio', hova='19'):
     print(Path.cwd())
     files = []
     finrep_dir = Path(__file__).parents[2]
