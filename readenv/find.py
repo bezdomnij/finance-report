@@ -2,7 +2,6 @@ import sys
 from pathlib import Path
 from queue import dekju
 
-
 file_kju = dekju.Queue()
 folder_kju = dekju.Queue()
 
@@ -22,6 +21,7 @@ def main(gpath):
     folder_kju.print_queue()
     print(folder_kju.length)
     actual = folder_kju.dequeue()
+
 
 if __name__ == '__main__':
     main('h:/pd/fin_rep')

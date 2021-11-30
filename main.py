@@ -15,7 +15,7 @@ def print_hi(name):
     # Use a breakpoint in the code line below to debug your script.
     print(f'Hi, {name}')  # Press ⌘F8 to toggle the breakpoint.
     director = urllib.request.build_opener(SMBHandler)
-    fh = director.open(u'smb://frank:999@192.168.2.44/raiddisk/PD/datum_darab_error.txt',)
+    fh = director.open(u'smb://frank:999@192.168.2.44/raiddisk/PD/datum_darab_error.txt', )
 
     # Process fh like a file-like object and then close it.
     with fh as f:
@@ -36,13 +36,13 @@ def report():
 
 
 if __name__ == '__main__':
-    print_hi('PyCharm')
+    # print_hi('PyCharm')
     if len(argv) == 1:
         print("Nincs mire nézni!")
     else:
         print(argv)
         discover(argv[1:])
-        print_hi('PyCharm')
+        # print_hi('PyCharm')
     report()
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
