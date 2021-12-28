@@ -23,11 +23,11 @@ def get_comparable_names(columns_list):
 
 
 def check_sheet_df(sheet, df):
-    filename = 'sheet_fields_librek.txt'
+    filename = 'sheet_fields_libreka.txt'
     file_path = Path.cwd() / 'libreka' / filename
     error = 0
     try:
-        with open(file_path, mode='r') as f:  # read list of expected column names
+        with open(file_path, mode='r', encoding='utf-8') as f:  # read list of expected column names
             lines = f.readlines()
             sheets = [line.strip().split(';')[0] for line in lines]
             fields = [line.strip().split(';')[1] for line in lines]

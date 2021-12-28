@@ -1,12 +1,18 @@
 import os
+import sys
+
 import sqlalchemy.sql.sqltypes
 from sqlalchemy import create_engine
-import sys
 
 
 def write_to_db(df, table_name, action='replace', hova='19'):
-    sql_engine = get_engine(hova, db_name='stage')
-    connection = sql_engine.connect()
+    try:
+        sql_engine = get_engine(hova, db_name='stage')
+        connection = sql_engine.connect()
+    except Exception as e:
+        print(f'SQL credentials need improvement. Error: {e}')
+        return
+
     types = get_types(df, milyen='mindegy')
     try:
         df.to_sql(table_name, connection, if_exists=action, index=False,
@@ -34,8 +40,12 @@ def get_engine(which_one, db_name='stage'):
     connection_uri = f'mysql+pymysql://{username}:{pw}@{server}:3306/{db_name}?charset=utf8mb4'
     connect_args = {'init_command': "SET @@collation_connection='utf8mb4_hungarian_ci'",
                     'read_timeout': 30}
-    sql_engine = create_engine(connection_uri, pool_pre_ping=True, pool_recycle=3600, echo=False,
-                               echo_pool=True, connect_args=connect_args, future=False)
+    try:
+        sql_engine = create_engine(connection_uri, pool_pre_ping=True, pool_recycle=3600, echo=False,
+                                   echo_pool=True, connect_args=connect_args, future=False)
+    except Exception as e:
+        print(f'NO connection, error: {e}')
+        return
     return sql_engine
 
 
