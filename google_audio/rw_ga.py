@@ -33,7 +33,8 @@ def write_to_db(df, table_name, hova='19', milyen="mindegy"):
 def google_audio(table='stg_fin2_20012_google_audio', hova='19'):
     files = []
     df = pd.DataFrame()
-    finrep_dir = Path('h:/NextCloud/Finance/szamitas/2021_10_oktober')
+    # finrep_dir = Path('h:/NextCloud/Finance/szamitas/2021_10_oktober')
+    finrep_dir = Path('/Users/frank/pd/finance_report')
     src = finrep_dir / 'google_audio'
     for f in src.iterdir():
         if f.suffix == '.csv':
