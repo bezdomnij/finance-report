@@ -5,6 +5,7 @@ from sys import argv
 from urllib import request
 from smb.SMBHandler import SMBHandler
 from google_audio import rw_ga
+from libreka import libreka
 
 
 def discover(to_find):
@@ -16,7 +17,7 @@ def print_hi(name):
     print(f'Hi, {name}')  # Press ⌘F8 to toggle the breakpoint.
     read_network()
 
-    # For paths/files with unicode characters, simply pass in the URL as an unicode string
+    # For paths/files with unicode characters, simply pass in the URL as a unicode string
     # fh2 = director.open(u'smb://myuserID:mypassword@192.168.1.1/sharedfolder/测试文件夹/垃圾文件.dat')
 
     # Process fh2 like a file-like object and then close it.
@@ -45,5 +46,6 @@ if __name__ == '__main__':
         print(argv)
         discover(argv[1:])
     report('19')
+    libreka.main('/Users/frank/pd/sales_report/16_libreka')
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
