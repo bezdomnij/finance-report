@@ -1,21 +1,29 @@
 import re
-import sys
 from pathlib import Path
+
 import pandas as pd
+
 from engineer import sql_writer
 
 
-def get_comparable_names(columns):
+def get_table_names():
+    sheet_name_originals = ('E-Book-Verkäufe', 'Hörbuch-Verkäufe', 'Kostenlostitel', 'Abo und Flatrate')
+    tables = ('e_book', 'a_book', 'free', 'sub')
+    good_for_table_names = dict(zip(sheet_name_originals, tables))
+    return good_for_table_names, sheet_name_originals
+
+
+def get_comparable_names(columns_list):
     prog = re.compile(r"\.[0-9]$")
-    for index, col in enumerate(columns):
+    for index, col in enumerate(columns_list):
         z = re.search(prog, col)
         if z:
-            columns[index] = col[:-2]
-    return columns
+            columns_list[index] = col[:-2]
+    return columns_list
 
 
 def check_sheet_df(sheet, df):
-    filename = 'sheet_fields_libreka.txt'
+    filename = 'sheet_fields_librek.txt'
     file_path = Path.cwd() / 'libreka' / filename
     error = 0
     try:
@@ -40,41 +48,45 @@ def check_file_sheet_names(f, sheet_name_originals):
         sheets_in_file = pd.read_excel(f, sheet_name=None, header=0)
         for sheet in sheets_in_file:
             if sheet not in sheet_name_originals:
-                print(f'Alert, unknown sheet {sheet} in {f}: ')
-                return 1
+                print(f'Alert, unknown sheet "{sheet}" in {f}: ')
+                return 1, sheets_in_file
         return 0, sheets_in_file
     except ValueError as ve:
         print(f'File is open, unreadable, error: {ve}')
-        return 2
+        return 2, None
 
 
 def main(dirpath):
     p = Path(dirpath)
     excel_files = [item for item in p.iterdir() if item.is_file() and item.suffix == '.xlsx']
-    sheet_name_originals = ('E-Book-Verkäufe', 'Hörbuch-Verkäufe', 'Kostenlostitel', 'Abo und Flatrate')
-    tables = ('e_book', 'a_book', 'free', 'sub')
-    good_for_table_names = dict(zip(sheet_name_originals, tables))
+    good_for_table_names, sheet_name_originals = get_table_names()
 
     for f in excel_files:
-        sheet_error, sheets_in_file = check_file_sheet_names(f, sheet_name_originals)
-        if sheet_error == 0:
-            print(f'Sheets are as expected in file {f}')
-        elif sheet_error == 1:
-            print(f"There's some weird shit going on in {f}, unknown sheet in file.")
-            print('Signing off...')
-            sys.exit(1)
-        elif sheet_error == 2:
-            print('File read error, signing off...')
-            sys.exit(1)
+        try:
+            sheet_error, sheets_in_file = check_file_sheet_names(f, sheet_name_originals)
+        except TypeError as te:
+            print(f'Excel read had given error: {te}')
+            return
+        else:
+            if sheet_error == 0:
+                print(f'Sheets are as expected in file {f}')
+            elif sheet_error == 1:
+                print(f"There's some weird shit going on in {f}, unknown sheet in file.\n{sheets_in_file.keys()}")
+                print('Signing off... Clean db!!!')
+                return
+            elif sheet_error == 2:
+                print('File read error, signing off...')
+                return
+
         for sheet, df in sheets_in_file.items():
             field_error = check_sheet_df(sheet, df)  # check fields in sheet
             if field_error == 1:
                 print(f"ERROR!!! \nColumns in file `{f.name}`, sheet `{sheet}` NOT matching the expected.")
                 print('not going to write any further to db. Clean up db!\nSigning off...')
-                sys.exit(1)
+                return
             elif field_error == 2:
                 print('Checking field names failed, no Libreka field reference found, signing off...')
-                sys.exit(2)
+                return
             else:
                 table_name = 'libreka_' + good_for_table_names[sheet]
                 sql_writer.write_to_db(df, table_name, 'append', '19')  # select DB here
