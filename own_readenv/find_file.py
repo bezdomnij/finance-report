@@ -1,6 +1,6 @@
 import sys
 from pathlib import Path
-from queue import dekju
+from own_queue import dekju
 
 file_kju = dekju.Queue()
 folder_kju = dekju.Queue()

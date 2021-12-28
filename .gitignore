@@ -97,7 +97,7 @@ modules.xml
  \\\\USER1-PC\\Users\\Public\\test.txt
 
 google_audio/__pycache__/*
-writer/__pycache__/*
+engineer/__pycache__/*
 
 ### PythonVanilla ###
 # Byte-compiled / optimized / DLL files

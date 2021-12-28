@@ -1,6 +1,6 @@
 from pathlib import Path
 import pandas as pd
-from writer import sql_writer as sqw
+from engineer import sql_writer as sqw
 
 
 def write_to_db(df, table_name, hova='19'):
@@ -29,9 +29,11 @@ def google_audio(table='stg_fin2_20012_google_audio', hova='19'):
     if len(files) == 1:
         df = pd.read_csv(files[0], encoding='utf-16', sep='\t', header=0, index_col=None)
         print(df.info)
-        print(df['Earnings Amount'].astype(float).sum())
-
-        write_to_db(df, table, hova)
+        print(df.columns)  # GAudio Sales report 'Payment Amount' kell
+        # print(df['Earnings Amount'].astype(float).sum())
+        print(df['Publisher Revenue'].astype(float).sum())
+        print(df['Payment Amount'].astype(float).sum())
+        # write_to_db(df, table, hova)
     else:
         print('odaszemetelt valaki, exiting...')
 
