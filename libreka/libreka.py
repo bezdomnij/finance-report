@@ -6,11 +6,10 @@ import pandas as pd
 from engineer import sql_writer
 
 
-def get_table_names():
-    sheet_name_originals = ('E-Book-Verkäufe', 'Hörbuch-Verkäufe', 'Kostenlostitel', 'Abo und Flatrate')
+def get_table_names(sheet_name_originals):
     tables = ('e_book', 'a_book', 'free', 'sub')
     good_for_table_names = dict(zip(sheet_name_originals, tables))
-    return good_for_table_names, sheet_name_originals
+    return good_for_table_names
 
 
 def get_comparable_names(columns_list):
@@ -45,39 +44,45 @@ def check_sheet_df(sheet, df):
 
 def check_file_sheet_names(f, sheet_name_originals):
     try:
-        sheets_in_file = pd.read_excel(f, sheet_name=None, header=0)
+        sheets_in_file = get_sheets(f)
         for sheet in sheets_in_file:
             if sheet not in sheet_name_originals:
                 print(f'Alert, unknown sheet "{sheet}" in {f}: ')
-                return 1, sheets_in_file
-        return 0, sheets_in_file
+                return 1
+        return 0
     except ValueError as ve:
         print(f'File is open, unreadable, error: {ve}')
-        return 2, None
+        return 2
+
+
+def get_sheets(f):
+    sheets_in_file = {}
+    try:
+        sheets_in_file = pd.read_excel(f, sheet_name=None, header=0)
+    except TypeError as e:
+        print(f'Excel read had produced an error: {e}')
+    return sheets_in_file
 
 
 def main(dirpath):
     p = Path(dirpath)
-    excel_files = [item for item in p.iterdir() if item.is_file() and item.suffix == '.xlsx']
-    good_for_table_names, sheet_name_originals = get_table_names()
+    expected_sheet_names = ('E-Book-Verkäufe', 'Hörbuch-Verkäufe', 'Kostenlostitel', 'Abo und Flatrate')
+    excel_files = [item for item in p.iterdir() if item.is_file() and item.suffix == '.xlsx']  # list
+    good_for_table_names = get_table_names(expected_sheet_names)  # dict
 
     for f in excel_files:
-        try:
-            sheet_error, sheets_in_file = check_file_sheet_names(f, sheet_name_originals)
-        except TypeError as te:
-            print(f'Excel read had given error: {te}')
+        sheets_in_file = get_sheets(f)  # dict
+        sheet_error = check_file_sheet_names(f, expected_sheet_names)
+        if sheet_error == 0:
+            print(f'Sheets are as expected in file {f}')
+        elif sheet_error == 1:
+            print(f"There's some weird shit going on in {f}, unknown sheet in file.\n{sheets_in_file.keys()}")
+            print('Signing off... Clean the DB now!!!')
             return
-        else:
-            if sheet_error == 0:
-                print(f'Sheets are as expected in file {f}')
-            elif sheet_error == 1:
-                print(f"There's some weird shit going on in {f}, unknown sheet in file.\n{sheets_in_file.keys()}")
-                print('Signing off... Clean db!!!')
-                return
-            elif sheet_error == 2:
-                print('File read error, signing off...')
-                return
-
+        elif sheet_error == 2:
+            print('File read error, signing off...')
+            return
+        # check fields in each sheet dict
         for sheet, df in sheets_in_file.items():
             field_error = check_sheet_df(sheet, df)  # check fields in sheet
             if field_error == 1:
@@ -85,7 +90,7 @@ def main(dirpath):
                 print('not going to write any further to db. Clean up db!\nSigning off...')
                 return
             elif field_error == 2:
-                print('Checking field names failed, no Libreka field reference found, signing off...')
+                print('Checking field names failed, no Libreka field reference file found, signing off...')
                 return
             else:
                 table_name = 'libreka_' + good_for_table_names[sheet]
