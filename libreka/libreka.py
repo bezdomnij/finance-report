@@ -21,10 +21,16 @@ def get_comparable_names(columns_list):
     return columns_list
 
 
+def get_fields_diff(incoming, etalon):
+    a = set(incoming)
+    b = set(etalon)
+    return list(a - b) + list(b - a)
+
+
 def check_sheet_df(sheet, df):
+    difference = []
     filename = 'sheet_fields_libreka.txt'
     file_path = Path.cwd() / 'libreka' / filename
-    error = 0
     try:
         with open(file_path, mode='r', encoding='utf-8') as f:  # read list of expected column names
             lines = f.readlines()
@@ -33,13 +39,11 @@ def check_sheet_df(sheet, df):
             for index, s in enumerate(sheets):
                 if s == sheet:
                     df_field_names = get_comparable_names(list(df.columns))
-                    if not (fields[index].split(',') == df_field_names):  # compare two lists
-                        error = 1
-                        break
+                    etalon = fields[index].split(',')
+                    difference = get_fields_diff(df_field_names, etalon)
     except FileNotFoundError as e:
         print(f"but CAN'T find field-names file: {filename} to check fields in sheet:\n error {e}")
-        error = 2
-    return error
+    return difference
 
 
 def check_file_sheet_names(f, sheet_name_originals):
@@ -83,19 +87,22 @@ def check_excel_for_sheet_names(libreka_files, expected_sheet_names):
     return errored_files
 
 
-def check_for_field_anomalies(f):
-    erred_sheets = []
+def check_field_anomalies(f):
+    errored_sheets = []
+    field_errors = []
     sheets = get_sheets(f)  # dict
+
     for sheet, df in sheets.items():
-        field_error = check_sheet_df(sheet, df)  # check fields in sheet
-        if field_error == 1:
+        field_errors = check_sheet_df(sheet, df)  # check fields in sheet
+        if len(field_errors) > 0:
             print(f"ERROR!!! \nColumns in file `{f.name}`, sheet `{sheet}` NOT matching the expected.")
             print('not going to write any further to db. Clean up db!\nSigning off...')
-            erred_sheets.append(sheet)
-        elif field_error == 2:
-            print('Checking field names failed, no Libreka field reference file found, signing off...')
-    if len(erred_sheets) > 0:
-        return {f.name: erred_sheets}
+            errored_sheets.append(sheet)
+
+    if len(errored_sheets) > 0:
+        return {f.name: errored_sheets}, field_errors
+    else:
+        return {}, []
 
 
 def main(dirpath):
@@ -109,12 +116,12 @@ def main(dirpath):
     sheet_errors = check_excel_for_sheet_names(libreka_excel_files, expected_sheet_names)  # dict
     print(f'Summary: sheet names are off here - {sheet_errors}\n')
 
-    # check errors in actual field names
+    # check errors in field names
     field_errors = []
     for f in libreka_excel_files:
-        errored_fields_in_file = check_for_field_anomalies(f)  # send to examine file
+        errored_fields_in_file, extra_fields = check_field_anomalies(f)  # send to examine file
         if errored_fields_in_file:
-            field_errors.append(errored_fields_in_file)
+            field_errors.append((errored_fields_in_file, extra_fields))
     print('Summary: field names are off - ', field_errors)
 
     # actual db write

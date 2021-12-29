@@ -3,7 +3,9 @@
 import urllib
 from sys import argv
 from urllib import request
+
 from smb.SMBHandler import SMBHandler
+
 from google_audio import rw_ga
 from libreka import libreka
 
@@ -46,7 +48,7 @@ if __name__ == '__main__':
         print(argv)
         discover(argv[1:])
     report('19')
-    # libreka.main('/Users/frank/pd/sales_report/16_libreka')
-    libreka.main('k:/PD/data/sales_report/16_libreka')
+    libreka.main('/Users/frank/pd/sales_report/16_libreka')
+    # libreka.main('k:/PD/data/sales_report/16_libreka')
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
