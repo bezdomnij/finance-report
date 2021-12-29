@@ -36,68 +36,98 @@ def check_sheet_df(sheet, df):
                     if not (fields[index].split(',') == df_field_names):  # compare two lists
                         error = 1
                         break
-    except FileNotFoundError as fnfe:
-        print(f"but CAN'T find field-names file: {filename} to check fields in sheet:\n error {fnfe}")
+    except FileNotFoundError as e:
+        print(f"but CAN'T find field-names file: {filename} to check fields in sheet:\n error {e}")
         error = 2
     return error
 
 
 def check_file_sheet_names(f, sheet_name_originals):
+    result = []
     try:
         sheets_in_file = get_sheets(f)
         for sheet in sheets_in_file:
             if sheet not in sheet_name_originals:
                 print(f'Alert, unknown sheet "{sheet}" in {f}: ')
-                return 1
-        return 0
-    except ValueError as ve:
-        print(f'File is open, unreadable, error: {ve}')
-        return 2
+                result.append(sheet)
+                return 1, result
+        return 0, result
+    except (ValueError, PermissionError) as e:
+        print(f'File is open, unreadable, error: {e}')
+        return 2, result
 
 
 def get_sheets(f):
-    sheets_in_file = {}
     try:
         sheets_in_file = pd.read_excel(f, sheet_name=None, header=0)
-    except TypeError as e:
+    except Exception as e:
         print(f'Excel read had produced an error: {e}')
+        return {}
     return sheets_in_file
+
+
+def check_excel_for_sheet_names(libreka_files, expected_sheet_names):
+    errored_files = {}
+    for f in libreka_files:
+        sheets_in_file = get_sheets(f)  # dict sheet_name: df
+        sheet_error, errored_sheets = check_file_sheet_names(f, expected_sheet_names)
+        if sheet_error == 0 and len(errored_sheets) == 0:
+            print(f'Sheets are as expected in file {f}')
+        elif sheet_error == 1:
+            print(f"There's some weird shit going on in {f}, unknown sheet in file.\n{sheets_in_file.keys()}")
+            print("Signing off... Clean the DB now!!!")
+            errored_files[f.name] = errored_sheets
+        elif sheet_error == 2:
+            print('File read error, signing off...')
+            errored_files[f.name] = errored_sheets
+    return errored_files
+
+
+def check_for_field_anomalies(f):
+    erred_sheets = []
+    sheets = get_sheets(f)  # dict
+    for sheet, df in sheets.items():
+        field_error = check_sheet_df(sheet, df)  # check fields in sheet
+        if field_error == 1:
+            print(f"ERROR!!! \nColumns in file `{f.name}`, sheet `{sheet}` NOT matching the expected.")
+            print('not going to write any further to db. Clean up db!\nSigning off...')
+            erred_sheets.append(sheet)
+        elif field_error == 2:
+            print('Checking field names failed, no Libreka field reference file found, signing off...')
+    if len(erred_sheets) > 0:
+        return {f.name: erred_sheets}
 
 
 def main(dirpath):
     p = Path(dirpath)
     expected_sheet_names = ('E-Book-Verkäufe', 'Hörbuch-Verkäufe', 'Kostenlostitel', 'Abo und Flatrate')
-    libreka_excel_files = [item for item in p.iterdir() if item.is_file() and item.suffix == '.xlsx']  # list
+    libreka_excel_files = [item for item in p.iterdir() if item.is_file() and item.suffix == '.xlsx'
+                           and item.name[:2] != '~$']  # list
     good_for_table_names = get_table_names(expected_sheet_names)  # dict
 
     # check sheet names in file
-    for f in libreka_excel_files:
-        sheets_in_file = get_sheets(f)  # dict
-        sheet_error = check_file_sheet_names(f, expected_sheet_names)
-        if sheet_error == 0:
-            print(f'Sheets are as expected in file {f}')
-        elif sheet_error == 1:
-            print(f"There's some weird shit going on in {f}, unknown sheet in file.\n{sheets_in_file.keys()}")
-            print('Signing off... Clean the DB now!!!')
-            return
-        elif sheet_error == 2:
-            print('File read error, signing off...')
-            return
+    sheet_errors = check_excel_for_sheet_names(libreka_excel_files, expected_sheet_names)  # dict
+    print(f'Summary: sheet names are off here - {sheet_errors}\n')
 
-        # check fields in each sheet dict - the Key part
-        for sheet, df in sheets_in_file.items():
-            field_error = check_sheet_df(sheet, df)  # check fields in sheet
-            if field_error == 1:
-                print(f"ERROR!!! \nColumns in file `{f.name}`, sheet `{sheet}` NOT matching the expected.")
-                print('not going to write any further to db. Clean up db!\nSigning off...')
-                return
-            elif field_error == 2:
-                print('Checking field names failed, no Libreka field reference file found, signing off...')
-                return
-            else:
-                table_name = 'libreka_' + good_for_table_names[sheet]
-                sql_writer.write_to_db(df, table_name, 'append', '19')  # select DB here
+    # check errors in actual field names
+    field_errors = []
+    for f in libreka_excel_files:
+        errored_fields_in_file = check_for_field_anomalies(f)  # send to examine file
+        if errored_fields_in_file:
+            field_errors.append(errored_fields_in_file)
+    print('Summary: field names are off - ', field_errors)
+
+    # actual db write
+    if len(sheet_errors) == 0 and len(field_errors) == 0:
+        for f in libreka_excel_files:
+            sheets_in_file = get_sheets(f)
+            for sheet, df in sheets_in_file.items():
+                table_name = 'libreka_' + good_for_table_names.get(sheet, "no_name")
+                sql_writer.write_to_db(df, table_name, 'append', '19')  # select DB, here: 19
+    else:
+        print('\nDB write is a no-go. Fix the source files first.')
 
 
 if __name__ == '__main__':
-    main('/Users/frank/pd/sales_report/16_libreka')
+    # main('/Users/frank/pd/sales_report/16_libreka')
+    main('k:/PD/data/sales_report/16_libreka')

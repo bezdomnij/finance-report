@@ -42,7 +42,7 @@ def get_engine(which_one, db_name='stage'):
                     'read_timeout': 30}
     try:
         sql_engine = create_engine(connection_uri, pool_pre_ping=True, pool_recycle=3600, echo=False,
-                                   echo_pool=True, connect_args=connect_args, future=False)
+                                   echo_pool=False, connect_args=connect_args, future=False)
     except Exception as e:
         print(f'NO connection, error: {e}')
         return
