@@ -66,7 +66,7 @@ def get_types(dfparam, milyen='mindegy'):
                     lens[field] = max_length
                 else:
                     lens[field] = 255
-            except TypeError:
+            except (TypeError, ValueError):
                 lens[field] = 255
                 continue
         typedict = {col_name: sqlalchemy.sql.sqltypes.VARCHAR(length=lens[col_name]) for col_name in lens.keys()}

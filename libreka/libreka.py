@@ -132,7 +132,8 @@ def main(dirpath):
             sheets_in_file = get_sheets(f)
             for sheet, df in sheets_in_file.items():
                 table_name = 'libreka_' + good_for_table_names.get(sheet, "no_name")
-                sql_writer.write_to_db(df, table_name, 'append', '19')  # select DB, here: 19
+                # select DB, here: 19
+                sql_writer.write_to_db(df, table_name, db_name='stage', action='append', hova='19')
     else:
         print('\nDB write is a no-go. Fix the source files first.')
 
