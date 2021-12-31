@@ -7,7 +7,7 @@ from engineer import sql_writer as sqw
 
 
 def google(table='stg_fin2_12_googleplay', hova='19'):
-    logging.basicConfig(level=logging.ERROR, filename='datacamp.log', filemode='w')
+    logging.basicConfig(level=logging.INFO, filename='datacamp.log', filemode='w')
     files = []
     df = pd.DataFrame()
     # finrep_dir = Path('h:/NextCloud/Finance/szamitas/2021_10_oktober')
@@ -16,10 +16,12 @@ def google(table='stg_fin2_12_googleplay', hova='19'):
     for f in src.iterdir():
         if f.suffix == '.csv':
             files.append(f)
+            logging.info(msg=f'file found:{f}')
     if len(files) == 1:
         try:
             df = pd.read_csv(files[0], encoding='utf-16', sep='\t', header=0, index_col=None)
         except Exception as e:
+            logging.exception(msg=f'error!!! {e}')
             print(f"mar konvertaltuk..., error: {e}")
             df = pd.read_csv(files[0], sep='\t', header=0, index_col=None)
         finally:
