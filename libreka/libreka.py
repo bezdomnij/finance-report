@@ -1,5 +1,6 @@
 import re
 from pathlib import Path
+from typing import Callable, Any
 
 import pandas as pd
 
@@ -22,8 +23,8 @@ def get_comparable_names(columns_list):
 
 
 def get_fields_diff(incoming, etalon):
-    diff = lambda l1, l2: [x for x in l1 if x not in l2]
-    diff2 = lambda l1, l2: [x for x in l2 if x not in l1]
+    diff: Callable[[Any, Any], list[Any]] = lambda l1, l2: [x for x in l1 if x not in l2]
+    diff2: Callable[[Any, Any], list[Any]] = lambda l1, l2: [x for x in l2 if x not in l1]
     res1 = diff(incoming, etalon) + diff(etalon, incoming)
     res2 = diff2(incoming, etalon) + diff2(etalon, incoming)
     return res1 + res2
@@ -92,7 +93,6 @@ def check_field_anomalies(f):
     result = []
     err_sheets = []
     sheets = get_sheets(f)  # dict
-
     for sheet, df in sheets.items():
         err_fields = check_sheet_df(sheet, df)  # check fields in sheet
         if len(err_fields) > 0:
