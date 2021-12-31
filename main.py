@@ -6,7 +6,7 @@ from urllib import request
 
 from smb.SMBHandler import SMBHandler
 
-from google_audio import rw_ga
+from google_all import google_audio
 from libreka import libreka
 
 
@@ -38,7 +38,8 @@ def read_network():
 
 # Press the green button in the gutter to run the script.
 def report(hova='19'):
-    rw_ga.google_audio('stg_fin2_20012_google_audio', hova)
+    google_audio.google_audio('stg_fin2_20012_google_audio', hova)
+    # google.google('stg_fin2_12_googleplay', hova)
 
 
 if __name__ == '__main__':

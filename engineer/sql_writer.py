@@ -1,28 +1,32 @@
 import os
 import sys
 
+import numpy as np
 import sqlalchemy.sql.sqltypes
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, exc
 
 
-def write_to_db(df, table_name, action='replace', hova='19'):
+def write_to_db(df, table_name, db_name='stage', action='replace', hova='19', field_lens=None):
+    if field_lens is None:
+        field_lens = get_types(df, milyen='mindegy')
     try:
-        sql_engine = get_engine(hova, db_name='stage')
+        sql_engine = get_engine(hova, db_name=db_name)
         connection = sql_engine.connect()
-    except Exception as e:
-        print(f'SQL credentials need improvement. Error: {e}')
+    except exc.OperationalError as e:
+        print(f'fuck, SQL credentials need improvement. Error: {e}')
         return
-
-    types = get_types(df, milyen='mindegy')
     try:
         df.to_sql(table_name, connection, if_exists=action, index=False,
-                  method='multi', chunksize=20000, dtype=types)
+                  method='multi', chunksize=5000, dtype=field_lens)
     except ValueError as vx:
         print('ERROR!!! df not created : ', vx)
     else:
         print(f"Table {table_name} is written to successfully.")
     finally:
-        connection.close()
+        try:
+            connection.close()
+        except AttributeError as e:
+            print(f'Nothing to close, no connection. Error: {e}')
 
 
 def get_engine(which_one, db_name='stage'):
@@ -51,8 +55,21 @@ def get_engine(which_one, db_name='stage'):
 
 def get_types(dfparam, milyen='mindegy'):
     typedict = {}
+    lens = {}
     if milyen == 'mindegy':
-        typedict = {col_name: sqlalchemy.sql.sqltypes.VARCHAR(length=255) for col_name in dfparam}
+        for field in dfparam.columns:
+            current = np.asarray((dfparam[field]))
+            try:
+                max_length = len(max(current, key=len))
+                if max_length > 255:
+                    print(max_length, field)
+                    lens[field] = max_length
+                else:
+                    lens[field] = 255
+            except TypeError:
+                lens[field] = 255
+                continue
+        typedict = {col_name: sqlalchemy.sql.sqltypes.VARCHAR(length=lens[col_name]) for col_name in lens.keys()}
     else:
         for i, j in zip(dfparam.columns, dfparam.dtypes):
             if "object" in str(j):
