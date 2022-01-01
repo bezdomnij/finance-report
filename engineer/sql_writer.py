@@ -1,3 +1,4 @@
+import logging
 import os
 import sys
 
@@ -13,18 +14,21 @@ def write_to_db(df, table_name, db_name='stage', action='replace', hova='19', fi
         sql_engine = get_engine(hova, db_name=db_name)
         connection = sql_engine.connect()
     except exc.OperationalError as e:
+        logging.exception(msg=f'logged error SQL write: {e}')
         print(f'fuck, SQL credentials need improvement. Error: {e}')
         return
     try:
         df.to_sql(table_name, connection, if_exists=action, index=False,
                   method='multi', chunksize=5000, dtype=field_lens)
-    except ValueError as vx:
-        print('ERROR!!! df not created : ', vx)
+    except Exception as e:
+        logging.exception(e)
+        print(f'BIG RED FLAG, this is, {e.__str__}: check the logfile for details!!!{table_name}')
     else:
         print(f"Table {table_name} is written to successfully.")
     finally:
         try:
             connection.close()
+            engine.dispose()
         except AttributeError as e:
             print(f'Nothing to close, no connection. Error: {e}')
 

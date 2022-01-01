@@ -7,7 +7,6 @@ from urllib import request
 from smb.SMBHandler import SMBHandler
 
 from google_all import google_audio, google
-from libreka import libreka
 
 
 def discover(to_find):
@@ -49,7 +48,5 @@ if __name__ == '__main__':
         print(argv)
         discover(argv[1:])
     report('19')
-    libreka.main('/Users/frank/pd/sales_report/16_libreka')
-    # libreka.main('k:/PD/data/sales_report/16_libreka')
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
