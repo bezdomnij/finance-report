@@ -74,7 +74,6 @@ def get_types(dfparam, milyen='mindegy'):
                     lens[field] = 255
             except Exception as e:
                 logging.exception(msg=f'LOGERROR: {e}')
-                # print(f"Error {e}")
                 temp[field] = dfparam[field].astype("str")
                 m = max(temp[field].str.len())
                 lens[field] = 255 if m < 255 else m
