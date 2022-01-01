@@ -42,19 +42,18 @@ def make_df(files, amazon):
         sqw.write_to_db(df, amazon[f], db_name='stage', action='replace', hova=srv)
 
 
-def amz_read():
-    amz_path = '/Users/frank/pd/finance_report/amazon'
-    p = Path(amz_path)
+def amz_read(dirpath):
+    p = Path(dirpath)
     amazon = {}
     files = [item for item in p.iterdir() if item.suffix == '.xlsx']
     if len(files) == 2:
         for item in files:
-            if 'kep_print_dashboard' in item.stem:
+            if 'kep_print_dashboard' in item.stem or 'amazon_POD' in item.stem:
                 amazon[item] = 'stg_fin2_30666_AmazonPOD'
-            elif 'kep_dashboard' in item.stem:
+            elif 'kep_dashboard' in item.stem or 'amazon_KEP' in item.stem:
                 amazon[item] = 'stg_fin2_10666_Amazon_kep'
             else:
-                print(f'Not regular amazon file in here, {amz_path}')
+                print(f'Not regular amazon file in here, {dirpath}')
                 return
     else:
         print(f"Directory not clean, has {len(files)} items.")
