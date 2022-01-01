@@ -7,7 +7,6 @@ from engineer import sql_writer as sqw
 
 
 def google(table='stg_fin2_12_googleplay', hova='19'):
-    logging.basicConfig(level=logging.INFO, filename='datacamp.log', filemode='w')
     files = []
     df = pd.DataFrame()
     # finrep_dir = Path('h:/NextCloud/Finance/szamitas/2021_10_oktober')

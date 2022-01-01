@@ -1,7 +1,9 @@
+import logging
 import os
 import sys
 
 import numpy as np
+import pandas as pd
 import sqlalchemy.sql.sqltypes
 from sqlalchemy import create_engine, exc
 
@@ -13,18 +15,21 @@ def write_to_db(df, table_name, db_name='stage', action='replace', hova='19', fi
         sql_engine = get_engine(hova, db_name=db_name)
         connection = sql_engine.connect()
     except exc.OperationalError as e:
+        logging.exception(msg=f'logged error SQL write: {e}')
         print(f'fuck, SQL credentials need improvement. Error: {e}')
         return
     try:
         df.to_sql(table_name, connection, if_exists=action, index=False,
                   method='multi', chunksize=5000, dtype=field_lens)
-    except ValueError as vx:
-        print('ERROR!!! df not created : ', vx)
+    except Exception as e:
+        logging.exception(e)
+        print(f'BIG RED FLAG, this is, {e.__str__}: check the logfile for details!!!{table_name}')
     else:
         print(f"Table {table_name} is written to successfully.")
     finally:
         try:
             connection.close()
+            # engine.dispose()
         except AttributeError as e:
             print(f'Nothing to close, no connection. Error: {e}')
 
@@ -56,6 +61,7 @@ def get_engine(which_one, db_name='stage'):
 def get_types(dfparam, milyen='mindegy'):
     typedict = {}
     lens = {}
+    temp = pd.DataFrame()
     if milyen == 'mindegy':
         for field in dfparam.columns:
             current = np.asarray((dfparam[field]))
@@ -66,8 +72,12 @@ def get_types(dfparam, milyen='mindegy'):
                     lens[field] = max_length
                 else:
                     lens[field] = 255
-            except (TypeError, ValueError):
-                lens[field] = 255
+            except Exception as e:
+                logging.exception(msg=f'LOGERROR: {e}')
+                # print(f"Error {e}")
+                temp[field] = dfparam[field].astype("str")
+                m = max(temp[field].str.len())
+                lens[field] = 255 if m < 255 else m
                 continue
         typedict = {col_name: sqlalchemy.sql.sqltypes.VARCHAR(length=lens[col_name]) for col_name in lens.keys()}
     else:
@@ -84,6 +94,6 @@ def get_types(dfparam, milyen='mindegy'):
 
 
 if __name__ == '__main__':
-    engine = get_engine('19')
-    engine.dispose()
+    # engine = get_engine('19')
+    # engine.dispose()
     print('whatever')

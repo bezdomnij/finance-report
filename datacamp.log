@@ -1,22 +1,125 @@
-INFO:root:file found:/Users/frank/pd/finance_report/google/GoogleEarningsReport-2021-11-PD-61ce9c3beae14.csv
-ERROR:root:error!!! UTF-16 stream does not start with BOM
+ERROR:root:error with field: object of type 'float' has no len()
 Traceback (most recent call last):
-  File "/Users/frank/pd/finance_report/finrep_collect_data/google_all/google.py", line 22, in google
-    df = pd.read_csv(files[0], encoding='utf-16', sep='\t', header=0, index_col=None)
-  File "/Users/frank/pd/finance_report/finrep_collect_data/venv/lib/python3.9/site-packages/pandas/util/_decorators.py", line 311, in wrapper
-    return func(*args, **kwargs)
-  File "/Users/frank/pd/finance_report/finrep_collect_data/venv/lib/python3.9/site-packages/pandas/io/parsers/readers.py", line 586, in read_csv
-    return _read(filepath_or_buffer, kwds)
-  File "/Users/frank/pd/finance_report/finrep_collect_data/venv/lib/python3.9/site-packages/pandas/io/parsers/readers.py", line 482, in _read
-    parser = TextFileReader(filepath_or_buffer, **kwds)
-  File "/Users/frank/pd/finance_report/finrep_collect_data/venv/lib/python3.9/site-packages/pandas/io/parsers/readers.py", line 811, in __init__
-    self._engine = self._make_engine(self.engine)
-  File "/Users/frank/pd/finance_report/finrep_collect_data/venv/lib/python3.9/site-packages/pandas/io/parsers/readers.py", line 1040, in _make_engine
-    return mapping[engine](self.f, **self.options)  # type: ignore[call-arg]
-  File "/Users/frank/pd/finance_report/finrep_collect_data/venv/lib/python3.9/site-packages/pandas/io/parsers/c_parser_wrapper.py", line 69, in __init__
-    self._reader = parsers.TextReader(self.handles.handle, **kwds)
-  File "pandas/_libs/parsers.pyx", line 542, in pandas._libs.parsers.TextReader.__cinit__
-  File "pandas/_libs/parsers.pyx", line 642, in pandas._libs.parsers.TextReader._get_header
-  File "pandas/_libs/parsers.pyx", line 843, in pandas._libs.parsers.TextReader._tokenize_rows
-  File "pandas/_libs/parsers.pyx", line 1917, in pandas._libs.parsers.raise_parser_error
-UnicodeError: UTF-16 stream does not start with BOM
+  File "/Users/frank/pd/code/finrep_collect_data/engineer/sql_writer.py", line 68, in get_types
+    max_length = len(max(current, key=len))
+TypeError: object of type 'float' has no len()
+ERROR:root:error with field: object of type 'numpy.int64' has no len()
+Traceback (most recent call last):
+  File "/Users/frank/pd/code/finrep_collect_data/engineer/sql_writer.py", line 68, in get_types
+    max_length = len(max(current, key=len))
+TypeError: object of type 'numpy.int64' has no len()
+ERROR:root:error with field: object of type 'numpy.int64' has no len()
+Traceback (most recent call last):
+  File "/Users/frank/pd/code/finrep_collect_data/engineer/sql_writer.py", line 68, in get_types
+    max_length = len(max(current, key=len))
+TypeError: object of type 'numpy.int64' has no len()
+ERROR:root:error with field: object of type 'float' has no len()
+Traceback (most recent call last):
+  File "/Users/frank/pd/code/finrep_collect_data/engineer/sql_writer.py", line 68, in get_types
+    max_length = len(max(current, key=len))
+TypeError: object of type 'float' has no len()
+ERROR:root:error with field: object of type 'numpy.float64' has no len()
+Traceback (most recent call last):
+  File "/Users/frank/pd/code/finrep_collect_data/engineer/sql_writer.py", line 68, in get_types
+    max_length = len(max(current, key=len))
+TypeError: object of type 'numpy.float64' has no len()
+ERROR:root:error with field: object of type 'numpy.float64' has no len()
+Traceback (most recent call last):
+  File "/Users/frank/pd/code/finrep_collect_data/engineer/sql_writer.py", line 68, in get_types
+    max_length = len(max(current, key=len))
+TypeError: object of type 'numpy.float64' has no len()
+ERROR:root:error with field: object of type 'numpy.float64' has no len()
+Traceback (most recent call last):
+  File "/Users/frank/pd/code/finrep_collect_data/engineer/sql_writer.py", line 68, in get_types
+    max_length = len(max(current, key=len))
+TypeError: object of type 'numpy.float64' has no len()
+ERROR:root:error with field: object of type 'numpy.float64' has no len()
+Traceback (most recent call last):
+  File "/Users/frank/pd/code/finrep_collect_data/engineer/sql_writer.py", line 68, in get_types
+    max_length = len(max(current, key=len))
+TypeError: object of type 'numpy.float64' has no len()
+ERROR:root:error with field: object of type 'numpy.float64' has no len()
+Traceback (most recent call last):
+  File "/Users/frank/pd/code/finrep_collect_data/engineer/sql_writer.py", line 68, in get_types
+    max_length = len(max(current, key=len))
+TypeError: object of type 'numpy.float64' has no len()
+ERROR:root:error with field: object of type 'numpy.float64' has no len()
+Traceback (most recent call last):
+  File "/Users/frank/pd/code/finrep_collect_data/engineer/sql_writer.py", line 68, in get_types
+    max_length = len(max(current, key=len))
+TypeError: object of type 'numpy.float64' has no len()
+ERROR:root:error with field: object of type 'numpy.float64' has no len()
+Traceback (most recent call last):
+  File "/Users/frank/pd/code/finrep_collect_data/engineer/sql_writer.py", line 68, in get_types
+    max_length = len(max(current, key=len))
+TypeError: object of type 'numpy.float64' has no len()
+ERROR:root:error with field: object of type 'numpy.int64' has no len()
+Traceback (most recent call last):
+  File "/Users/frank/pd/code/finrep_collect_data/engineer/sql_writer.py", line 68, in get_types
+    max_length = len(max(current, key=len))
+TypeError: object of type 'numpy.int64' has no len()
+ERROR:root:error with field: object of type 'numpy.int64' has no len()
+Traceback (most recent call last):
+  File "/Users/frank/pd/code/finrep_collect_data/engineer/sql_writer.py", line 68, in get_types
+    max_length = len(max(current, key=len))
+TypeError: object of type 'numpy.int64' has no len()
+ERROR:root:error with field: object of type 'numpy.int64' has no len()
+Traceback (most recent call last):
+  File "/Users/frank/pd/code/finrep_collect_data/engineer/sql_writer.py", line 68, in get_types
+    max_length = len(max(current, key=len))
+TypeError: object of type 'numpy.int64' has no len()
+ERROR:root:error with field: object of type 'numpy.float64' has no len()
+Traceback (most recent call last):
+  File "/Users/frank/pd/code/finrep_collect_data/engineer/sql_writer.py", line 68, in get_types
+    max_length = len(max(current, key=len))
+TypeError: object of type 'numpy.float64' has no len()
+ERROR:root:error with field: object of type 'numpy.float64' has no len()
+Traceback (most recent call last):
+  File "/Users/frank/pd/code/finrep_collect_data/engineer/sql_writer.py", line 68, in get_types
+    max_length = len(max(current, key=len))
+TypeError: object of type 'numpy.float64' has no len()
+ERROR:root:error with field: object of type 'numpy.float64' has no len()
+Traceback (most recent call last):
+  File "/Users/frank/pd/code/finrep_collect_data/engineer/sql_writer.py", line 68, in get_types
+    max_length = len(max(current, key=len))
+TypeError: object of type 'numpy.float64' has no len()
+ERROR:root:error with field: object of type 'numpy.float64' has no len()
+Traceback (most recent call last):
+  File "/Users/frank/pd/code/finrep_collect_data/engineer/sql_writer.py", line 68, in get_types
+    max_length = len(max(current, key=len))
+TypeError: object of type 'numpy.float64' has no len()
+ERROR:root:error with field: object of type 'numpy.float64' has no len()
+Traceback (most recent call last):
+  File "/Users/frank/pd/code/finrep_collect_data/engineer/sql_writer.py", line 68, in get_types
+    max_length = len(max(current, key=len))
+TypeError: object of type 'numpy.float64' has no len()
+ERROR:root:error with field: object of type 'numpy.float64' has no len()
+Traceback (most recent call last):
+  File "/Users/frank/pd/code/finrep_collect_data/engineer/sql_writer.py", line 68, in get_types
+    max_length = len(max(current, key=len))
+TypeError: object of type 'numpy.float64' has no len()
+ERROR:root:error with field: object of type 'numpy.float64' has no len()
+Traceback (most recent call last):
+  File "/Users/frank/pd/code/finrep_collect_data/engineer/sql_writer.py", line 68, in get_types
+    max_length = len(max(current, key=len))
+TypeError: object of type 'numpy.float64' has no len()
+ERROR:root:error with field: object of type 'numpy.float64' has no len()
+Traceback (most recent call last):
+  File "/Users/frank/pd/code/finrep_collect_data/engineer/sql_writer.py", line 68, in get_types
+    max_length = len(max(current, key=len))
+TypeError: object of type 'numpy.float64' has no len()
+ERROR:root:error with field: object of type 'numpy.float64' has no len()
+Traceback (most recent call last):
+  File "/Users/frank/pd/code/finrep_collect_data/engineer/sql_writer.py", line 68, in get_types
+    max_length = len(max(current, key=len))
+TypeError: object of type 'numpy.float64' has no len()
+ERROR:root:error with field: object of type 'numpy.float64' has no len()
+Traceback (most recent call last):
+  File "/Users/frank/pd/code/finrep_collect_data/engineer/sql_writer.py", line 68, in get_types
+    max_length = len(max(current, key=len))
+TypeError: object of type 'numpy.float64' has no len()
+ERROR:root:error with field: object of type 'numpy.float64' has no len()
+Traceback (most recent call last):
+  File "/Users/frank/pd/code/finrep_collect_data/engineer/sql_writer.py", line 68, in get_types
+    max_length = len(max(current, key=len))
+TypeError: object of type 'numpy.float64' has no len()
