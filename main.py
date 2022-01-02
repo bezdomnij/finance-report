@@ -40,8 +40,8 @@ def read_network():
 
 # Press the green button in the gutter to run the script.
 def report(hova='19'):
-    # directory = '/Users/frank/pd/finance_report'
-    directory = 'h:/NextCloud/Finance/szamitas/2021_11_november'
+    directory = '/Users/frank/pd/finance_report'
+    # directory = 'h:/NextCloud/Finance/szamitas/2021_11_november'
     google_audio.google_audio(directory, 'stg_fin2_20012_google_audio', hova)
     google.google(directory, 'stg_fin2_12_googleplay', hova)
     amazon.amz_read(directory, hova)
@@ -56,6 +56,7 @@ if __name__ == '__main__':
     else:
         print(argv)
         discover(argv[1:])
+    # HOVA IRUNK?
     report('19')
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
