@@ -1,7 +1,27 @@
+ERROR:root:LOGERROR: object of type 'int' has no len() in field: ||| Qty
+Traceback (most recent call last):
+  File "/Users/frank/pd/code/finrep_collect_data/engineer/sql_writer.py", line 66, in get_types
+    max_length = len(max(df[field], key=len))
+TypeError: object of type 'int' has no len()
+ERROR:root:LOGERROR: object of type 'float' has no len() in field: ||| Publisher Revenue
+Traceback (most recent call last):
+  File "/Users/frank/pd/code/finrep_collect_data/engineer/sql_writer.py", line 66, in get_types
+    max_length = len(max(df[field], key=len))
+TypeError: object of type 'float' has no len()
+ERROR:root:LOGERROR: object of type 'float' has no len() in field: ||| Earnings Amount
+Traceback (most recent call last):
+  File "/Users/frank/pd/code/finrep_collect_data/engineer/sql_writer.py", line 66, in get_types
+    max_length = len(max(df[field], key=len))
+TypeError: object of type 'float' has no len()
+ERROR:root:LOGERROR: object of type 'float' has no len() in field: ||| Currency Conversion Rate
+Traceback (most recent call last):
+  File "/Users/frank/pd/code/finrep_collect_data/engineer/sql_writer.py", line 66, in get_types
+    max_length = len(max(df[field], key=len))
+TypeError: object of type 'float' has no len()
 INFO:root:file found:/Users/frank/pd/finance_report/google/GoogleEarningsReport-2021-11-PD-61ce9c3beae14.csv
 ERROR:root:error!!! UTF-16 stream does not start with BOM
 Traceback (most recent call last):
-  File "/Users/frank/pd/finance_report/finrep_collect_data/google_all/google.py", line 22, in google
+  File "/Users/frank/pd/code/finrep_collect_data/google_all/google.py", line 19, in google
     df = pd.read_csv(files[0], encoding='utf-16', sep='\t', header=0, index_col=None)
   File "/Users/frank/pd/finance_report/finrep_collect_data/venv/lib/python3.9/site-packages/pandas/util/_decorators.py", line 311, in wrapper
     return func(*args, **kwargs)
@@ -20,3 +40,348 @@ Traceback (most recent call last):
   File "pandas/_libs/parsers.pyx", line 843, in pandas._libs.parsers.TextReader._tokenize_rows
   File "pandas/_libs/parsers.pyx", line 1917, in pandas._libs.parsers.raise_parser_error
 UnicodeError: UTF-16 stream does not start with BOM
+ERROR:root:LOGERROR: object of type 'int' has no len() in field: ||| Qty
+Traceback (most recent call last):
+  File "/Users/frank/pd/code/finrep_collect_data/engineer/sql_writer.py", line 66, in get_types
+    max_length = len(max(df[field], key=len))
+TypeError: object of type 'int' has no len()
+ERROR:root:LOGERROR: object of type 'int' has no len() in field: ||| Publisher Revenue %
+Traceback (most recent call last):
+  File "/Users/frank/pd/code/finrep_collect_data/engineer/sql_writer.py", line 66, in get_types
+    max_length = len(max(df[field], key=len))
+TypeError: object of type 'int' has no len()
+ERROR:root:LOGERROR: object of type 'float' has no len() in field: ||| Currency Conversion Rate
+Traceback (most recent call last):
+  File "/Users/frank/pd/code/finrep_collect_data/engineer/sql_writer.py", line 66, in get_types
+    max_length = len(max(df[field], key=len))
+TypeError: object of type 'float' has no len()
+ERROR:root:LOGERROR: object of type 'int' has no len() in field: ||| Tax Rate %
+Traceback (most recent call last):
+  File "/Users/frank/pd/code/finrep_collect_data/engineer/sql_writer.py", line 66, in get_types
+    max_length = len(max(df[field], key=len))
+TypeError: object of type 'int' has no len()
+ERROR:root:LOGERROR: object of type 'int' has no len() in field: ||| Local Partner ID
+Traceback (most recent call last):
+  File "/Users/frank/pd/code/finrep_collect_data/engineer/sql_writer.py", line 66, in get_types
+    max_length = len(max(df[field], key=len))
+TypeError: object of type 'int' has no len()
+ERROR:root:LOGERROR: object of type 'int' has no len() in field: ||| Google Partner ID
+Traceback (most recent call last):
+  File "/Users/frank/pd/code/finrep_collect_data/engineer/sql_writer.py", line 66, in get_types
+    max_length = len(max(df[field], key=len))
+TypeError: object of type 'int' has no len()
+ERROR:root:LOGERROR: object of type 'float' has no len() in field: ||| Region or State
+Traceback (most recent call last):
+  File "/Users/frank/pd/code/finrep_collect_data/engineer/sql_writer.py", line 66, in get_types
+    max_length = len(max(df[field], key=len))
+TypeError: object of type 'float' has no len()
+ERROR:root:LOGERROR: object of type 'float' has no len() in field: ||| postalCode
+Traceback (most recent call last):
+  File "/Users/frank/pd/code/finrep_collect_data/engineer/sql_writer.py", line 66, in get_types
+    max_length = len(max(df[field], key=len))
+TypeError: object of type 'float' has no len()
+ERROR:root:LOGERROR: object of type 'int' has no len() in field: ||| Payment Profile ID
+Traceback (most recent call last):
+  File "/Users/frank/pd/code/finrep_collect_data/engineer/sql_writer.py", line 66, in get_types
+    max_length = len(max(df[field], key=len))
+TypeError: object of type 'int' has no len()
+ERROR:root:LOGERROR: object of type 'float' has no len() in field: ||| Author
+Traceback (most recent call last):
+  File "/Users/frank/pd/code/finrep_collect_data/engineer/sql_writer.py", line 66, in get_types
+    max_length = len(max(df[field], key=len))
+TypeError: object of type 'float' has no len()
+ERROR:root:LOGERROR: object of type 'int' has no len() in field: ||| eISBN
+Traceback (most recent call last):
+  File "/Users/frank/pd/code/finrep_collect_data/engineer/sql_writer.py", line 66, in get_types
+    max_length = len(max(df[field], key=len))
+TypeError: object of type 'int' has no len()
+ERROR:root:LOGERROR: object of type 'int' has no len() in field: ||| Reference ID
+Traceback (most recent call last):
+  File "/Users/frank/pd/code/finrep_collect_data/engineer/sql_writer.py", line 66, in get_types
+    max_length = len(max(df[field], key=len))
+TypeError: object of type 'int' has no len()
+ERROR:root:LOGERROR: object of type 'float' has no len() in field: ||| COR
+Traceback (most recent call last):
+  File "/Users/frank/pd/code/finrep_collect_data/engineer/sql_writer.py", line 66, in get_types
+    max_length = len(max(df[field], key=len))
+TypeError: object of type 'float' has no len()
+ERROR:root:LOGERROR: object of type 'float' has no len() in field: ||| Publisher Price
+Traceback (most recent call last):
+  File "/Users/frank/pd/code/finrep_collect_data/engineer/sql_writer.py", line 66, in get_types
+    max_length = len(max(df[field], key=len))
+TypeError: object of type 'float' has no len()
+ERROR:root:LOGERROR: object of type 'float' has no len() in field: ||| List Price
+Traceback (most recent call last):
+  File "/Users/frank/pd/code/finrep_collect_data/engineer/sql_writer.py", line 66, in get_types
+    max_length = len(max(df[field], key=len))
+TypeError: object of type 'float' has no len()
+ERROR:root:LOGERROR: object of type 'float' has no len() in field: ||| Offer Price
+Traceback (most recent call last):
+  File "/Users/frank/pd/code/finrep_collect_data/engineer/sql_writer.py", line 66, in get_types
+    max_length = len(max(df[field], key=len))
+TypeError: object of type 'float' has no len()
+ERROR:root:LOGERROR: object of type 'float' has no len() in field: ||| Units Sold
+Traceback (most recent call last):
+  File "/Users/frank/pd/code/finrep_collect_data/engineer/sql_writer.py", line 66, in get_types
+    max_length = len(max(df[field], key=len))
+TypeError: object of type 'float' has no len()
+ERROR:root:LOGERROR: object of type 'float' has no len() in field: ||| Units Refunded
+Traceback (most recent call last):
+  File "/Users/frank/pd/code/finrep_collect_data/engineer/sql_writer.py", line 66, in get_types
+    max_length = len(max(df[field], key=len))
+TypeError: object of type 'float' has no len()
+ERROR:root:LOGERROR: object of type 'float' has no len() in field: ||| Net Units Sold
+Traceback (most recent call last):
+  File "/Users/frank/pd/code/finrep_collect_data/engineer/sql_writer.py", line 66, in get_types
+    max_length = len(max(df[field], key=len))
+TypeError: object of type 'float' has no len()
+ERROR:root:LOGERROR: object of type 'float' has no len() in field: ||| Payment Amount
+Traceback (most recent call last):
+  File "/Users/frank/pd/code/finrep_collect_data/engineer/sql_writer.py", line 66, in get_types
+    max_length = len(max(df[field], key=len))
+TypeError: object of type 'float' has no len()
+ERROR:root:LOGERROR: object of type 'int' has no len() in field: ||| ISBN
+Traceback (most recent call last):
+  File "/Users/frank/pd/code/finrep_collect_data/engineer/sql_writer.py", line 66, in get_types
+    max_length = len(max(df[field], key=len))
+TypeError: object of type 'int' has no len()
+ERROR:root:LOGERROR: object of type 'int' has no len() in field: ||| EAN
+Traceback (most recent call last):
+  File "/Users/frank/pd/code/finrep_collect_data/engineer/sql_writer.py", line 66, in get_types
+    max_length = len(max(df[field], key=len))
+TypeError: object of type 'int' has no len()
+ERROR:root:LOGERROR: object of type 'int' has no len() in field: ||| Reference ID
+Traceback (most recent call last):
+  File "/Users/frank/pd/code/finrep_collect_data/engineer/sql_writer.py", line 66, in get_types
+    max_length = len(max(df[field], key=len))
+TypeError: object of type 'int' has no len()
+ERROR:root:LOGERROR: object of type 'float' has no len() in field: ||| List Price
+Traceback (most recent call last):
+  File "/Users/frank/pd/code/finrep_collect_data/engineer/sql_writer.py", line 66, in get_types
+    max_length = len(max(df[field], key=len))
+TypeError: object of type 'float' has no len()
+ERROR:root:LOGERROR: object of type 'float' has no len() in field: ||| Total List Price
+Traceback (most recent call last):
+  File "/Users/frank/pd/code/finrep_collect_data/engineer/sql_writer.py", line 66, in get_types
+    max_length = len(max(df[field], key=len))
+TypeError: object of type 'float' has no len()
+ERROR:root:LOGERROR: object of type 'float' has no len() in field: ||| Extended Price Per Unit
+Traceback (most recent call last):
+  File "/Users/frank/pd/code/finrep_collect_data/engineer/sql_writer.py", line 66, in get_types
+    max_length = len(max(df[field], key=len))
+TypeError: object of type 'float' has no len()
+ERROR:root:LOGERROR: object of type 'float' has no len() in field: ||| Total Extended Price
+Traceback (most recent call last):
+  File "/Users/frank/pd/code/finrep_collect_data/engineer/sql_writer.py", line 66, in get_types
+    max_length = len(max(df[field], key=len))
+TypeError: object of type 'float' has no len()
+ERROR:root:LOGERROR: object of type 'float' has no len() in field: ||| Unit Fees
+Traceback (most recent call last):
+  File "/Users/frank/pd/code/finrep_collect_data/engineer/sql_writer.py", line 66, in get_types
+    max_length = len(max(df[field], key=len))
+TypeError: object of type 'float' has no len()
+ERROR:root:LOGERROR: object of type 'float' has no len() in field: ||| Total Unit Fees
+Traceback (most recent call last):
+  File "/Users/frank/pd/code/finrep_collect_data/engineer/sql_writer.py", line 66, in get_types
+    max_length = len(max(df[field], key=len))
+TypeError: object of type 'float' has no len()
+ERROR:root:LOGERROR: object of type 'float' has no len() in field: ||| Units Sold
+Traceback (most recent call last):
+  File "/Users/frank/pd/code/finrep_collect_data/engineer/sql_writer.py", line 66, in get_types
+    max_length = len(max(df[field], key=len))
+TypeError: object of type 'float' has no len()
+ERROR:root:LOGERROR: object of type 'float' has no len() in field: ||| Units Refunded
+Traceback (most recent call last):
+  File "/Users/frank/pd/code/finrep_collect_data/engineer/sql_writer.py", line 66, in get_types
+    max_length = len(max(df[field], key=len))
+TypeError: object of type 'float' has no len()
+ERROR:root:LOGERROR: object of type 'float' has no len() in field: ||| Net Units Sold
+Traceback (most recent call last):
+  File "/Users/frank/pd/code/finrep_collect_data/engineer/sql_writer.py", line 66, in get_types
+    max_length = len(max(df[field], key=len))
+TypeError: object of type 'float' has no len()
+ERROR:root:LOGERROR: object of type 'float' has no len() in field: ||| Payment Amount
+Traceback (most recent call last):
+  File "/Users/frank/pd/code/finrep_collect_data/engineer/sql_writer.py", line 66, in get_types
+    max_length = len(max(df[field], key=len))
+TypeError: object of type 'float' has no len()
+ERROR:root:LOGERROR: object of type 'float' has no len() in field: ||| Publisher Compensation Per Unit
+Traceback (most recent call last):
+  File "/Users/frank/pd/code/finrep_collect_data/engineer/sql_writer.py", line 66, in get_types
+    max_length = len(max(df[field], key=len))
+TypeError: object of type 'float' has no len()
+ERROR:root:LOGERROR: object of type 'int' has no len() in field: ||| Vendor Number
+Traceback (most recent call last):
+  File "/Users/frank/pd/code/finrep_collect_data/engineer/sql_writer.py", line 66, in get_types
+    max_length = len(max(df[field], key=len))
+TypeError: object of type 'int' has no len()
+ERROR:root:LOGERROR: object of type 'int' has no len() in field: ||| Ean
+Traceback (most recent call last):
+  File "/Users/frank/pd/code/finrep_collect_data/engineer/sql_writer.py", line 66, in get_types
+    max_length = len(max(df[field], key=len))
+TypeError: object of type 'int' has no len()
+ERROR:root:LOGERROR: object of type 'float' has no len() in field: ||| Author
+Traceback (most recent call last):
+  File "/Users/frank/pd/code/finrep_collect_data/engineer/sql_writer.py", line 66, in get_types
+    max_length = len(max(df[field], key=len))
+TypeError: object of type 'float' has no len()
+ERROR:root:LOGERROR: object of type 'float' has no len() in field: ||| Publisher Name
+Traceback (most recent call last):
+  File "/Users/frank/pd/code/finrep_collect_data/engineer/sql_writer.py", line 66, in get_types
+    max_length = len(max(df[field], key=len))
+TypeError: object of type 'float' has no len()
+ERROR:root:LOGERROR: object of type 'float' has no len() in field: ||| Category
+Traceback (most recent call last):
+  File "/Users/frank/pd/code/finrep_collect_data/engineer/sql_writer.py", line 66, in get_types
+    max_length = len(max(df[field], key=len))
+TypeError: object of type 'float' has no len()
+ERROR:root:LOGERROR: object of type 'float' has no len() in field: ||| Date Of eGift
+Traceback (most recent call last):
+  File "/Users/frank/pd/code/finrep_collect_data/engineer/sql_writer.py", line 66, in get_types
+    max_length = len(max(df[field], key=len))
+TypeError: object of type 'float' has no len()
+ERROR:root:LOGERROR: object of type 'int' has no len() in field: ||| Po Number
+Traceback (most recent call last):
+  File "/Users/frank/pd/code/finrep_collect_data/engineer/sql_writer.py", line 66, in get_types
+    max_length = len(max(df[field], key=len))
+TypeError: object of type 'int' has no len()
+ERROR:root:LOGERROR: object of type 'int' has no len() in field: ||| PO Country Code
+Traceback (most recent call last):
+  File "/Users/frank/pd/code/finrep_collect_data/engineer/sql_writer.py", line 66, in get_types
+    max_length = len(max(df[field], key=len))
+TypeError: object of type 'int' has no len()
+ERROR:root:LOGERROR: object of type 'float' has no len() in field: ||| DLP Sale Currency Tax Exclusive
+Traceback (most recent call last):
+  File "/Users/frank/pd/code/finrep_collect_data/engineer/sql_writer.py", line 66, in get_types
+    max_length = len(max(df[field], key=len))
+TypeError: object of type 'float' has no len()
+ERROR:root:LOGERROR: object of type 'float' has no len() in field: ||| Consumer Unit Price Tax Exclusive
+Traceback (most recent call last):
+  File "/Users/frank/pd/code/finrep_collect_data/engineer/sql_writer.py", line 66, in get_types
+    max_length = len(max(df[field], key=len))
+TypeError: object of type 'float' has no len()
+ERROR:root:LOGERROR: object of type 'float' has no len() in field: ||| Tax Amount
+Traceback (most recent call last):
+  File "/Users/frank/pd/code/finrep_collect_data/engineer/sql_writer.py", line 66, in get_types
+    max_length = len(max(df[field], key=len))
+TypeError: object of type 'float' has no len()
+ERROR:root:LOGERROR: object of type 'float' has no len() in field: ||| Consumer Unit Price, Tax Inclusive
+Traceback (most recent call last):
+  File "/Users/frank/pd/code/finrep_collect_data/engineer/sql_writer.py", line 66, in get_types
+    max_length = len(max(df[field], key=len))
+TypeError: object of type 'float' has no len()
+ERROR:root:LOGERROR: object of type 'int' has no len() in field: ||| Units Sold
+Traceback (most recent call last):
+  File "/Users/frank/pd/code/finrep_collect_data/engineer/sql_writer.py", line 66, in get_types
+    max_length = len(max(df[field], key=len))
+TypeError: object of type 'int' has no len()
+ERROR:root:LOGERROR: object of type 'int' has no len() in field: ||| Units Returned
+Traceback (most recent call last):
+  File "/Users/frank/pd/code/finrep_collect_data/engineer/sql_writer.py", line 66, in get_types
+    max_length = len(max(df[field], key=len))
+TypeError: object of type 'int' has no len()
+ERROR:root:LOGERROR: object of type 'float' has no len() in field: ||| Unit Cost Sale Currency
+Traceback (most recent call last):
+  File "/Users/frank/pd/code/finrep_collect_data/engineer/sql_writer.py", line 66, in get_types
+    max_length = len(max(df[field], key=len))
+TypeError: object of type 'float' has no len()
+ERROR:root:LOGERROR: object of type 'float' has no len() in field: ||| Total Cost Sale Currency
+Traceback (most recent call last):
+  File "/Users/frank/pd/code/finrep_collect_data/engineer/sql_writer.py", line 66, in get_types
+    max_length = len(max(df[field], key=len))
+TypeError: object of type 'float' has no len()
+ERROR:root:LOGERROR: object of type 'float' has no len() in field: ||| Unit Cost Payment Currency
+Traceback (most recent call last):
+  File "/Users/frank/pd/code/finrep_collect_data/engineer/sql_writer.py", line 66, in get_types
+    max_length = len(max(df[field], key=len))
+TypeError: object of type 'float' has no len()
+ERROR:root:LOGERROR: object of type 'float' has no len() in field: ||| Total Cost Payment Currency
+Traceback (most recent call last):
+  File "/Users/frank/pd/code/finrep_collect_data/engineer/sql_writer.py", line 66, in get_types
+    max_length = len(max(df[field], key=len))
+TypeError: object of type 'float' has no len()
+ERROR:root:LOGERROR: object of type 'float' has no len() in field: ||| Season Name
+Traceback (most recent call last):
+  File "/Users/frank/pd/code/finrep_collect_data/engineer/sql_writer.py", line 66, in get_types
+    max_length = len(max(df[field], key=len))
+TypeError: object of type 'float' has no len()
+ERROR:root:LOGERROR: object of type 'float' has no len() in field: ||| Season Number
+Traceback (most recent call last):
+  File "/Users/frank/pd/code/finrep_collect_data/engineer/sql_writer.py", line 66, in get_types
+    max_length = len(max(df[field], key=len))
+TypeError: object of type 'float' has no len()
+ERROR:root:LOGERROR: object of type 'float' has no len() in field: ||| Episode Number
+Traceback (most recent call last):
+  File "/Users/frank/pd/code/finrep_collect_data/engineer/sql_writer.py", line 66, in get_types
+    max_length = len(max(df[field], key=len))
+TypeError: object of type 'float' has no len()
+ERROR:root:LOGERROR: object of type 'float' has no len() in field: ||| Studio ID
+Traceback (most recent call last):
+  File "/Users/frank/pd/code/finrep_collect_data/engineer/sql_writer.py", line 66, in get_types
+    max_length = len(max(df[field], key=len))
+TypeError: object of type 'float' has no len()
+ERROR:root:LOGERROR: object of type 'float' has no len() in field: ||| UPC
+Traceback (most recent call last):
+  File "/Users/frank/pd/code/finrep_collect_data/engineer/sql_writer.py", line 66, in get_types
+    max_length = len(max(df[field], key=len))
+TypeError: object of type 'float' has no len()
+ERROR:root:LOGERROR: object of type 'float' has no len() in field: ||| ISRC/ISBN
+Traceback (most recent call last):
+  File "/Users/frank/pd/code/finrep_collect_data/engineer/sql_writer.py", line 66, in get_types
+    max_length = len(max(df[field], key=len))
+TypeError: object of type 'float' has no len()
+ERROR:root:LOGERROR: object of type 'float' has no len() in field: ||| Vendor Identifier
+Traceback (most recent call last):
+  File "/Users/frank/pd/code/finrep_collect_data/engineer/sql_writer.py", line 66, in get_types
+    max_length = len(max(df[field], key=len))
+TypeError: object of type 'float' has no len()
+ERROR:root:LOGERROR: object of type 'float' has no len() in field: ||| Quantity
+Traceback (most recent call last):
+  File "/Users/frank/pd/code/finrep_collect_data/engineer/sql_writer.py", line 66, in get_types
+    max_length = len(max(df[field], key=len))
+TypeError: object of type 'float' has no len()
+ERROR:root:LOGERROR: object of type 'float' has no len() in field: ||| Partner Share
+Traceback (most recent call last):
+  File "/Users/frank/pd/code/finrep_collect_data/engineer/sql_writer.py", line 66, in get_types
+    max_length = len(max(df[field], key=len))
+TypeError: object of type 'float' has no len()
+ERROR:root:LOGERROR: object of type 'float' has no len() in field: ||| Extended Partner Share
+Traceback (most recent call last):
+  File "/Users/frank/pd/code/finrep_collect_data/engineer/sql_writer.py", line 66, in get_types
+    max_length = len(max(df[field], key=len))
+TypeError: object of type 'float' has no len()
+ERROR:root:LOGERROR: object of type 'float' has no len() in field: ||| Apple Identifier
+Traceback (most recent call last):
+  File "/Users/frank/pd/code/finrep_collect_data/engineer/sql_writer.py", line 66, in get_types
+    max_length = len(max(df[field], key=len))
+TypeError: object of type 'float' has no len()
+ERROR:root:LOGERROR: object of type 'float' has no len() in field: ||| Artist/Show/Developer/Author
+Traceback (most recent call last):
+  File "/Users/frank/pd/code/finrep_collect_data/engineer/sql_writer.py", line 66, in get_types
+    max_length = len(max(df[field], key=len))
+TypeError: object of type 'float' has no len()
+ERROR:root:LOGERROR: object of type 'float' has no len() in field: ||| Grid
+Traceback (most recent call last):
+  File "/Users/frank/pd/code/finrep_collect_data/engineer/sql_writer.py", line 66, in get_types
+    max_length = len(max(df[field], key=len))
+TypeError: object of type 'float' has no len()
+ERROR:root:LOGERROR: object of type 'float' has no len() in field: ||| ISAN/Other Identifier
+Traceback (most recent call last):
+  File "/Users/frank/pd/code/finrep_collect_data/engineer/sql_writer.py", line 66, in get_types
+    max_length = len(max(df[field], key=len))
+TypeError: object of type 'float' has no len()
+ERROR:root:LOGERROR: object of type 'float' has no len() in field: ||| Pre-order Flag
+Traceback (most recent call last):
+  File "/Users/frank/pd/code/finrep_collect_data/engineer/sql_writer.py", line 66, in get_types
+    max_length = len(max(df[field], key=len))
+TypeError: object of type 'float' has no len()
+ERROR:root:LOGERROR: object of type 'float' has no len() in field: ||| Promo Code
+Traceback (most recent call last):
+  File "/Users/frank/pd/code/finrep_collect_data/engineer/sql_writer.py", line 66, in get_types
+    max_length = len(max(df[field], key=len))
+TypeError: object of type 'float' has no len()
+ERROR:root:LOGERROR: object of type 'float' has no len() in field: ||| Customer Price
+Traceback (most recent call last):
+  File "/Users/frank/pd/code/finrep_collect_data/engineer/sql_writer.py", line 66, in get_types
+    max_length = len(max(df[field], key=len))
+TypeError: object of type 'float' has no len()

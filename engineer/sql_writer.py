@@ -1,7 +1,7 @@
+import logging
 import os
 import sys
 
-import numpy as np
 import sqlalchemy.sql.sqltypes
 from sqlalchemy import create_engine, exc
 
@@ -13,18 +13,21 @@ def write_to_db(df, table_name, db_name='stage', action='replace', hova='19', fi
         sql_engine = get_engine(hova, db_name=db_name)
         connection = sql_engine.connect()
     except exc.OperationalError as e:
+        logging.exception(msg=f'logged error SQL write: {e}')
         print(f'fuck, SQL credentials need improvement. Error: {e}')
         return
     try:
         df.to_sql(table_name, connection, if_exists=action, index=False,
                   method='multi', chunksize=5000, dtype=field_lens)
-    except ValueError as vx:
-        print('ERROR!!! df not created : ', vx)
+    except Exception as e:
+        logging.exception(e)
+        print(f'BIG RED FLAG, this is, {e.__str__}: check the logfile for details!!!{table_name}')
     else:
         print(f"Table {table_name} is written to successfully.")
     finally:
         try:
             connection.close()
+            # engine.dispose()
         except AttributeError as e:
             print(f'Nothing to close, no connection. Error: {e}')
 
@@ -53,25 +56,27 @@ def get_engine(which_one, db_name='stage'):
     return sql_engine
 
 
-def get_types(dfparam, milyen='mindegy'):
+def get_types(df, milyen='mindegy'):
     typedict = {}
     lens = {}
-    if milyen == 'mindegy':
-        for field in dfparam.columns:
-            current = np.asarray((dfparam[field]))
+    if milyen == 'mindegy' and len(df) > 0:
+        for field in df.columns:
             try:
-                max_length = len(max(current, key=len))
+                max_length = len(max(df[field], key=len))
                 if max_length > 255:
-                    print(max_length, field)
+                    print("Long field! ", max_length, field)
                     lens[field] = max_length
                 else:
                     lens[field] = 255
-            except (TypeError, ValueError):
-                lens[field] = 255
+            except Exception as e:
+                logging.exception(msg=f'LOGERROR: {e} in field: ||| {field}')
+                df[field] = df[field].astype("str")
+                m = max(df[field].str.len())
+                lens[field] = 255 if m < 255 else m
                 continue
         typedict = {col_name: sqlalchemy.sql.sqltypes.VARCHAR(length=lens[col_name]) for col_name in lens.keys()}
     else:
-        for i, j in zip(dfparam.columns, dfparam.dtypes):
+        for i, j in zip(df.columns, df.dtypes):
             if "object" in str(j):
                 typedict.update({i: sqlalchemy.types.NVARCHAR(length=255)})
             if "datetime" in str(j):
@@ -84,6 +89,6 @@ def get_types(dfparam, milyen='mindegy'):
 
 
 if __name__ == '__main__':
-    engine = get_engine('19')
-    engine.dispose()
+    # engine = get_engine('19')
+    # engine.dispose()
     print('whatever')

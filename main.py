@@ -1,13 +1,15 @@
 # Press ⌃R to execute it or replace it with your code.
 # Press Double ⇧ to search everywhere for classes, files, tool windows, actions, and settings.
+import logging
 import urllib
 from sys import argv
 from urllib import request
 
 from smb.SMBHandler import SMBHandler
 
+from apple_finrep import apples
 from google_all import google_audio, google
-from libreka import libreka
+from stores import amazon, bn
 
 
 def discover(to_find):
@@ -40,16 +42,18 @@ def read_network():
 def report(hova='19'):
     google_audio.google_audio('stg_fin2_20012_google_audio', hova)
     google.google('stg_fin2_12_googleplay', hova)
+    amazon.amz_read('/Users/frank/pd/finance_report/amazon', hova)
+    bn.main('/Users/frank/pd/finance_report/bn', hova)
+    apples.main('/Users/frank/pd/finance_report/apple', hova)
 
 
 if __name__ == '__main__':
+    logging.basicConfig(level=logging.INFO, filename='datacamp.log', filemode='w')
     if len(argv) == 1:
         print("Nincs mire nézni!")
     else:
         print(argv)
         discover(argv[1:])
     report('19')
-    libreka.main('/Users/frank/pd/sales_report/16_libreka')
-    # libreka.main('k:/PD/data/sales_report/16_libreka')
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
