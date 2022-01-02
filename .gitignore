@@ -166,5 +166,5 @@ cover/
 # PEP 582; used by e.g. github.com/David-OConnor/pyflow
 __pypackages__/
 
-
+.DS_Store
 # End of https://www.toptal.com/developers/gitignore/api/pycharm+all,pythonvanilla
