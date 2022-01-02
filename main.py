@@ -7,8 +7,9 @@ from urllib import request
 
 from smb.SMBHandler import SMBHandler
 
-from amazon_fin import amz_read
+from apple_finrep import apples
 from google_all import google_audio, google
+from stores import amazon, bn
 
 
 def discover(to_find):
@@ -41,7 +42,9 @@ def read_network():
 def report(hova='19'):
     google_audio.google_audio('stg_fin2_20012_google_audio', hova)
     google.google('stg_fin2_12_googleplay', hova)
-    amz_read('/Users/frank/pd/finance_report/amazon')
+    amazon.amz_read('/Users/frank/pd/finance_report/amazon', hova)
+    bn.main('/Users/frank/pd/finance_report/bn', hova)
+    apples.main('/Users/frank/pd/finance_report/apple', hova)
 
 
 if __name__ == '__main__':

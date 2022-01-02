@@ -2,8 +2,6 @@ import logging
 import os
 import sys
 
-import numpy as np
-import pandas as pd
 import sqlalchemy.sql.sqltypes
 from sqlalchemy import create_engine, exc
 
@@ -58,29 +56,27 @@ def get_engine(which_one, db_name='stage'):
     return sql_engine
 
 
-def get_types(dfparam, milyen='mindegy'):
+def get_types(df, milyen='mindegy'):
     typedict = {}
     lens = {}
-    temp = pd.DataFrame()
-    if milyen == 'mindegy':
-        for field in dfparam.columns:
-            current = np.asarray((dfparam[field]))
+    if milyen == 'mindegy' and len(df) > 0:
+        for field in df.columns:
             try:
-                max_length = len(max(current, key=len))
+                max_length = len(max(df[field], key=len))
                 if max_length > 255:
-                    print(max_length, field)
+                    print("Long field! ", max_length, field)
                     lens[field] = max_length
                 else:
                     lens[field] = 255
             except Exception as e:
-                logging.exception(msg=f'LOGERROR: {e}')
-                temp[field] = dfparam[field].astype("str")
-                m = max(temp[field].str.len())
+                logging.exception(msg=f'LOGERROR: {e} in field: ||| {field}')
+                df[field] = df[field].astype("str")
+                m = max(df[field].str.len())
                 lens[field] = 255 if m < 255 else m
                 continue
         typedict = {col_name: sqlalchemy.sql.sqltypes.VARCHAR(length=lens[col_name]) for col_name in lens.keys()}
     else:
-        for i, j in zip(dfparam.columns, dfparam.dtypes):
+        for i, j in zip(df.columns, df.dtypes):
             if "object" in str(j):
                 typedict.update({i: sqlalchemy.types.NVARCHAR(length=255)})
             if "datetime" in str(j):

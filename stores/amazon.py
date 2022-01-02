@@ -27,8 +27,8 @@ def write_to_db(df, table_name, hova='19', extras=None):
         # engine.dispose()
 
 
-def make_df(files, amazon):
-    srv = '19'
+def make_df(files, amazon, hova='19'):
+    srv = hova
     # srv = 'pd'
     for f in files:
         df = pd.read_excel(f, header=0, index_col=None)
@@ -42,7 +42,7 @@ def make_df(files, amazon):
         sqw.write_to_db(df, amazon[f], db_name='stage', action='replace', hova=srv)
 
 
-def amz_read(dirpath):
+def amz_read(dirpath, hova='19'):
     p = Path(dirpath)
     amazon = {}
     files = [item for item in p.iterdir() if item.suffix == '.xlsx']
@@ -58,9 +58,9 @@ def amz_read(dirpath):
     else:
         print(f"Directory not clean, has {len(files)} items.")
         return
-    make_df(files, amazon)
+    make_df(files, amazon, hova)
 
 
 if __name__ == '__main__':
-    logging.basicConfig(level=logging.INFO, filename='datacamp.log', filemode='w')
+    logging.basicConfig(level=logging.INFO, filename='../datacamp.log', filemode='w')
     amz_read('/Users/frank/pd/finance_report/amazon')
