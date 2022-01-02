@@ -63,4 +63,7 @@ def amz_read(dirpath):
 
 if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO, filename='datacamp.log', filemode='w')
+    # amz_path = '/Users/frank/pd/finance_report/amazon'
+    amz_path = 'h:/NextCloud/Finance/szamitas/2021_11_november/amazon'
+    amz_read(amz_path)
     amz_read('/Users/frank/pd/finance_report/amazon')

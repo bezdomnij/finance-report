@@ -1,5 +1,5 @@
 from pathlib import Path
-
+from engineer import sql_writer as sqw
 import pandas as pd
 
 currencies = {
@@ -57,7 +57,8 @@ def read_apple(dir_path):
 
     print("EXTENDED PARTNER SHARE", total['Extended Partner Share'].sum())
     print("UNITS SOLD", int(total['Quantity'].sum()))
-    print(total.shape[0])
+    print("ennyi sor: ", total.shape[0])
+    sqw.write_to_db(total, "stg_fin2_1_apple")
     return pd.DataFrame(sum_df, index=range(1, 23))
 
 
@@ -82,6 +83,7 @@ def main(dir_path):
         writer.sheets['Sheet1'].set_column(col_idx, col_idx, column_width)
 
     writer.save()
+    # sqw.write_to_db()
 
 
 if __name__ == '__main__':
