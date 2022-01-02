@@ -11,7 +11,7 @@ def calc_sum(df):
 
 
 def main(dirpath, hova='19'):
-    p = Path(dirpath)
+    p = Path(dirpath) / 'bn'
     file = p / 'bn.csv'
     df = pd.read_csv(file, header=0, sep=',')
 
@@ -24,4 +24,4 @@ def main(dirpath, hova='19'):
 
 
 if __name__ == '__main__':
-    main('/Users/frank/pd/finance_report/bn', '19')
+    main('/Users/frank/pd/finance_report', '19')

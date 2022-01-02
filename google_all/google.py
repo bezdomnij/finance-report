@@ -6,12 +6,12 @@ import pandas as pd
 from engineer import sql_writer as sqw
 
 
-def google(table='stg_fin2_12_googleplay', hova='19'):
+def google(finrep_dir, table='stg_fin2_12_googleplay', hova='19'):
     files = []
     df = pd.DataFrame()
     # finrep_dir = Path('h:/NextCloud/Finance/szamitas/2021_10_oktober')
-    finrep_dir = Path('/Users/frank/pd/finance_report')
-    src = finrep_dir / 'google'
+    # finrep_dir = Path('/Users/frank/pd/finance_report')
+    src = Path(finrep_dir).joinpath('google')
     for f in src.iterdir():
         if f.suffix == '.csv':
             files.append(f)

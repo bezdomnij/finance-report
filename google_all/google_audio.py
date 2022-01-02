@@ -5,12 +5,12 @@ import pandas as pd
 from engineer import sql_writer as sqw
 
 
-def google_audio(table='stg_fin2_20012_google_audio', hova='19'):
+def google_audio(finrep_dir, table='stg_fin2_20012_google_audio', hova='19'):
     files = []
     df = pd.DataFrame()
     # finrep_dir = Path('h:/NextCloud/Finance/szamitas/2021_11_november')
-    finrep_dir = Path('/Users/frank/pd/finance_report')
-    src = finrep_dir / 'google_audio'
+    # finrep_dir = Path(finrep_dir)
+    src = Path(finrep_dir).joinpath('google_audio')
     for f in src.iterdir():
         if f.suffix == '.csv':
             files.append(f)

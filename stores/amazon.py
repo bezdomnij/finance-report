@@ -43,7 +43,7 @@ def make_df(files, amazon, hova='19'):
 
 
 def amz_read(dirpath, hova='19'):
-    p = Path(dirpath)
+    p = Path(dirpath) / 'amazon'
     amazon = {}
     files = [item for item in p.iterdir() if item.suffix == '.xlsx']
     if len(files) == 2:
@@ -63,4 +63,4 @@ def amz_read(dirpath, hova='19'):
 
 if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO, filename='../datacamp.log', filemode='w')
-    amz_read('/Users/frank/pd/finance_report/amazon')
+    amz_read('/Users/frank/pd/finance_report')

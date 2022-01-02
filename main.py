@@ -40,11 +40,13 @@ def read_network():
 
 # Press the green button in the gutter to run the script.
 def report(hova='19'):
-    google_audio.google_audio('stg_fin2_20012_google_audio', hova)
-    google.google('stg_fin2_12_googleplay', hova)
-    amazon.amz_read('/Users/frank/pd/finance_report/amazon', hova)
-    bn.main('/Users/frank/pd/finance_report/bn', hova)
-    apples.main('/Users/frank/pd/finance_report/apple', hova)
+    # directory = '/Users/frank/pd/finance_report'
+    directory = 'h:/NextCloud/Finance/szamitas/2021_11_november'
+    google_audio.google_audio(directory, 'stg_fin2_20012_google_audio', hova)
+    google.google(directory, 'stg_fin2_12_googleplay', hova)
+    amazon.amz_read(directory, hova)
+    bn.main(directory, hova)
+    apples.main(directory, hova)
 
 
 if __name__ == '__main__':

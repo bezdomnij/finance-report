@@ -54,7 +54,7 @@ def read_file_content(c):
 
 
 def read_apple(dir_path, hova='19'):
-    p = Path(dir_path)
+    p = Path(dir_path) / 'apple'
     total = pd.DataFrame()
     # files = [f for f in p.iterdir()]
     # template_df = pd.read_csv(files[0], sep='\t', index_col=None)
@@ -81,10 +81,11 @@ def main(dir_path, hova='19'):
     workbook = writer.book
     worksheet1 = writer.sheets['Sheet1']
     format1 = workbook.add_format({'num_format': '#,##0.00'})
-    f3 = workbook.add_format({'align': 'right'})
+    f3 = workbook.add_format({'align': 'right'
+                              })
     worksheet1.set_column('B:B', None, format1)
     worksheet1.set_column('D:D', None, format1)
-    worksheet1.set_column('C:C', None, f3)
+    worksheet1.set_column('C:C', None, format1)
 
     # Auto-adjust columns' width
     for column in resultset_df:
@@ -96,4 +97,4 @@ def main(dir_path, hova='19'):
 
 
 if __name__ == '__main__':
-    main('/Users/frank/pd/finance_report/apple', '19')
+    main('/Users/frank/pd/finance_report', '19')
