@@ -7,6 +7,7 @@ from urllib import request
 
 from smb.SMBHandler import SMBHandler
 
+from amazon_fin import amz_read
 from google_all import google_audio, google
 
 
@@ -40,6 +41,7 @@ def read_network():
 def report(hova='19'):
     google_audio.google_audio('stg_fin2_20012_google_audio', hova)
     google.google('stg_fin2_12_googleplay', hova)
+    amz_read('/Users/frank/pd/finance_report/amazon')
 
 
 if __name__ == '__main__':

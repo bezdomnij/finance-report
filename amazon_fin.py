@@ -63,4 +63,4 @@ def amz_read(dirpath):
 
 if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO, filename='datacamp.log', filemode='w')
-    amz_read()
+    amz_read('/Users/frank/pd/finance_report/amazon')

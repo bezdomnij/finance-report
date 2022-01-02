@@ -49,7 +49,7 @@ def read_apple(dir_path):
     p = Path(dir_path)
     files = [f for f in p.iterdir()]
     template_df = pd.read_csv(files[0], sep='\t')
-    total = pd.DataFrame(columns=[x for x in template_df.columns])
+    total = pd.DataFrame(columns=[x for x in template_df.columns])  # collective df
 
     for c in p.iterdir():
         if c.suffix != '.csv':
@@ -61,8 +61,7 @@ def read_apple(dir_path):
     return pd.DataFrame(sum_df, index=range(1, 23))
 
 
-def main():
-    dir_path = '/Users/frank/pd/finance_report/apple'
+def main(dir_path):
     resultset_df = read_apple(dir_path)
     print(resultset_df)
 
@@ -86,4 +85,4 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    main('/Users/frank/pd/finance_report/apple')
