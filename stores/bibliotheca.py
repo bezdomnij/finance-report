@@ -28,7 +28,8 @@ def main(dirpath, hova='19'):
             all_row_count += rc
     print("Bibliotheca\n", total.info, total.columns)
     print(all_row_count)
-    sqw.write_to_db(total, table_name, field_lens='mas', hova=hova)  # action append: replace give a row size error
+    sqw.write_to_db(total, table_name, field_lens='mas', action='replace', hova=hova)
+    # action append: replace give a row size error - before the change to other types part in get_types
 
 
 if __name__ == '__main__':

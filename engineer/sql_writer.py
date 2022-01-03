@@ -9,6 +9,8 @@ from sqlalchemy import create_engine, exc
 def write_to_db(df, table_name, db_name='stage', action='replace', hova='19', field_lens=None):
     if field_lens is None:
         field_lens = get_types(df, milyen='mindegy')
+    else:
+        field_lens = get_types(df, milyen=field_lens)
     try:
         sql_engine = get_engine(hova, db_name=db_name)
         connection = sql_engine.connect()
@@ -80,13 +82,16 @@ def get_types(df, milyen='mindegy'):
     else:
         for i, j in zip(df.columns, df.dtypes):
             if "object" in str(j):
-                typedict.update({i: sqlalchemy.types.NVARCHAR(length=255)})
+                typedict.update({i: sqlalchemy.types.VARCHAR(length=255)})
+                print(i, j)
             if "datetime" in str(j):
                 typedict.update({i: sqlalchemy.types.DateTime()})
             if "float" in str(j):
-                typedict.update({i: sqlalchemy.types.Float(precision=3, asdecimal=True)})
+                # typedict.update({i: sqlalchemy.types.Float(precision=3, asdecimal=True)})
+                typedict.update({i: sqlalchemy.types.VARCHAR(length=64)})
             if "int" in str(j):
-                typedict.update({i: sqlalchemy.types.INT()})
+                # typedict.update({i: sqlalchemy.types.INT()})
+                typedict.update({i: sqlalchemy.types.VARCHAR(length=32)})
     return typedict
 
 

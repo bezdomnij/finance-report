@@ -35,7 +35,8 @@ def make_df(files, amazon, hova='19'):
         if ' ' in df.columns:
             df.drop(df.columns[[27]], axis=1, inplace=True)
         # df.dropna(axis='columns', inplace=True, how='any')  # nem mukodik
-        print(df.columns)
+        # for col in df.columns:
+        #     print(col, df[col].dtype)
         too_many_chars = data_checker.d_checker(df=df, right_length=255)
         if too_many_chars:
             print(f'Look out, "{f.name}" has extra lengths: {too_many_chars}')
