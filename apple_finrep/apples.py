@@ -1,7 +1,5 @@
 from pathlib import Path
-
 import pandas as pd
-
 from engineer import sql_writer as sqw
 
 currencies = {
@@ -66,7 +64,7 @@ def read_apple(dir_path, hova='19'):
 
     print("EXTENDED PARTNER SHARE", total['Extended Partner Share'].sum())
     print("UNITS SOLD", int(total['Quantity'].sum()))
-    print("sorok", total.shape[0])
+    print("line count", total.shape[0])
     sqw.write_to_db(total, 'stg_fin2_1_apple', hova=hova)
     return pd.DataFrame(sum_df, index=range(1, 23))
     # return pd.DataFrame(sum_df, index=None)
@@ -81,11 +79,10 @@ def main(dir_path, hova='19'):
     workbook = writer.book
     worksheet1 = writer.sheets['Sheet1']
     format1 = workbook.add_format({'num_format': '#,##0.00'})
-    f3 = workbook.add_format({'align': 'right'
-                              })
+    f3 = workbook.add_format({'align': 'right'})
     worksheet1.set_column('B:B', None, format1)
     worksheet1.set_column('D:D', None, format1)
-    worksheet1.set_column('C:C', None, format1)
+    worksheet1.set_column('C:C', None, f3)
 
     # Auto-adjust columns' width
     for column in resultset_df:

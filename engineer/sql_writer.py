@@ -47,6 +47,8 @@ def get_engine(which_one, db_name='stage'):
     connection_uri = f'mysql+pymysql://{username}:{pw}@{server}:3306/{db_name}?charset=utf8mb4'
     connect_args = {'init_command': "SET @@collation_connection='utf8mb4_hungarian_ci'",
                     'read_timeout': 30}
+    # connect_args = {'init_command': "SET @@collation_connection='utf8_hungarian_ci'",
+    #                 'read_timeout': 30}
     try:
         sql_engine = create_engine(connection_uri, pool_pre_ping=True, pool_recycle=3600, echo=False,
                                    echo_pool=False, connect_args=connect_args, future=False)
