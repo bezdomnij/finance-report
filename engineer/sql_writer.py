@@ -83,7 +83,6 @@ def get_types(df, milyen='mindegy'):
         for i, j in zip(df.columns, df.dtypes):
             if "object" in str(j):
                 typedict.update({i: sqlalchemy.types.VARCHAR(length=255)})
-                print(i, j)
             if "datetime" in str(j):
                 typedict.update({i: sqlalchemy.types.DateTime()})
             if "float" in str(j):
