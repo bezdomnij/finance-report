@@ -26,9 +26,9 @@ def main(dirpath, hova='19'):
             current_df, rc = whatever
             total = pd.concat([total, current_df])
             all_row_count += rc
-    print("Bibliotheca\n", total.info)
+    print("Bibliotheca\n", total.info, total.columns)
     print(all_row_count)
-    sqw.write_to_db(total, table_name, action='append', hova=hova)  # action append: replace give a row size error
+    sqw.write_to_db(total, table_name, field_lens='mas', hova=hova)  # action append: replace give a row size error
 
 
 if __name__ == '__main__':
