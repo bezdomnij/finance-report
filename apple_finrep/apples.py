@@ -1,5 +1,7 @@
 from pathlib import Path
+
 import pandas as pd
+
 from engineer import sql_writer as sqw
 
 currencies = {
@@ -57,7 +59,6 @@ def read_apple(dir_path, hova='19'):
     # files = [f for f in p.iterdir()]
     # template_df = pd.read_csv(files[0], sep='\t', index_col=None)
     # total = pd.DataFrame(columns=[x for x in template_df.columns], index=None)  # collective df
-
     for c in p.iterdir():
         if c.suffix != '.csv':
             total = pd.concat([total, read_file_content(c)])
@@ -65,7 +66,7 @@ def read_apple(dir_path, hova='19'):
     print("EXTENDED PARTNER SHARE", total['Extended Partner Share'].sum())
     print("UNITS SOLD", int(total['Quantity'].sum()))
     print("line count", total.shape[0])
-    sqw.write_to_db(total, 'stg_fin2_1_apple', action='replace', field_lens='mas', hova=hova)
+    sqw.write_to_db(total, 'stg_fin2_1_apple', action='replace', hova=hova)
     return pd.DataFrame(sum_df, index=range(1, 23))
     # return pd.DataFrame(sum_df, index=None)
 

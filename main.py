@@ -6,9 +6,9 @@ from sys import argv
 from urllib import request
 
 from smb.SMBHandler import SMBHandler
+
 from apple_finrep import apples
-from stores import bibliotheca, bn
-from google_all import google, google_audio
+from stores import amazon, bibliotheca, google, google_audio, bn
 
 
 def discover(to_find):
@@ -39,14 +39,14 @@ def read_network():
 
 # Press the green button in the gutter to run the script.
 def report(hova='19'):
-    # directory = '/Users/frank/pd/finance_report'
-    directory = 'h:/NextCloud/Finance/szamitas/2021_11_november'
-    # google_audio.google_audio(directory, 'stg_fin2_20012_google_audio', hova)
-    # google.google(directory, 'stg_fin2_12_googleplay', hova)
-    # amazon.amz_read(directory, hova)
-    # bn.main(directory, hova)
+    directory = '/Users/frank/pd/finance_report'
+    # directory = 'h:/NextCloud/Finance/szamitas/2021_11_november'
+    google_audio.google_audio(directory, 'stg_fin2_20012_google_audio', hova)
+    google.google(directory, 'stg_fin2_12_googleplay', hova)
+    amazon.amz_read(directory, hova)
+    bn.main(directory, hova)
     apples.main(directory, hova)
-    # bibliotheca.main(directory, hova)  # DELETE table first!!!
+    bibliotheca.main(directory, hova)  # DELETE table first!!!
 
 
 if __name__ == '__main__':
@@ -57,6 +57,6 @@ if __name__ == '__main__':
         print(argv)
         discover(argv[1:])
     # HOVA IRUNK?
-    report('pd')
+    report('19')
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
