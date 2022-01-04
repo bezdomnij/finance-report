@@ -20,4 +20,4 @@ def dibook(dirpath, hova):
 
 
 if __name__ == '__main__':
-    dibook('/Users/frank/pd/finance_report', '19')
+    dibook('/Users/frank/pd/finance_report', hova='19')
