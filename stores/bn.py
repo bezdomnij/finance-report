@@ -20,7 +20,7 @@ def main(dirpath, hova='19'):
     print(df.shape[0], df.shape[1])
 
     print(calc_sum(df))
-    sqw.write_to_db(df, 'stg_fin2_5_bn', hova=hova)
+    sqw.write_to_db(df, 'stg_fin2_5_bn', action='replace', field_lens='mas', hova=hova)
 
 
 if __name__ == '__main__':

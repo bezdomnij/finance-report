@@ -65,7 +65,7 @@ def read_apple(dir_path, hova='19'):
     print("EXTENDED PARTNER SHARE", total['Extended Partner Share'].sum())
     print("UNITS SOLD", int(total['Quantity'].sum()))
     print("line count", total.shape[0])
-    sqw.write_to_db(total, 'stg_fin2_1_apple', hova=hova)
+    sqw.write_to_db(total, 'stg_fin2_1_apple', action='replace', field_lens='mas', hova=hova)
     return pd.DataFrame(sum_df, index=range(1, 23))
     # return pd.DataFrame(sum_df, index=None)
 
