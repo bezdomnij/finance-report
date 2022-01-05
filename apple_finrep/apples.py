@@ -96,4 +96,5 @@ def main(dir_path, hova='19'):
 
 
 if __name__ == '__main__':
-    main('/Users/frank/pd/finance_report', '19')
+    # main('/Users/frank/pd/finance_report', '19')
+    main('h:/NextCloud/Finance/szamitas/2021_11_november', '19')

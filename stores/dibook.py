@@ -9,7 +9,7 @@ def dibook(dirpath, hova):
     p = Path(dirpath).joinpath('dibook')
     table_name = 'stg_fin2_15_dibook_v2'
     for f in p.iterdir():
-        if f.name == 'dibook.xls':
+        if f.name.lower() == 'dibook.xls':
             df = pd.read_excel(f, header=0, index_col=None, sheet_name='Sheet')
             print("elotte", df.shape[0])
             if df['ISBN'].isnull().values.any():
@@ -20,4 +20,4 @@ def dibook(dirpath, hova):
 
 
 if __name__ == '__main__':
-    dibook('/Users/frank/pd/finance_report', hova='19')
+    dibook('h:/NextCloud/Finance/szamitas/2021_11_november', hova='19')
