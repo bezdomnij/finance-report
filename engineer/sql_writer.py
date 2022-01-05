@@ -74,15 +74,15 @@ def get_types(df, milyen='mindegy'):
                     lens[field] = 255
             except Exception as e:
                 logging.exception(msg=f'LOGERROR: {e} in field: ||| {field}')
-                df[field] = df[field].astype("str")
-                m = max(df[field].str.len())
+                m = get_lengths(df, field)
                 lens[field] = 255 if m < 255 else m
                 continue
         typedict = {col_name: sqlalchemy.sql.sqltypes.VARCHAR(length=lens[col_name]) for col_name in lens.keys()}
     else:
         for i, j in zip(df.columns, df.dtypes):
             if "object" in str(j):
-                typedict.update({i: sqlalchemy.types.VARCHAR(length=255)})
+                m = get_lengths(df, i)
+                typedict.update({i: sqlalchemy.types.VARCHAR(length=m)})
             if "datetime" in str(j):
                 typedict.update({i: sqlalchemy.types.DateTime()})
             if "float" in str(j):
@@ -92,6 +92,12 @@ def get_types(df, milyen='mindegy'):
                 # typedict.update({i: sqlalchemy.types.INT()})
                 typedict.update({i: sqlalchemy.types.VARCHAR(length=32)})
     return typedict
+
+
+def get_lengths(df, field):
+    df[field] = df[field].astype("str")
+    m = max(df[field].str.len())
+    return m
 
 
 if __name__ == '__main__':

@@ -40,14 +40,15 @@ def read_file_content(c):
         df = pd.read_csv(c, sep='\t', index_col=None)
         record_count = df.shape[0]
         print("egy file record count: ", record_count)
-
+        df['Vendor Identifier'] = df['Vendor Identifier'].astype(str).str.slice(stop=13)
+        print(df['Vendor Identifier'])
         sum_df['file'].append(c.stem)
         sum_df['r_count'].append(record_count)
         sum_df['currency'].append((currencies.get(location, 'nincs')))
         sum_df['sum'].append(round(df["Extended Partner Share"].sum(), 3))
         sum_df['built_in_total'].append(df[df['Start Date'] == 'Total_Amount']['End Date'].iloc[-1])
         df.drop(df.tail(3).index, inplace=True)
-        print(df.info)
+        # print(df.info)
         aggregated_df = pd.concat([total, df])
 
     return aggregated_df
@@ -66,7 +67,7 @@ def read_apple(dir_path, hova='19'):
     print("EXTENDED PARTNER SHARE", total['Extended Partner Share'].sum())
     print("UNITS SOLD", int(total['Quantity'].sum()))
     print("line count", total.shape[0])
-    sqw.write_to_db(total, 'stg_fin2_1_apple', action='replace', hova=hova)
+    sqw.write_to_db(total, 'stg_fin2_1_apple', action='replace', hova=hova, field_lens='mas')
     return pd.DataFrame(sum_df, index=range(1, 23))
     # return pd.DataFrame(sum_df, index=None)
 
