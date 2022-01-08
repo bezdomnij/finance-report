@@ -21,6 +21,7 @@ def get_df(f):
 
 def google_audio(finrep_dir, table='stg_fin2_20012_google_audio', hova='19'):
 	files = []
+	df = pd.DataFrame()
 	src = Path(finrep_dir).joinpath('google_audio')
 	for f in src.iterdir():
 		if check_incoming(f):
@@ -37,8 +38,10 @@ def google_audio(finrep_dir, table='stg_fin2_20012_google_audio', hova='19'):
 			period_file[period[0] * 100 + period[1]] = f
 		the_one = period_file[sorted(period_file.keys())[-1]]
 		df = get_df(the_one)
-	else:
+	elif len(files) == 1:
 		df = files[0]
+	else:
+		print("Nothing there...")
 	print(df.info)
 	sqw.write_to_db(df, table, action='replace', hova=hova)
 

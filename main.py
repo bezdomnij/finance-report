@@ -4,7 +4,7 @@ import logging
 import urllib
 from sys import argv
 from urllib import request
-from stores import bibliotheca
+from stores import bibliotheca, google_audio
 from smb.SMBHandler import SMBHandler
 
 from apple_finrep import apples
