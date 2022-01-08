@@ -1,5 +1,6 @@
 from pathlib import Path
 
+import numpy as np
 import pandas as pd
 
 from engineer import sql_writer as sqw
@@ -42,6 +43,7 @@ def read_file_content(c):
         print("egy file record count: ", record_count)
         df['Vendor Identifier'] = df['Vendor Identifier'].astype(str).str.slice(stop=13)
         print(df['Vendor Identifier'])
+        df['Pre-order Flag'].replace({np.NAN: None}, inplace=True)
         sum_df['file'].append(c.stem)
         sum_df['r_count'].append(record_count)
         sum_df['currency'].append((currencies.get(location, 'nincs')))
@@ -96,5 +98,5 @@ def main(dir_path, hova='19'):
 
 
 if __name__ == '__main__':
-    # main('/Users/frank/pd/finance_report', '19')
-    main('h:/NextCloud/Finance/szamitas/2021_11_november', '19')
+    main('/Users/frank/pd/finance_report', '19')
+    # main('h:/NextCloud/Finance/szamitas/2021_11_november', '19')
