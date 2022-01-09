@@ -5,12 +5,6 @@ from util import util
 import logging
 
 
-def check_incoming(f):
-	ftype, period = util.check_file_name(f.name)
-	print(ftype, period)
-	return ftype, period
-
-
 def get_df(f):
 	df = pd.DataFrame()
 	try:
@@ -29,7 +23,7 @@ def google_audio(finrep_dir, table='stg_fin2_20012_google_audio', hova='19'):
 	for f in src.iterdir():
 		if f.suffix == '':
 			continue
-		ftype, period = check_incoming(f)
+		ftype, period = util.check_incoming(f)
 		if ftype == 'ga':
 			files.append(f)
 	for f in files:

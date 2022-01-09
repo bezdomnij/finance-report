@@ -1,58 +1,47 @@
 import logging
+import re
 
 
-def check_file_name(fname):
-	result = None
-	period = []
-	filename = fname.split('.')
-	if 'GoogleEarningsReport' in filename[0] and filename[1] == 'csv':
-		fname_parts = filename[0].split('_')
-		if len(fname_parts) == 2:
-			period = get_period(fname_parts[1])
-			result = ('ga', period)
-		elif len(fname_parts) == 1:
-			print(type(fname_parts))
-			period = get_period(fname_parts[0].split('-'))
-			result = ('gg', period)
+def get_period(fname):
+	ga_pattern = r'202[0-2]-[0-1][0-9]'
+	prog = re.compile(ga_pattern)
+	return prog.findall(fname)
+
+
+def check_google_file_name(fname):
+	result = get_period(fname)
+	name_and_extension = fname.split('.')
+	if 'GoogleEarningsReport' in name_and_extension[0] and name_and_extension[1] == 'csv':
+		name_parts = name_and_extension[0].split('_')  # gg-nel nincs benne _
+		period = tuple(get_period(fname)[0].split('-'))
+		if len(period) > 0:
+			if len(name_parts) == 2:  # ilyen a GoogleAudio
+				result = ('ga', period)
+			elif len(name_parts) == 1:
+				result = ('gg', period)
+			else:
+				print("Filename is not ok, too many parts (sep='_')")
+				return None, period
 		else:
-			print("Filename is not ok, too many parts (sep='_')")
-			return
-		year = period[0]
-		month = period[1]
-		if year == 0 or month == 0:
+			period = (0, 0)
+		if period[0] == 0 or period[1] == 0:
 			print("Don't know the period of filename.")
-			return
+			return None, period
 	else:
 		print("Does not appear to be a Google earnings .csv report.")
 	return result
 
 
-def get_period(fname_restof):
-	period, month, year = None, 0, 0
-	others = fname_restof.split('-')
-	if len(others) == 1:
-		print(f"Filename error, period is: '{period}'")
-		period = (0, 0)
-		return period
-	try:
-		year = int(others[0])
-	except ValueError:
-		logging.exception(msg=f"Year convert failed, {period} errored out.")
-		print(f"Year convert failed, {period} errored out.")
-		period = (0, 0)
-		return period
-	try:
-		month = int(others[1])
-	except Exception:
-		logging.exception(msg=f'Month convert failed, {period} errored out.')
-		period = (0, 0)
-		return period
-	period = (year, month)
-	return period
+def check_incoming(f):
+	ftype, period = check_google_file_name(f.name)
+	print(ftype, period)
+	return ftype, period
 
 
 def main():
-	check_file_name("GoogleEarningsReport_whatever.csv")
+	logging.basicConfig(level=logging.INFO, filename='datacamp.log', filemode='w', format='%(asctime)s %(message)s')
+	# check_file_name("GoogleEarningsReport_whatever.csv")
+	check_google_file_name("GoogleEarningsReport_2021-11.csv")
 
 
 if __name__ == '__main__':
