@@ -40,7 +40,7 @@ def make_df(files, amazon, hova='19'):
         too_many_chars = data_checker.d_checker(df=df, right_length=255)
         if too_many_chars:
             print(f'Look out, "{f.name}" has extra lengths: {too_many_chars}')
-        sqw.write_to_db(df, amazon[f], db_name='stage', action='replace', hova=srv)
+        sqw.write_to_db(df, amazon[f], db_name='stage', action='replace', hova=srv, field_lens='mas')
 
 
 def amz_read(dirpath, hova='19'):

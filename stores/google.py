@@ -29,7 +29,7 @@ def google(finrep_dir, table='stg_fin2_12_googleplay', hova='19'):
             df['Earnings Amount'] = df['Earnings Amount'].str.replace(',', '.')
             print('sum: ', df['Earnings Amount'].astype(float).sum())
             print('row count', df.shape[0])
-            sqw.write_to_db(df, table, action='replace', hova=hova)
+            sqw.write_to_db(df, table, action='replace', hova=hova, field_lens='mas')
     else:
         print('odaszemetelt valaki, exiting...')
 

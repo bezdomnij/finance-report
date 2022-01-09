@@ -39,7 +39,7 @@ def google_audio(finrep_dir, table='stg_fin2_20012_google_audio', hova='19'):
 		the_one = period_file[sorted(period_file.keys())[-1]]
 		df = get_df(the_one)
 	elif len(files) == 1:
-		df = files[0]
+		df = get_df(files[0])
 	else:
 		print("Nothing there...")
 	print(df.info)
