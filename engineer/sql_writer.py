@@ -74,9 +74,8 @@ def get_types(df, milyen='mindegy'):
                     lens[field] = 255
             except Exception as e:
                 logging.exception(msg=f'LOGERROR: {e} in field: ||| {field}')
-
                 m = get_lengths(df, field)
-                lens[field] = 255 if m < 255 else m
+                lens[field] = 255 if m <= 255 else m
                 continue
         typedict = {col_name: sqlalchemy.sql.sqltypes.VARCHAR(length=lens[col_name]) for col_name in lens.keys()}
     else:
@@ -97,8 +96,7 @@ def get_types(df, milyen='mindegy'):
 
 def get_lengths(df, field):
     df[field] = df[field].astype("str")
-    m = max(df[field].str.len())
-    return m
+    return max(df[field].str.len())
 
 
 if __name__ == '__main__':
