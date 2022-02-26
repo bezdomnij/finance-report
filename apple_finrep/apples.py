@@ -40,9 +40,9 @@ def read_file_content(c):
         location = c.stem.split('_')[-1]
         df = pd.read_csv(c, sep='\t', index_col=None)
         record_count = df.shape[0]
-        print("egy file record count: ", record_count)
+        print(f"{c.name} record count: ", record_count)
         df['Vendor Identifier'] = df['Vendor Identifier'].astype(str).str.slice(stop=13)
-        print(df['Vendor Identifier'])
+        # print(df['Vendor Identifier'])
         df['Pre-order Flag'].replace({np.NAN: None}, inplace=True)
         sum_df['file'].append(c.stem)
         sum_df['r_count'].append(record_count)
@@ -63,13 +63,14 @@ def read_apple(dir_path, hova='19'):
     # template_df = pd.read_csv(files[0], sep='\t', index_col=None)
     # total = pd.DataFrame(columns=[x for x in template_df.columns], index=None)  # collective df
     for c in p.iterdir():
-        if c.suffix != '.csv':
+        if c.suffix == '.txt':
             total = pd.concat([total, read_file_content(c)])
 
     print("EXTENDED PARTNER SHARE", total['Extended Partner Share'].sum())
     print("UNITS SOLD", int(total['Quantity'].sum()))
     print("line count", total.shape[0])
-    sqw.write_to_db(total, 'stg_fin2_1_apple', action='replace', hova=hova, field_lens='mas')
+    # write!!!
+    # sqw.write_to_db(total, 'stg_fin2_1_apple', action='replace', hova=hova, field_lens='mas')
     return pd.DataFrame(sum_df, index=range(1, 23))
     # return pd.DataFrame(sum_df, index=None)
 

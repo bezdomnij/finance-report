@@ -46,11 +46,13 @@ def google_audio(finrep_dir, table='stg_fin2_20012_google_audio', hova='19'):
 	else:
 		print("No writeable Google file there...")
 		return
-	# print(df.info)
-	sqw.write_to_db(df, table, action='replace', hova=hova)
+	print(df.info)
+
+
+# sqw.write_to_db(df, table, action='replace', hova=hova)
 
 
 if __name__ == '__main__':
 	logging.basicConfig(level=logging.INFO, filename='datacamp.log', filemode='w', format='%(asctime)s %(message)s')
-	# google_audio('/Users/frank/pd/finance_report', hova='19')
-	google_audio('h:/NextCloud/Finance/szamitas/2021_11_november')
+	google_audio('/Users/frank/pd/finance_report/2021_12_december', hova='19')
+# google_audio('h:/NextCloud/Finance/szamitas/2021_12_december')

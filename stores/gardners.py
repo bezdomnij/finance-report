@@ -20,7 +20,7 @@ def main(dirpath, hova='19'):
             with open(f, mode='r') as g:
                 contents = g.readlines()
                 header = contents[0].rstrip().split(',')
-                df = pd.DataFrame(columns=header)
+                df = pd.DataFrame(columns=header, index=None)
                 for l in contents[1:]:
                     line = l.rstrip()
                     try:

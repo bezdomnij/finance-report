@@ -16,8 +16,9 @@ def dibook(dirpath, hova):
                 print("drop!!!!!!")
                 df.drop(df.tail(1).index, inplace=True)
             print("utana", df.shape[0])
-            sqw.write_to_db(df, table_name, action='replace', field_lens='mas', hova=hova)
+            print(df['Beszállító árbevétel összeg nettó'].sum())
+            # sqw.write_to_db(df, table_name, action='replace', field_lens='mas', hova=hova)
 
 
 if __name__ == '__main__':
-    dibook('h:/NextCloud/Finance/szamitas/2021_11_november', hova='19')
+    dibook('/Users/frank/pd/finance_report', hova='19')

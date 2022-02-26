@@ -11,7 +11,7 @@ def get_period(fname):
 def check_google_file_name(fname):
     result = get_period(fname)
     name_and_extension = fname.split('.')
-    if 'GoogleEarningsReport' in name_and_extension[0] and name_and_extension[1] == 'csv':
+    if 'GoogleEarningsReport' in name_and_extension[0] and name_and_extension[-1] == 'csv':
         name_parts = name_and_extension[0].split('_')  # gg-nel nincs benne _
         period = tuple(get_period(fname)[0].split('-'))
         if len(period) > 0:

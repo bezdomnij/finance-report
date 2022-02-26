@@ -35,5 +35,5 @@ def google(finrep_dir, table='stg_fin2_12_googleplay', hova='19'):
 
 if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO, filename='datacamp.log', filemode='w', format='%(asctime)s %(message)s')
-    google('/Users/frank/pd/finance_report', hova='19')
+    google('/Users/frank/pd/finance_report/2021_12_december', hova='19')
 # google('h:/NextCloud/Finance/szamitas/2021_11_november')

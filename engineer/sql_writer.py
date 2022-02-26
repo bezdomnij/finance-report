@@ -7,6 +7,7 @@ from sqlalchemy import create_engine, exc
 
 
 def write_to_db(df, table_name, db_name='stage', action='replace', hova='19', field_lens=None):
+    if hova == '0': return
     if field_lens is None:
         field_lens = get_types(df, milyen='mindegy')
     else:
