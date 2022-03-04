@@ -17,7 +17,8 @@ def read_file_content(f):
             print(f'error: {e} es {e.__str__}')
             logging.exception(msg=f"ERR: {e}\nazonkivul: {e.__str__()}")
     if df.shape[0] != 0:
-        print(f"Itt van barmi: '{f.name}', {df.shape[0]} db record")
+        print(f"Itt van barmi: '{f.name}', {df.shape[0]} db record", end=" -- ")
+        print(round(df['Total proceeds due to publisher'].sum(), 2))
         return df, df.shape[0]
 
 
@@ -34,8 +35,8 @@ def main(dirpath, hova='19'):
             current_df, rc = whatever
             total = pd.concat([total, current_df])
             all_row_count += rc
-    print("Bibliotheca")
-    print(all_row_count)
+    print("Bibliotheca", end='  --  ')
+    print(all_row_count, 'db record')
     sqw.write_to_db(total, table_name, field_lens='mas', action='replace', hova=hova)
     # action append: replace give a row size error - before the change to other types part in get_types
 

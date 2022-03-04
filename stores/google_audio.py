@@ -54,5 +54,5 @@ def google_audio(finrep_dir, table='stg_fin2_20012_google_audio', hova='19'):
 
 if __name__ == '__main__':
 	logging.basicConfig(level=logging.INFO, filename='datacamp.log', filemode='w', format='%(asctime)s %(message)s')
-	google_audio('/Users/frank/pd/finance_report/2021_12_december', hova='19')
+	google_audio('/Users/frank/pd/finance_report/2021_12_december', hova='0')
 # google_audio('h:/NextCloud/Finance/szamitas/2021_12_december')

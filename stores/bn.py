@@ -6,7 +6,7 @@ from engineer import sql_writer as sqw
 
 
 def calc_sum(df):
-    print(df.info)
+    # print(df.info)
     return df['Total Cost Payment Currency'].sum()
 
 
@@ -15,11 +15,11 @@ def main(dirpath, hova='19'):
     file = p / 'bn.csv'
     df = pd.read_csv(file, header=0, sep=',')
 
-    print(df.shape[0], df.shape[1])
+    print(df.shape[0], df.shape[1], ' columns')
     df.drop(df.columns[[35]], axis=1, inplace=True)
-    print(df.shape[0], df.shape[1])
+    print(df.shape[0], df.shape[1], ' columns')
 
-    print(calc_sum(df))
+    print("BN: ", calc_sum(df))
     sqw.write_to_db(df, 'stg_fin2_5_bn', action='replace', field_lens='mas', hova=hova)
 
 
