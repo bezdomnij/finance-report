@@ -38,7 +38,7 @@ def read_network():
 
 # Press the green button in the gutter to run the script.
 def report(hova='19'):
-    directory = '/Users/frank/pd/finance_report/2021_12_december'
+    directory = '/Users/frank/pd/finance_report/2022_01_january'
     # directory = 'h:/NextCloud/Finance/szamitas/2021_11_november'
 
     google_audio.google_audio(directory, 'stg_fin2_20012_google_audio', hova)
@@ -59,6 +59,6 @@ if __name__ == '__main__':
         print(argv)
         discover(argv[1:])
     # HOVA IRUNK?
-    report('w')
+    report('0')
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/

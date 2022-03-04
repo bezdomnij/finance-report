@@ -15,7 +15,7 @@ def google(finrep_dir, table='stg_fin2_12_googleplay', hova='19'):
             continue
         ftype, period = util.check_google_file_name(f.name)
         year, month = period
-        if ftype == 'gg' and int(month) == 12:
+        if ftype == 'gg' and int(month) == 1:
             files.append(f)
             logging.info(msg=f'file found:{f}')
     for f in files:
@@ -35,5 +35,5 @@ def google(finrep_dir, table='stg_fin2_12_googleplay', hova='19'):
 
 if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO, filename='datacamp.log', filemode='w', format='%(asctime)s %(message)s')
-    google('/Users/frank/pd/finance_report/2021_12_december', hova='19')
+    google('/Users/frank/pd/finance_report/2022_01_january', hova='0')
 # google('h:/NextCloud/Finance/szamitas/2021_11_november')
