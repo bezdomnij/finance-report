@@ -1,10 +1,12 @@
 from pathlib import Path
 import pandas as pd
 from engineer import sql_writer as sqw
+import logging
 
 SOURCE_DIR = '2022_02_february'
 DATA_DIR = 'bn'
-FILENAME = 'export ('
+FILENAME = 'bn'
+TABLE = 'stg_fin2_5_bn'
 
 
 def calc_sum(df):
@@ -12,7 +14,7 @@ def calc_sum(df):
     return df['Total Cost Payment Currency'].sum()
 
 
-def apple(dirpath, hova='0'):
+def bn(dirpath, hova='0'):
     df = pd.DataFrame()
     p = Path(dirpath).joinpath(SOURCE_DIR).joinpath(DATA_DIR)
 
@@ -24,12 +26,13 @@ def apple(dirpath, hova='0'):
             print(df.shape[0], df.shape[1], ' columns')
 
     print(f"BN: {df.shape[0]} db, total {calc_sum(df)}")
-    sqw.write_to_db(df, 'stg_fin2_5_bn', action='replace', field_lens='mas', hova=hova)
+    sqw.write_to_db(df, TABLE, action='replace', field_lens='mas', hova=hova)
 
 
 def main():
-    apple('/Users/frank/pd/Nextcloud', 'pd')
+    bn('/Users/frank/pd/Nextcloud/szamitas', '0')
 
 
 if __name__ == '__main__':
+    logging.basicConfig(level=logging.INFO, filename='../datacamp.log', filemode='w')
     main()

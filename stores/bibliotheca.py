@@ -6,6 +6,7 @@ from engineer import sql_writer as sqw
 
 DATA_DIR = 'bibliotheca'
 SOURCE_DIR = '2022_02_february'
+TABLE = 'stg_fin2_39_bibliotheca'
 
 
 def read_file_content(f):
@@ -23,11 +24,10 @@ def read_file_content(f):
         return df, df.shape[0]
 
 
-def main(dirpath, hova='19'):
+def bibliotheca(dirpath, hova='19'):
     p = Path(dirpath).joinpath(SOURCE_DIR).joinpath(DATA_DIR)
     total = pd.DataFrame()
     all_row_count = 0
-    table_name = 'stg_fin2_39_bibliotheca'
 
     # multiple files system!!!
     for f in p.iterdir():
@@ -38,11 +38,16 @@ def main(dirpath, hova='19'):
             all_row_count += rc
     print("Bibliotheca", end='  --  ')
     print(all_row_count, 'db record')
-    sqw.write_to_db(total, table_name, field_lens='mas', action='replace', hova=hova)
+    sqw.write_to_db(total, TABLE, field_lens='mas', action='replace', hova=hova)
     # action append: replace give a row size error - before the change to other types part in get_types
 
 
-if __name__ == '__main__':
+def main():
     # directory = 'h:/NextCloud/Finance/2022_01_january'
-    directory = '/Users/frank/pd/Nextcloud'
-    main(directory, '0')
+    directory = '/Users/frank/pd/Nextcloud/szamitas'
+    bibliotheca(directory, 'pd')
+
+
+if __name__ == '__main__':
+    logging.basicConfig(level=logging.INFO, filename='../datacamp.log', filemode='w')
+    main()
