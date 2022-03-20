@@ -1,6 +1,7 @@
-import csv
 from pathlib import Path
+
 import pandas as pd
+
 from engineer import sql_writer as sqw
 
 
@@ -47,12 +48,12 @@ def main(dirpath, hova='19'):
                         line = find_bad_comma(line, positions)
                     item = dict(zip(header, line.split(',')))
                     df = df.append(item, ignore_index=True)
-            # print(df.columns)
+            print(df.columns)
             print(df.tail())
             df = df[df['TOTAL-NET-LINE-VALUE'] != '']
             df['TOTAL-NET-LINE-VALUE'] = df['TOTAL-NET-LINE-VALUE'].astype(float)
             print('Gardners: ', df['TOTAL-NET-LINE-VALUE'].sum())
-            sqw.write_to_db(df, table, action='replace', hova=hova, field_lens='mindegy')
+            sqw.write_to_db(df, table, action='replace', hova=hova, field_lens='vchall')
 
 
 if __name__ == '__main__':

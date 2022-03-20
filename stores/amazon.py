@@ -6,6 +6,10 @@ import pandas as pd
 from checker import data_checker
 from engineer import sql_writer as sqw
 
+SOURCE_DIR = '2022_02_february'
+REPORT_MONTH = '2022_02_february'
+DATA_DIR = 'amazon'
+
 
 def write_to_db(df, table_name, hova='19', extras=None):
     print('Started to connect to db...')
@@ -28,8 +32,6 @@ def write_to_db(df, table_name, hova='19', extras=None):
 
 
 def make_df(files, amazon, hova='19'):
-    srv = hova
-    # srv = 'pd'
     for f in files:
         df = pd.read_excel(f, header=0, index_col=None)
         if ' ' in df.columns:
@@ -38,14 +40,15 @@ def make_df(files, amazon, hova='19'):
         # for col in df.columns:
         #     print(col, df[col].dtype)
         too_many_chars = data_checker.d_checker(df=df, right_length=255)
-        print(df.columns)
+        # print(df.columns)
         if too_many_chars:
             print(f'Look out, "{f.name}" has extra lengths: {too_many_chars}')
-        sqw.write_to_db(df, amazon[f], db_name='stage', action='replace', hova=srv, field_lens='mas')
+        sqw.write_to_db(df, amazon[f], db_name='stage', action='replace', hova=hova, field_lens='vchall')
 
 
 def amz_read(dirpath, hova='19'):
-    p = Path(dirpath) / 'amazon'
+    p = Path(dirpath).joinpath(SOURCE_DIR).joinpath(DATA_DIR)
+    print(p)
     amazon = {}
     files = [item for item in p.iterdir() if item.suffix == '.xlsx']
     if len(files) == 2:
@@ -58,11 +61,11 @@ def amz_read(dirpath, hova='19'):
                 print(f'Not regular amazon file in here, {dirpath}')
                 return
     else:
-        print(f"Directory not clean, has {len(files)} items.")
+        print(f"Directory content not clean, has {len(files)} items.")
         return
     make_df(files, amazon, hova)
 
 
 if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO, filename='../datacamp.log', filemode='w')
-    amz_read('/Users/frank/pd/finance_report', hova='0')
+    amz_read('/Users/frank/pd/Nextcloud/szamitas', hova='pd')

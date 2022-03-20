@@ -46,7 +46,7 @@ def google_audio(finrep_dir, table='stg_fin2_20012_google_audio', hova='19'):
 	else:
 		print("No writeable Google file there...")
 		return
-	print(df.info)
+	# print(df.info)
 
 
 # sqw.write_to_db(df, table, action='replace', hova=hova)

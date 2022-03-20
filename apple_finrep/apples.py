@@ -5,7 +5,9 @@ import pandas as pd
 
 from engineer import sql_writer as sqw
 
-currencies = {
+DATA_DIR = 'apple'
+SOURCE_DIR = '2022_02_february'
+CURRENCIES = {
     'US': 'USD',
     'CH': 'CHF',
     'NO': 'NOK',
@@ -46,7 +48,7 @@ def read_file_content(c):
         df['Pre-order Flag'].replace({np.NAN: None}, inplace=True)
         sum_df['file'].append(c.stem)
         sum_df['r_count'].append(record_count)
-        sum_df['currency'].append((currencies.get(location, 'nincs')))
+        sum_df['currency'].append((CURRENCIES.get(location, 'nincs')))
         sum_df['sum'].append(round(df["Extended Partner Share"].sum(), 3))
         sum_df['built_in_total'].append(df[df['Start Date'] == 'Total_Amount']['End Date'].iloc[-1])
         df.drop(df.tail(3).index, inplace=True)
@@ -57,7 +59,7 @@ def read_file_content(c):
 
 
 def read_apple(dir_path, hova='19'):
-    p = Path(dir_path) / 'apple'
+    p = Path(dir_path).joinpath(SOURCE_DIR).joinpath(DATA_DIR)
     total = pd.DataFrame()
     # files = [f for f in p.iterdir()]
     # template_df = pd.read_csv(files[0], sep='\t', index_col=None)
@@ -70,12 +72,12 @@ def read_apple(dir_path, hova='19'):
     print("UNITS SOLD", int(total['Quantity'].sum()))
     print("line count", total.shape[0])
     # write!!!
-    # sqw.write_to_db(total, 'stg_fin2_1_apple', action='replace', hova=hova, field_lens='mas')
+    sqw.write_to_db(total, 'stg_fin2_1_apple', action='replace', hova=hova, field_lens='vchall')
     return pd.DataFrame(sum_df, index=range(1, 23))
     # return pd.DataFrame(sum_df, index=None)
 
 
-def main(dir_path, hova='19'):
+def apple(dir_path, hova='19'):
     resultset_df = read_apple(dir_path, hova=hova)
     print(resultset_df)
 
@@ -98,6 +100,10 @@ def main(dir_path, hova='19'):
     writer.save()
 
 
+def main():
+    apple('/Users/frank/pd/Nextcloud/szamitas', 'pd')
+    # apple('h:/NextCloud/Finance/szamitas', '19')
+
+
 if __name__ == '__main__':
-    main('/Users/frank/pd/finance_report', '19')
-    # main('h:/NextCloud/Finance/szamitas/2021_11_november', '19')
+    main()

@@ -11,6 +11,8 @@ def write_to_db(df, table_name, db_name='stage', action='replace', hova='19', fi
         return
     if field_lens is None:
         field_lens = get_types(df, milyen='mindegy')
+    # elif field_lens == 'vchall':
+    #     field_lens = get_types(df, milyen='vchall')
     else:
         field_lens = get_types(df, milyen=field_lens)
     try:
@@ -48,11 +50,12 @@ def get_engine(which_one, db_name='stage'):
     else:
         print("No destination SERVER given! Exiting")
         sys.exit(1)
-    connection_uri = f'mysql+pymysql://{username}:{pw}@{server}:3306/{db_name}?charset=utf8mb4'
-    connect_args = {'init_command': "SET @@collation_connection='utf8mb4_hungarian_ci'",
-                    'read_timeout': 30}
-    # connect_args = {'init_command': "SET @@collation_connection='utf8_hungarian_ci'",
+    # connection_uri = f'mysql+pymysql://{username}:{pw}@{server}:3306/{db_name}?charset=utf8mb4'
+    connection_uri = f'mysql+pymysql://{username}:{pw}@{server}:3306/{db_name}?charset=utf8'  # utf8mb4 fucks with joins
+    # connect_args = {'init_command': "SET @@collation_connection='utf8mb4_hungarian_ci'", # this causes problems in joining
     #                 'read_timeout': 30}
+    connect_args = {'init_command': "SET @@collation_connection='utf8_hungarian_ci'",
+                    'read_timeout': 30}
     try:
         sql_engine = create_engine(connection_uri, pool_pre_ping=True, pool_recycle=3600, echo=False,
                                    echo_pool=False, connect_args=connect_args, future=False)
@@ -80,11 +83,20 @@ def get_types(df, milyen='mindegy'):
                 lens[field] = 255 if m <= 255 else m
                 continue
         typedict = {col_name: sqlalchemy.sql.sqltypes.VARCHAR(length=lens[col_name]) for col_name in lens.keys()}
+    elif milyen == 'vchall':
+        for col in df.columns:
+            if "object" in str(df[col].dtype):
+                m = get_lengths(df, col)
+                m2 = m if m > 255 else 255
+                typedict[col] = sqlalchemy.types.VARCHAR(length=m2)
+            else:
+                typedict[col] = sqlalchemy.types.VARCHAR(length=255)
     else:
         for i, j in zip(df.columns, df.dtypes):
             if "object" in str(j):
                 m = get_lengths(df, i)
-                typedict.update({i: sqlalchemy.types.VARCHAR(length=m)})
+                m2 = m if m > 255 else 255
+                typedict.update({i: sqlalchemy.types.VARCHAR(length=m2)})
             if "datetime" in str(j):
                 typedict.update({i: sqlalchemy.types.DateTime()})
             if "float" in str(j):
@@ -98,7 +110,8 @@ def get_types(df, milyen='mindegy'):
 
 def get_lengths(df, field):
     df[field] = df[field].astype("str")
-    return max(df[field].str.len())
+    m = max(df[field].str.len())
+    return m
 
 
 if __name__ == '__main__':

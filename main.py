@@ -41,14 +41,14 @@ def report(hova='19'):
     directory = '/Users/frank/pd/finance_report/2022_01_january'
     # directory = 'h:/NextCloud/Finance/szamitas/2021_11_november'
 
-    # google_audio.google_audio(directory, 'stg_fin2_20012_google_audio', hova)
-    # google.google(directory, 'stg_fin2_12_googleplay', hova)
+    google_audio.google_audio(directory, 'stg_fin2_20012_google_audio', hova)
+    google.google(directory, 'stg_fin2_12_googleplay', hova)
     amazon.amz_read(directory, hova)
-    # bn.main(directory, hova)
-    # apples.main(directory, hova)
-    # bibliotheca.main(directory, hova)  # DELETE table first!!!
-    # dibook.dibook(directory, hova)
-    # gardners.main(directory, hova=hova)
+    bn.apple(directory, hova)
+    apples.apple(directory, hova)
+    bibliotheca.main(directory, hova)  # DELETE table first!!!
+    dibook.dibook(directory, hova)
+    gardners.main(directory, hova=hova)
 
 
 if __name__ == '__main__':

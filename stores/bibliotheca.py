@@ -42,5 +42,6 @@ def main(dirpath, hova='19'):
 
 
 if __name__ == '__main__':
-    directory = 'h:/NextCloud/Finance/2021_11_november'
-    main(directory)
+    # directory = 'h:/NextCloud/Finance/2022_01_january'
+    directory = '/Users/frank/pd/finance_report/2022_01_january'
+    main(directory, '0')
