@@ -1,10 +1,11 @@
 import logging
 import warnings
 from pathlib import Path
-
 import pandas as pd
-
 from engineer import sql_writer as sqw
+
+DATA_DIR = 'bibliotheca'
+SOURCE_DIR = '2022_02_february'
 
 
 def read_file_content(f):
@@ -23,7 +24,7 @@ def read_file_content(f):
 
 
 def main(dirpath, hova='19'):
-    p = Path(dirpath).joinpath('bibliotheca')
+    p = Path(dirpath).joinpath(SOURCE_DIR).joinpath(DATA_DIR)
     total = pd.DataFrame()
     all_row_count = 0
     table_name = 'stg_fin2_39_bibliotheca'
@@ -43,5 +44,5 @@ def main(dirpath, hova='19'):
 
 if __name__ == '__main__':
     # directory = 'h:/NextCloud/Finance/2022_01_january'
-    directory = '/Users/frank/pd/finance_report/2022_01_january'
+    directory = '/Users/frank/pd/Nextcloud'
     main(directory, '0')

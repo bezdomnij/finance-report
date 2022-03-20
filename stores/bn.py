@@ -1,7 +1,5 @@
 from pathlib import Path
-
 import pandas as pd
-
 from engineer import sql_writer as sqw
 
 SOURCE_DIR = '2022_02_february'
@@ -17,9 +15,9 @@ def calc_sum(df):
 def apple(dirpath, hova='0'):
     df = pd.DataFrame()
     p = Path(dirpath).joinpath(SOURCE_DIR).joinpath(DATA_DIR)
+
     for f in p.iterdir():
         if f.is_file() and f.suffix == '.csv' and FILENAME in f.stem:
-            # file = p / 'bn.csv'
             df = pd.read_csv(f, header=0, sep=',')
             print(df.shape[0], df.shape[1], ' columns')
             df.drop(df.columns[[35]], axis=1, inplace=True)
