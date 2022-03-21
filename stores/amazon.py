@@ -48,7 +48,7 @@ def make_df(files, amazon, hova='0'):
         if 'POD' in f.stem:
             print(df.shape[0])
             print(df['Payment Amount'].sum())
-            print(df.groupby(['Royalty Amount Currency']).sum())
+            print(df.groupby(by=['Royalty Amount Currency'], axis=0).sum())
         sqw.write_to_db(df, amazon[f], db_name='stage', action='replace', hova=hova, field_lens='vchall')
 
 
