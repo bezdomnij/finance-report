@@ -4,6 +4,8 @@ import pandas as pd
 
 from engineer import sql_writer as sqw
 
+SUM_FIELD = 'TOTAL-NET-LINE-VALUE'
+
 
 def find_bad_comma(line, positions):
     one, two, three = '', '', ''
