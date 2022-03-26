@@ -4,7 +4,11 @@ import pandas as pd
 
 from engineer import sql_writer as sqw
 
+SOURCE_DIR = '2022_02_february'
+DATA_DIR = 'gardners'
 SUM_FIELD = 'TOTAL-NET-LINE-VALUE'
+TABLE = 'stg_fin2_20_gardners'
+FILENAME = 'EMCONT0E'
 
 
 def find_bad_comma(line, positions):
@@ -33,12 +37,11 @@ def forget_comma(one, two, three):
     return temp1.replace(',', ';'), temp2.replace(',', ';'), temp3.replace(',', ';')
 
 
-def main(dirpath, hova='19'):
-    p = Path(dirpath).joinpath('gardners')
-    table = 'stg_fin2_20_gardners'
+def main(dirpath, hova='0'):
+    p = Path(dirpath).joinpath(SOURCE_DIR).joinpath(DATA_DIR)
     for f in p.iterdir():
         print(f)
-        if f.name == 'EMCONT0E (1).CSV':
+        if f.is_file() and FILENAME in f.stem and f.suffix in ('.csv', '.CSV'):
             with open(f, mode='r') as g:
                 contents = g.readlines()
                 header = contents[0].rstrip().split(',')
@@ -52,11 +55,11 @@ def main(dirpath, hova='19'):
                     df = df.append(item, ignore_index=True)
             print(df.columns)
             print(df.tail())
-            df = df[df['TOTAL-NET-LINE-VALUE'] != '']
-            df['TOTAL-NET-LINE-VALUE'] = df['TOTAL-NET-LINE-VALUE'].astype(float)
-            print('Gardners: ', df['TOTAL-NET-LINE-VALUE'].sum())
-            sqw.write_to_db(df, table, action='replace', hova=hova, field_lens='vchall')
+            df = df[df[SUM_FIELD] != '']
+            df[SUM_FIELD] = df[SUM_FIELD].astype(float)
+            print('Gardners: ', df[SUM_FIELD].sum())
+            sqw.write_to_db(df, TABLE, action='replace', hova=hova, field_lens='vchall')
 
 
 if __name__ == '__main__':
-    main('/Users/frank/pd/finance_report/2022_01_january', hova='0')
+    main('/Users/frank/pd/Nextcloud', hova='0')
