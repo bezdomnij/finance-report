@@ -1,5 +1,8 @@
 import logging
 import re
+import warnings
+import pandas as pd
+from engineer import sql_writer as sqw
 
 
 def get_period(fname):
@@ -36,6 +39,26 @@ def check_incoming(f):
     ftype, period = check_google_file_name(f.name)
     print(ftype, period)
     return ftype, period
+
+
+def get_proper_df(f):
+    df = pd.read_excel(f, sheet_name='Details', header=0, index_col=None)
+    col2 = [col.strip() for col in df.columns]
+    renamed_cols = dict(zip(df.columns, col2))
+    df2 = df.rename(columns=renamed_cols)
+    return df2
+
+
+def get_content_xl_onesheet(file, table, hova, sum_field, na_field, header=0):
+    with warnings.catch_warnings(record=True):
+        warnings.simplefilter("always")
+        df = pd.read_excel(file, header=header, index_col=None)  # , engine='openpyxl')  # ???
+    if na_field != '':
+        df = df[df[na_field].notna()]
+    summa = df[sum_field].sum()
+    print(f"file: {file.stem}, osszege: {round(df[sum_field].sum(), 3):-10,.3f}")
+    sqw.write_to_db(df, table, db_name='stage', action='replace', field_lens='vchall', hova=hova)
+    return summa
 
 
 def main():

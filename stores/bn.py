@@ -3,10 +3,10 @@ import pandas as pd
 from engineer import sql_writer as sqw
 import logging
 
+TABLE = 'stg_fin2_5_bn'
+FILENAME = 'bn'
 SOURCE_DIR = '2022_02_february'
 DATA_DIR = 'bn'
-FILENAME = 'bn'
-TABLE = 'stg_fin2_5_bn'
 
 
 def calc_sum(df):
