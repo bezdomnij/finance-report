@@ -48,8 +48,8 @@ def report(hova='19'):
     apples.apple(directory, hova)
     bn.bn(directory, hova)
     bibliotheca.bibliotheca(directory, hova)  # DELETE table first!!!
-    # dibook.dibook(directory, hova)
-    # gardners.main(directory, hova=hova)
+    dibook.dibook(directory, hova)
+    gardners.main(directory, hova=hova)
 
 
 if __name__ == '__main__':

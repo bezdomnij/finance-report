@@ -62,4 +62,5 @@ def main(dirpath, hova='0'):
 
 
 if __name__ == '__main__':
-    main('/Users/frank/pd/Nextcloud', hova='0')
+    # main('/Users/frank/pd/Nextcloud', hova='0')
+    main('h:/Nextcloud/Finance', hova='0')
