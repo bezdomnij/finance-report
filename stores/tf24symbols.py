@@ -3,7 +3,7 @@ import pandas as pd
 from engineer import sql_writer as sqw
 import util
 
-TABLE = 'stg_rts2_28_24symbols_data'
+TABLE = 'stg_fin2_28_24symbols_data'
 FILENAME = 'D343_'
 SOURCE_DIR = '2022_02_february'
 REPORT_MONTH = '2022_02_february'
@@ -17,8 +17,9 @@ def tfsymbols(dirpath, hova='0'):
     pd.options.mode.chained_assignment = None
     for f in p.iterdir():
         if f.suffix == '.xlsx' and FILENAME in f.stem and f.name[:2] != '~$':
-            szumma = util.get_content_xl_onesheet(f, TABLE, hova=hova, sum_field=SUM_FIELD, na_field='', header=5)
-            print(f"{DATA_DIR}, {REPORT_MONTH}, total: {szumma:-10,.3f}\n")
+            dimensions = util.get_content_xl_onesheet(f, TABLE, hova=hova, sum_field=SUM_FIELD,
+                                                      na_field='', header=5)
+            print(f"{DATA_DIR} | {REPORT_MONTH}, {dimensions[0]} records, total: {dimensions[1]:-10,.3f}\n")
 
 
 def main():
