@@ -43,9 +43,9 @@ def bibliotheca(dirpath, hova='19'):
 
 
 def main():
-    # directory = 'h:/NextCloud/Finance/2022_01_january'
-    directory = '/Users/frank/pd/Nextcloud/szamitas'
-    bibliotheca(directory, 'pd')
+    directory = 'h:/NextCloud/Finance/szamitas'
+    # directory = '/Users/frank/pd/Nextcloud/szamitas'
+    bibliotheca(directory, '0')
 
 
 if __name__ == '__main__':

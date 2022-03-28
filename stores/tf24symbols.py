@@ -23,8 +23,8 @@ def tfsymbols(dirpath, hova='0'):
 
 
 def main():
-    tfsymbols('/Users/frank/pd/Nextcloud', '0')
-    # dreane_month('e:/pd/sales_report', '0')
+    # tfsymbols('/Users/frank/pd/Nextcloud', '0')
+    tfsymbols('h:/Nextcloud/Finance/szamitas', '19')
 
 
 if __name__ == '__main__':
