@@ -37,7 +37,7 @@ def forget_comma(one, two, three):
     return temp1.replace(',', ';'), temp2.replace(',', ';'), temp3.replace(',', ';')
 
 
-def main(dirpath, hova='0'):
+def gardners(dirpath, hova='0'):
     p = Path(dirpath).joinpath(SOURCE_DIR).joinpath(DATA_DIR)
     for f in p.iterdir():
         print(f)
@@ -61,6 +61,11 @@ def main(dirpath, hova='0'):
             sqw.write_to_db(df, TABLE, action='replace', hova=hova, field_lens='vchall')
 
 
-if __name__ == '__main__':
+def main():
+    gardners('h:/Nextcloud/Finance/szamitas', hova='0')
     # main('/Users/frank/pd/Nextcloud', hova='0')
-    main('h:/Nextcloud/Finance', hova='0')
+
+
+if __name__ == '__main__':
+    main()
+

@@ -7,7 +7,8 @@ from urllib import request
 from smb.SMBHandler import SMBHandler
 
 from apple_finrep import apples
-from stores import amazon, bibliotheca, google, google_audio, bn, dibook, gardners
+import stores
+import kobo
 
 
 def discover(to_find):
@@ -42,14 +43,23 @@ def report(hova='19'):
     # directory = 'h:/NextCloud/Finance/szamitas/2021_11_november'
     directory = 'h:/NextCloud/Finance/szamitas'
 
-    # google_audio.google_audio(directory, 'stg_fin2_20012_google_audio', hova)
-    # google.google(directory, 'stg_fin2_12_googleplay', hova)
-    amazon.amz_read(directory, hova)
+    stores.tfsymbols(directory, hova)
+    # stores.amz_read(directory, hova)
     apples.apple(directory, hova)
-    bn.bn(directory, hova)
-    bibliotheca.bibliotheca(directory, hova)  # DELETE table first!!!
-    dibook.dibook(directory, hova)
-    gardners.main(directory, hova=hova)
+    stores.bibliotheca(directory, hova)  # DELETE table first!!!
+    stores.bn(directory, hova)
+    stores.bookmate(directory, hova)
+    stores.cnpiec(directory, hova)
+    stores.dibook(directory, hova)
+    stores.ekonyv_rw(directory, hova)
+    stores.findaway(directory, hova)
+    stores.gardners(directory, hova=hova)
+    stores.google(directory, hova)
+    stores.google_audio(directory, hova)
+    stores.ireader(directory, hova)
+    kobo.kobo(directory, hova)
+    kobo.kobo_audio(directory, hova)
+    kobo.kobo_plus(directory, hova)
 
 
 if __name__ == '__main__':

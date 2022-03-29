@@ -29,8 +29,8 @@ def kobo_plus(dirpath, hova='0'):
 
 
 def main():
-    # read_kobo_plus('h:/NextCloud/Operative/Admin dev/live_sales_v2', hova='0')
-    kobo_plus('/Users/frank/pd/Nextcloud', hova='pd')
+    kobo_plus('h:/NextCloud/Finance/szamitas', hova='0')
+    # kobo_plus('/Users/frank/pd/Nextcloud', hova='pd')
 
 
 if __name__ == '__main__':

@@ -30,7 +30,8 @@ def bn(dirpath, hova='0'):
 
 
 def main():
-    bn('/Users/frank/pd/Nextcloud/szamitas', '0')
+    # bn('/Users/frank/pd/Nextcloud/szamitas', '0')
+    bn('h:/Nextcloud/Finance/szamitas', '0')
 
 
 if __name__ == '__main__':

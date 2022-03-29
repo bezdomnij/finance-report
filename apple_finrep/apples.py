@@ -61,19 +61,19 @@ def read_file_content(c):
 
 def read_apple(dir_path, hova='19'):
     p = Path(dir_path).joinpath(SOURCE_DIR).joinpath(DATA_DIR)
-    total = pd.DataFrame()
+    total_df = pd.DataFrame()
     # files = [f for f in p.iterdir()]
     # template_df = pd.read_csv(files[0], sep='\t', index_col=None)
     # total = pd.DataFrame(columns=[x for x in template_df.columns], index=None)  # collective df
     for c in p.iterdir():
         if c.suffix == '.txt':
-            total = pd.concat([total, read_file_content(c)])
+            total_df = pd.concat([total_df, read_file_content(c)])
 
-    print("EXTENDED PARTNER SHARE", total['Extended Partner Share'].sum())
-    print("UNITS SOLD", int(total['Quantity'].sum()))
-    print("line count", total.shape[0])
+    print("EXTENDED PARTNER SHARE", total_df['Extended Partner Share'].sum())
+    print("UNITS SOLD", int(total_df['Quantity'].sum()))
+    print("line count", total_df.shape[0])
     # write!!!
-    sqw.write_to_db(total, 'stg_fin2_1_apple', action='replace', hova=hova, field_lens='vchall')
+    sqw.write_to_db(total_df, 'stg_fin2_1_apple', action='replace', hova=hova, field_lens='vchall')
     return pd.DataFrame(sum_df, index=range(1, 23))
     # return pd.DataFrame(sum_df, index=None)
 
@@ -102,8 +102,8 @@ def apple(dir_path, hova='19'):
 
 
 def main():
-    apple('/Users/frank/pd/Nextcloud/szamitas', 'pd')
-    # apple('h:/NextCloud/Finance/szamitas', '19')
+    # apple('/Users/frank/pd/Nextcloud/szamitas', 'pd')
+    apple('h:/NextCloud/Finance/szamitas', '19')
 
 
 if __name__ == '__main__':

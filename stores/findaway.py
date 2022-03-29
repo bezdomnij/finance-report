@@ -25,8 +25,8 @@ def findaway(dirpath, hova='0'):
 
 
 def main():
-    # findaway('h:/NextCloud/Finance', hova='0')
-    findaway('/Users/frank/pd/Nextcloud', hova='19')
+    findaway('h:/NextCloud/Finance/szamitas', hova='0')
+    # findaway('/Users/frank/pd/Nextcloud', hova='19')
 
 
 if __name__ == '__main__':

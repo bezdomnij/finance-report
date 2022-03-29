@@ -15,7 +15,7 @@ def get_df(f):
 		df = pd.read_csv(f, encoding='utf-16', sep='\t', header=0, index_col=None)
 	except Exception as e:
 		print(f"mar konvertaltuk..., error: {e}")
-		df = pd.read_csv(f, sep='\t', header=0, index_col=None)
+		df = pd.read_csv(f, encoding='utf-8', sep='\t', header=0, index_col=None)
 	finally:
 		return df
 
@@ -50,7 +50,7 @@ def google_audio(finrep_dir, hova='0'):
 	else:
 		print("No writeable Google file there...")
 		return
-	print(df.info)
+	# df.info()
 
 	sqw.write_to_db(df, TABLE, action='replace', hova=hova)
 
@@ -58,4 +58,4 @@ def google_audio(finrep_dir, hova='0'):
 if __name__ == '__main__':
 	logging.basicConfig(level=logging.INFO, filename='datacamp.log', filemode='w', format='%(asctime)s %(message)s')
 	# google_audio('/Users/frank/pd/finance_report/2021_12_december', hova='0')
-google_audio('h:/NextCloud/Finance/szamitas', hova='0')
+	google_audio('h:/NextCloud/Finance/szamitas', hova='0')

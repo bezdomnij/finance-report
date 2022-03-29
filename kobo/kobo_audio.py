@@ -47,8 +47,8 @@ def kobo_audio(dirpath, hova='0'):
 
 
 def main():
-    # readwrite_kobo_audio('h:/NextCloud/Operative/Admin dev/live_sales_v2', hova='0')
-    kobo_audio('/Users/frank/pd/Nextcloud', hova='0')
+    kobo_audio('h:/NextCloud/Finance/szamitas', hova='0')
+    # kobo_audio('/Users/frank/pd/Nextcloud', hova='0')
 
 
 if __name__ == '__main__':

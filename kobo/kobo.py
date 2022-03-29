@@ -31,8 +31,8 @@ def kobo(dirpath, hova='0'):
 
 
 def main():
-    # kobo('h:/NextCloud/Finance', hova='0')
-    kobo('/Users/frank/pd/Nextcloud', hova='pd')
+    kobo('h:/NextCloud/Finance/szamitas', hova='0')
+    # kobo('/Users/frank/pd/Nextcloud', hova='pd')
 
 
 if __name__ == '__main__':
