@@ -1,6 +1,7 @@
 from pathlib import Path
+
 import pandas as pd
-from engineer import sql_writer as sqw
+
 import util
 
 TABLE = 'stg_fin2_28_24symbols_data'
@@ -23,8 +24,8 @@ def tfsymbols(dirpath, hova='0'):
 
 
 def main():
-    # tfsymbols('/Users/frank/pd/Nextcloud', '0')
-    tfsymbols('h:/Nextcloud/Finance/szamitas', '19')
+    tfsymbols('/Users/frank/pd/Nextcloud', '19')
+    # tfsymbols('h:/Nextcloud/Finance/szamitas', '19')
 
 
 if __name__ == '__main__':
