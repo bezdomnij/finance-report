@@ -60,6 +60,7 @@ def report(hova='19'):
     kobo.kobo(directory, hova)
     kobo.kobo_audio(directory, hova)
     kobo.kobo_plus(directory, hova)
+    stores.libreka(directory, hova)
 
 
 if __name__ == '__main__':
