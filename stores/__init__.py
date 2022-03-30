@@ -12,4 +12,6 @@ from .google import google
 from .google_audio import google_audio
 from .ireader import ireader
 from .libreka import libreka
+from .mackin import mackin
+from .odilo import odilo
 

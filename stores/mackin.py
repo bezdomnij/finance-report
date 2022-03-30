@@ -25,14 +25,14 @@ def mackin(dirpath, hova='0'):
     for f in p.iterdir():
         if f.suffix in ['.xlsx', '.xls', '.XLS'] and FILENAME in f.stem:
             df = pd.read_excel(f, header=4)
-            print(df.columns)
+            # print(df.columns)
             df = df.drop(['Unnamed: 1', 'Unnamed: 2', 'Unnamed: 3'], axis=1)
             print(df.shape[0])
             df = df[df['ISBN'].notna()]
             df = df[df['Title'] != 'Title']
             print(df.shape[0])
             szumma = df[SUM_FIELD].sum()
-            print(f"{DATA_DIR}, {REPORT_MONTH}, total: {szumma:-10,.3f}\n")
+            print(f"{DATA_DIR}, {REPORT_MONTH}, total: {szumma:-10,.2f}\n")
             sqw.write_to_db(df, TABLE, hova=hova, action='replace', field_lens='vchall')
 
 
