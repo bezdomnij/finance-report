@@ -41,7 +41,6 @@ def make_df(files, amazon, hova='0'):
             print(f'Look out, "{f.name}" has extra lengths: {too_many_chars}')
 
         szumma = df['Payment Amount'].sum()
-        print(f"\n{DATA_DIR}_{marker}, {SOURCE_DIR}, total: {szumma:-10,.3f}, \n{df.shape[0]} records")
 
         if 'KEP' in f.stem:
             currencies = df['Payment Amount Currency'].unique()
@@ -59,6 +58,7 @@ def make_df(files, amazon, hova='0'):
                 df2 = df[df['Royalty Amount Currency'] == c]
                 print(f"{c}: {df2['Payment Amount'].sum():-18,.2f}")
 
+        print(f"\n{DATA_DIR}_{marker}, {SOURCE_DIR}, total: {szumma:-10,.3f}, \n{df.shape[0]} records")
         sqw.write_to_db(df, amazon[f], db_name='stage', action='replace', hova=hova, field_lens='vchall')
 
 
@@ -84,5 +84,5 @@ def amz_read(dirpath, hova='0'):
 
 if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO, filename='../datacamp.log', filemode='a')
-    # amz_read('/Users/frank/pd/Nextcloud/szamitas', hova='0')
-    amz_read('h:/Nextcloud/Finance/szamitas', hova='pd')
+    amz_read('/Users/frank/pd/Nextcloud/szamitas', hova='0')
+    # amz_read('h:/Nextcloud/Finance/szamitas', hova='0')

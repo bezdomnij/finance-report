@@ -53,17 +53,18 @@ def gardners(dirpath, hova='0'):
                         line = find_bad_comma(line, positions)
                     item = dict(zip(header, line.split(',')))
                     df = df.append(item, ignore_index=True)
-            print(df.columns)
-            print(df.tail())
+            # print(df.columns)
+            # print(df.tail())
             df = df[df[SUM_FIELD] != '']
             df[SUM_FIELD] = df[SUM_FIELD].astype(float)
-            print('Gardners: ', df[SUM_FIELD].sum())
+            szumma = df[SUM_FIELD].sum()
+            print(f"{DATA_DIR}, {SOURCE_DIR}, total: {szumma:-10,.3f}\n")
             sqw.write_to_db(df, TABLE, action='replace', hova=hova, field_lens='vchall')
 
 
 def main():
-    gardners('h:/Nextcloud/Finance/szamitas', hova='0')
-    # main('/Users/frank/pd/Nextcloud', hova='0')
+    # gardners('h:/Nextcloud/Finance/szamitas', hova='0')
+    gardners('/Users/frank/pd/Nextcloud', hova='0')
 
 
 if __name__ == '__main__':

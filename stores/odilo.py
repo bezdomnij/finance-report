@@ -38,8 +38,8 @@ def odilo(dirpath, hova='0'):
 
 
 def main():
-    # odilo('/Users/frank/pd/Nextcloud', hova='0')
-    odilo('h:/Nextcloud/Finance/szamitas', hova='19')
+    odilo('/Users/frank/pd/Nextcloud/szamitas', hova='0')
+    # odilo('h:/Nextcloud/Finance/szamitas', hova='0')
 
 
 if __name__ == '__main__':
