@@ -34,13 +34,13 @@ def perlego(dirpath, hova='0'):
 
     szumma = df_all[SUM_FIELD].astype('float64').sum()
     print(f"{DATA_DIR}, {REPORT_MONTH}, total: {szumma:-10,.2f}\n")
-    df_all.info()
+    # df_all.info()
     sqw.write_to_db(df_all, TABLE, hova=hova, action='replace', field_lens='vchall')
 
 
 def main():
-    # perlego('/Users/frank/pd/Nextcloud/szamitas', hova='0')
-    perlego('h:/Nextcloud/Finance/szamitas', hova='pd')
+    perlego('/Users/frank/pd/Nextcloud/szamitas', hova='0')
+    # perlego('h:/Nextcloud/Finance/szamitas', hova='pd')
 
 
 if __name__ == '__main__':
