@@ -25,8 +25,8 @@ def hoopla(dirpath, hova='0'):
 
 
 def main():
-    # dibook('e:/pd/sales_report', hova='0')
-    hoopla('/Users/frank/pd/Nextcloud', hova='19')
+    # hoopla('h:/Nextcloud/Finance/szamitas', hova='0')
+    hoopla('/Users/frank/pd/Nextcloud/szamitas', hova='19')
 
 
 if __name__ == '__main__':

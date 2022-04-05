@@ -35,6 +35,10 @@ def scribd(dirpath, hova='0'):
     sqw.write_to_db(all_df, TABLE, db_name='stage', action='replace', field_lens='vchall', hova=hova)
 
 
+def main():
+    scribd('/Users/frank/pd/Nextcloud/szamitas', hova='0')
+    # hoopla('h:/Nextcloud/Finance/szamitas', hova='0')
+
+
 if __name__ == '__main__':
-    scribd('/Users/frank/pd/Nextcloud', hova='0')
-    # overdrive_audio('h:/NextCloud/Operative/Admin dev/live_sales_v2')
+    main()

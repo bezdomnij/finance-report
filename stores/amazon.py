@@ -58,7 +58,7 @@ def make_df(files, amazon, hova='0'):
                 df2 = df[df['Royalty Amount Currency'] == c]
                 print(f"{c}: {df2['Payment Amount'].sum():-18,.2f}")
 
-        print(f"\n{DATA_DIR}_{marker}, {SOURCE_DIR}, total: {szumma:-10,.3f}, \n{df.shape[0]} records")
+        print(f"\n{DATA_DIR}_{marker}, {SOURCE_DIR}, total: {szumma:-10,.2f}, \n{df.shape[0]} records")
         sqw.write_to_db(df, amazon[f], db_name='stage', action='replace', hova=hova, field_lens='vchall')
 
 

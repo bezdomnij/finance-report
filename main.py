@@ -62,6 +62,7 @@ def report(hova='19'):
     stores.libreka(directory, hova)
     stores.mackin(directory, hova)
     stores.odilo(directory, hova)
+    stores.scribd(directory, hova)
 
 
 if __name__ == '__main__':
@@ -72,6 +73,6 @@ if __name__ == '__main__':
         print(argv)
         discover(argv[1:])
     # HOVA IRUNK?
-    report('0')
+    report('19')
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
