@@ -39,8 +39,8 @@ def read_network():
 
 # Press the green button in the gutter to run the script.
 def report(hova='19'):
-    directory = '/Users/frank/pd/Nextcloud/szamitas'
-    # directory = 'h:/NextCloud/Finance/szamitas'
+    # directory = '/Users/frank/pd/Nextcloud/szamitas'
+    directory = 'h:/NextCloud/Finance/szamitas'
 
     stores.tfsymbols(directory, hova)
     stores.amz_read(directory, hova)
@@ -49,12 +49,14 @@ def report(hova='19'):
     stores.bn(directory, hova)
     stores.bookmate(directory, hova)
     stores.cnpiec(directory, hova)
+    stores.dangdang(directory, hova)
     stores.dibook(directory, hova)
     stores.ekonyv_rw(directory, hova)
     stores.findaway(directory, hova)
     stores.gardners(directory, hova=hova)
     stores.google(directory, hova)
     stores.google_audio(directory, hova)
+    stores.hoopla(directory, hova)
     stores.ireader(directory, hova)
     kobo.kobo(directory, hova)
     kobo.kobo_audio(directory, hova)
@@ -73,6 +75,6 @@ if __name__ == '__main__':
         print(argv)
         discover(argv[1:])
     # HOVA IRUNK?
-    report('19')
+    report('0')
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/

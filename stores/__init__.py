@@ -16,4 +16,5 @@ from .ireader import ireader
 from .libreka import libreka
 from .mackin import mackin
 from .odilo import odilo
+from .perlego import perlego
 from .scribd import scribd

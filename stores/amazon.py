@@ -84,5 +84,5 @@ def amz_read(dirpath, hova='0'):
 
 if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO, filename='../datacamp.log', filemode='a')
-    amz_read('/Users/frank/pd/Nextcloud/szamitas', hova='0')
-    # amz_read('h:/Nextcloud/Finance/szamitas', hova='0')
+    # amz_read('/Users/frank/pd/Nextcloud/szamitas', hova='0')
+    amz_read('h:/Nextcloud/Finance/szamitas', hova='0')

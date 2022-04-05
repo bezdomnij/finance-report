@@ -5,7 +5,7 @@ import util
 TABLE = 'stg_fin2_15_dibook_v2'
 REPORT_MONTH = '2022_02_february'
 DATA_DIR = 'dibook'
-FILENAME = 'Elszámolás'
+FILENAME = 'Elsz'
 SUM_FIELD = 'Beszállító árbevétel összeg nettó'
 
 
@@ -19,5 +19,5 @@ def dibook(dirpath, hova='0'):
 
 
 if __name__ == '__main__':
-    dibook('/Users/frank/pd/Nextcloud/szamitas', hova='0')
-    # dibook('h:/Nextcloud/Finance/szamitas', hova='0')
+    # dibook('/Users/frank/pd/Nextcloud/szamitas', hova='0')
+    dibook('h:/Nextcloud/Finance/szamitas', hova='0')
