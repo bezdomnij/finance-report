@@ -39,8 +39,8 @@ def read_network():
 
 # Press the green button in the gutter to run the script.
 def report(hova='19'):
-    # directory = '/Users/frank/pd/Nextcloud/szamitas'
-    directory = 'h:/NextCloud/Finance/szamitas'
+    directory = '/Users/frank/pd/Nextcloud/szamitas'
+    # directory = 'h:/NextCloud/Finance/szamitas'
 
     stores.tfsymbols(directory, hova)
     stores.amz_read(directory, hova)
@@ -64,6 +64,7 @@ def report(hova='19'):
     stores.libreka(directory, hova)
     stores.mackin(directory, hova)
     stores.odilo(directory, hova)
+    stores.perlego(directory, hova)
     stores.scribd(directory, hova)
 
 
