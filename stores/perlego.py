@@ -16,13 +16,15 @@ def perlego(dirpath, hova='0'):
     :param dirpath: source dir, sales report
     :param hova: server to write to
     :return: nothing, just action
+    get the date from the filename - name files properly!
     """
     p = Path(dirpath).joinpath(SOURCE_DIR).joinpath(DATA_DIR)
     # disable chained assignments
     pd.options.mode.chained_assignment = None
     df_all = pd.DataFrame()
-
-    for f in p.iterdir():
+    files = [f for f in p.iterdir()]
+    files.sort()
+    for f in files:
         if f.suffix == '.csv':  # and FILENAME in f.stem:
             df = pd.read_csv(f, encoding='utf-8', header=1)
             # df['Date'] = REPORT_MONTH[:4] + '-' + REPORT_MONTH[5:7] + '-15'
@@ -35,11 +37,12 @@ def perlego(dirpath, hova='0'):
     szumma = df_all[SUM_FIELD].astype('float64').sum()
     print(f"{DATA_DIR}, {REPORT_MONTH}, total: {szumma:-10,.2f}\n")
     # df_all.info()
+    df_all = df_all.sort_values(by='Date')
     sqw.write_to_db(df_all, TABLE, hova=hova, action='replace', field_lens='vchall')
 
 
 def main():
-    perlego('/Users/frank/pd/Nextcloud/szamitas', hova='0')
+    perlego('/Users/frank/pd/Nextcloud/szamitas', hova='19')
     # perlego('h:/Nextcloud/Finance/szamitas', hova='pd')
 
 
