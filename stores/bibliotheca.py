@@ -1,9 +1,12 @@
 import logging
 import warnings
 from pathlib import Path
+
 import pandas as pd
-from engineer import sql_writer as sqw
+
+import util
 from config import MAIN_DIR, REPORT_MONTH
+from engineer import sql_writer as sqw
 
 DATA_DIR = 'bibliotheca'
 TABLE = 'stg_fin2_39_bibliotheca'
@@ -28,19 +31,20 @@ def bibliotheca(hova='0'):
     p = Path(MAIN_DIR).joinpath(REPORT_MONTH).joinpath(DATA_DIR)
     total_df = pd.DataFrame()
     all_row_count = 0
-    files = [f for f in p.iterdir() if f.suffix == '.xlsx']
+    files = util.get_file_list(p)
+    files = [f for f in files if f.suffix == '.xlsx']
     # multiple files system!!!
-    for f in files:
-        whatever = read_file_content(f)
-        if whatever:
-            current_df, rc = whatever
-            total_df = pd.concat([total_df, current_df])
-            all_row_count += rc
-    print("Bibliotheca", end='  --  ')
-    print(all_row_count, 'db record')
-    # action append: replace give a row size error - before the change to other types part in get_types
-    # !!! row size
-    sqw.write_to_db(total_df, TABLE, field_lens='mas', action='replace', hova=hova)
+    if files:
+        for f in files:
+            whatever = read_file_content(f)
+            if whatever:
+                current_df, rc = whatever
+                total_df = pd.concat([total_df, current_df])
+                all_row_count += rc
+        print(f"{DATA_DIR.upper()} {all_row_count}, db record")
+        # action append: replace give a row size error - before the change to other types part in get_types
+        # !!! row size
+        sqw.write_to_db(total_df, TABLE, field_lens='mas', action='replace', hova=hova)
 
 
 def main():

@@ -11,22 +11,24 @@ DATA_DIR = 'bn'
 
 def calc_sum(df):
     # print(df.info)
-    return df['Total Cost Payment Currency'].sum()
+    return round(df['Total Cost Payment Currency'].sum(), 3)
 
 
 def bn(hova='0'):
     df = pd.DataFrame()
     p = Path(MAIN_DIR).joinpath(REPORT_MONTH).joinpath(DATA_DIR)
     files = [f for f in p.iterdir() if f.suffix == '.csv']
-    for f in files:
-        if f.is_file() and FILENAME in f.stem:
-            df = pd.read_csv(f, header=0, sep=',')
-            print(f"{f.parents[0].stem.lower()} | {df.shape[0]} rows, {df.shape[1]}, columns")
-            df.drop(df.columns[[35]], axis=1, inplace=True)
-            print(f"{f.parents[0].stem.lower()} | {df.shape[0]} rows, {df.shape[1]}, columns")
+    if files:
+        for f in files:
 
-    print(f"{DATA_DIR.upper()}: {REPORT_MONTH} | {df.shape[0]} records, total {calc_sum(df)}")
-    sqw.write_to_db(df, TABLE, action='replace', field_lens='mas', hova=hova)
+            if f.is_file() and FILENAME in f.stem:
+                df = pd.read_csv(f, header=0, sep=',')
+                print(f"{f.parents[0].stem.lower()} | {df.shape[0]} rows, {df.shape[1]}, columns")
+                df.drop(df.columns[[35]], axis=1, inplace=True)
+                print(f"{f.parents[0].stem.lower()} | {df.shape[0]} rows, {df.shape[1]}, columns")
+
+        print(f"{DATA_DIR.upper()}: {REPORT_MONTH} | {df.shape[0]} records, total {calc_sum(df)}")
+        sqw.write_to_db(df, TABLE, action='replace', field_lens='mas', hova=hova)
 
 
 def main():

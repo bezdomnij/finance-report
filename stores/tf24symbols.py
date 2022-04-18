@@ -14,7 +14,8 @@ def tfsymbols(hova='0'):
     p = Path(MAIN_DIR).joinpath(REPORT_MONTH).joinpath(DATA_DIR)
     # disable chained assignments
     pd.options.mode.chained_assignment = None
-    for f in p.iterdir():
+    files = util.get_file_list(p)
+    for f in files:
         if f.suffix == '.xlsx' and FILENAME in f.stem and f.name[:2] != '~$':
             dimensions = util.get_content_xl_onesheet(f, TABLE, hova=hova, sum_field=SUM_FIELD,
                                                       na_field='', header=5)
@@ -22,7 +23,7 @@ def tfsymbols(hova='0'):
 
 
 def main():
-    tfsymbols(hova='pd')
+    tfsymbols(hova='0')
 
 
 if __name__ == '__main__':

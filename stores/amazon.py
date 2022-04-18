@@ -1,6 +1,6 @@
 import logging
 from pathlib import Path
-
+import util
 import pandas as pd
 from config import MAIN_DIR, REPORT_MONTH
 from checker import data_checker
@@ -66,20 +66,22 @@ def amz_read(hova='0'):
     p = Path(MAIN_DIR).joinpath(REPORT_MONTH).joinpath(DATA_DIR)
     print(p)
     amazon = {}
-    files = [item for item in p.iterdir() if item.suffix == '.xlsx' and item.stem[:2] != '~$']
-    if len(files) == 2:
-        for item in files:
-            if 'kep_print_dashboard' in item.stem or 'amazon_POD' in item.stem:
-                amazon[item] = 'stg_fin2_30666_AmazonPOD'
-            elif 'kep_dashboard' in item.stem or 'amazon_KEP' in item.stem:
-                amazon[item] = 'stg_fin2_10666_Amazon_kep'
-            else:
-                print(f'Not regular amazon file in here, {item}')
-                return
-    else:
-        print(f"Directory content not clean, has {len(files)} items.")
-        return
-    make_df(files, amazon, hova)
+    files = util.get_file_list(p)
+    if files:
+        files = [f for f in files if f.suffix == '.xlsx' and f.stem[:2] != '~$']
+        if len(files) == 2:
+            for item in files:
+                if 'kep_print_dashboard' in item.stem or 'amazon_POD' in item.stem:
+                    amazon[item] = 'stg_fin2_30666_AmazonPOD'
+                elif 'kep_dashboard' in item.stem or 'amazon_KEP' in item.stem:
+                    amazon[item] = 'stg_fin2_10666_Amazon_kep'
+                else:
+                    print(f'Not regular amazon file in here, {item}')
+                    return
+        else:
+            print(f"Directory content not clean, has {len(files)} items.")
+            return
+        make_df(files, amazon, hova)
 
 
 if __name__ == '__main__':
