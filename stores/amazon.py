@@ -9,24 +9,25 @@ from engineer import sql_writer as sqw
 DATA_DIR = 'amazon'
 
 
-def write_to_db(df, table_name, hova='19', extras=None):
-    print('Started to connect to db...')
-    if extras is None:
-        extras = {}
-    engine = sqw.get_engine(hova)
-    types = sqw.get_types(df, extras)
-    connection = engine.connect()
-    try:
-        df.to_sql(table_name, connection, if_exists='replace', index=False,
-                  method='multi', chunksize=5000, dtype=types)
-    except Exception as e:
-        logging.exception(e)
-        print(f'BIG RED FLAG, this is, {e.__str__}: check the logfile for details!!!{table_name}')
-    else:
-        print(f"Table {table_name} is written to successfully.\n")
-    finally:
-        connection.close()
-        # engine.dispose()
+#
+# def write_to_db(df, table_name, hova='19', extras=None):
+#     print('Started to connect to db...')
+#     if extras is None:
+#         extras = {}
+#     engine = sqw.get_engine(hova)
+#     types = sqw.get_types(df, extras)
+#     connection = engine.connect()
+#     try:
+#         df.to_sql(table_name, connection, if_exists='replace', index=False,
+#                   method='multi', chunksize=5000, dtype=types)
+#     except Exception as e:
+#         logging.exception(e)
+#         print(f'BIG RED FLAG, this is, {e.__str__}: check the logfile for details!!!{table_name}')
+#     else:
+#         print(f"Table {table_name} is written to successfully.\n")
+#     finally:
+#         connection.close()
+# engine.dispose()
 
 
 def make_df(files, amazon, hova='0'):

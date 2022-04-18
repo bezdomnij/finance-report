@@ -3,6 +3,7 @@ import re
 import warnings
 import pandas as pd
 from engineer import sql_writer as sqw
+from pathlib import Path
 
 
 def get_period(fname):
@@ -41,25 +42,48 @@ def check_incoming(f):
     return ftype, period
 
 
-def get_proper_df(f):
-    df = pd.read_excel(f, sheet_name='Details', header=0, index_col=None)
+def get_proper_df(f, sheet_name='Details'):
+    with warnings.catch_warnings(record=True):
+        warnings.simplefilter("always")
+        df = pd.read_excel(f, sheet_name=sheet_name, header=0, index_col=None)
     col2 = [col.strip() for col in df.columns]
     renamed_cols = dict(zip(df.columns, col2))
     df2 = df.rename(columns=renamed_cols)
     return df2
 
 
-def get_content_xl_onesheet(file, table, hova, sum_field, na_field, header=0):
-    with warnings.catch_warnings(record=True):
-        warnings.simplefilter("always")
-        df = pd.read_excel(file, header=header, index_col=None)  # , engine='openpyxl')  # ???
+def get_content_xl_onesheet(file, table, hova, sum_field, na_field, header=0, sheet_name=''):
+    record_count, szumma = 0, 0
+    if sheet_name == '':
+        with warnings.catch_warnings(record=True):
+            warnings.simplefilter("always")
+            df = pd.read_excel(file, header=header, index_col=None)  # , engine='openpyxl')  # ???
+    else:
+        df = get_proper_df(file, sheet_name=sheet_name)
     if na_field != '':
         df = df[df[na_field].notna()]
-    summa = df[sum_field].sum()
-    record_count = df.shape[0]
-    print(f"file: {file.stem}, osszege: {round(df[sum_field].sum(), 3):-12,.2f}, {record_count} records")
+    if not df.empty:
+        szumma = df[sum_field].sum()
+        record_count = df.shape[0]
+        # print(df.columns)
+    print(
+        f"{file.parents[0].stem.lower()} | file: {file.stem}, osszege: {round(szumma, 3):-18,.2f}, {record_count} records")
     sqw.write_to_db(df, table, db_name='stage', action='replace', field_lens='vchall', hova=hova)
-    return record_count, summa
+    return record_count, szumma
+
+
+def get_file_list(p):
+    try:
+        files = [f for f in p.iterdir()]
+    except FileNotFoundError as e:
+        print(f'{p.name.upper()} - {e}\n')
+        return None
+    else:
+        return files
+
+
+def get_path(dirpath, directory):
+    return Path(dirpath).joinpath(directory)
 
 
 def main():

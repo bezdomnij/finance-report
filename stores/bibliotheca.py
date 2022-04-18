@@ -3,34 +3,34 @@ import warnings
 from pathlib import Path
 import pandas as pd
 from engineer import sql_writer as sqw
+from config import MAIN_DIR, REPORT_MONTH
 
 DATA_DIR = 'bibliotheca'
-SOURCE_DIR = '2022_02_february'
 TABLE = 'stg_fin2_39_bibliotheca'
 
 
 def read_file_content(f):
     df = pd.DataFrame()
     warnings.simplefilter('ignore')
-    if f.is_file() and f.suffix == '.xlsx' and f.name[:2] != '~$':
+    if f.is_file() and f.name[:2] != '~$':
         try:
             df = pd.read_excel(f, header=0, engine='openpyxl')
         except Exception as e:
             print(f'error: {e} es {e.__str__}')
             logging.exception(msg=f"ERR: {e}\nazonkivul: {e.__str__()}")
     if df.shape[0] != 0:  # only if there is any content
-        print(f"Itt van barmi: '{f.name}', {df.shape[0]} db record", end=" -- ")
+        print(f"{f.parents[0].stem.lower()} barmi is, itt: '{f.name}', {df.shape[0]} db record", end=" -- ")
         print(round(df['Total proceeds due to publisher'].sum(), 2))
         return df, df.shape[0]
 
 
-def bibliotheca(dirpath, hova='19'):
-    p = Path(dirpath).joinpath(SOURCE_DIR).joinpath(DATA_DIR)
+def bibliotheca(hova='0'):
+    p = Path(MAIN_DIR).joinpath(REPORT_MONTH).joinpath(DATA_DIR)
     total_df = pd.DataFrame()
     all_row_count = 0
-
+    files = [f for f in p.iterdir() if f.suffix == '.xlsx']
     # multiple files system!!!
-    for f in p.iterdir():
+    for f in files:
         whatever = read_file_content(f)
         if whatever:
             current_df, rc = whatever
@@ -44,9 +44,7 @@ def bibliotheca(dirpath, hova='19'):
 
 
 def main():
-    directory = 'h:/NextCloud/Finance/szamitas'
-    # directory = '/Users/frank/pd/Nextcloud/szamitas'
-    bibliotheca(directory, '19')
+    bibliotheca('0')
 
 
 if __name__ == '__main__':

@@ -38,15 +38,15 @@ def read_network():
 
 
 # Press the green button in the gutter to run the script.
-def report(hova='19'):
+def report(hova='0'):
     directory = '/Users/frank/pd/Nextcloud/szamitas'
     # directory = 'h:/NextCloud/Finance/szamitas'
 
-    stores.tfsymbols(directory, hova)
+    stores.tfsymbols(hova)
     stores.amz_read(hova)
     apples.apple(hova)
-    stores.bibliotheca(directory, hova)  # DELETE table first!!!
-    stores.bn(directory, hova)
+    stores.bibliotheca(hova)  # DELETE table first!!!
+    stores.bn(hova)
     stores.bookmate(directory, hova)
     stores.cnpiec(directory, hova)
     stores.dangdang(directory, hova)
