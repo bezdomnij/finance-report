@@ -42,8 +42,8 @@ def perlego(dirpath, hova='0'):
 
 
 def main():
-    perlego('/Users/frank/pd/Nextcloud/szamitas', hova='19')
-    # perlego('h:/Nextcloud/Finance/szamitas', hova='pd')
+    # perlego('/Users/frank/pd/Nextcloud/szamitas', hova='19')
+    perlego('h:/Nextcloud/Finance/szamitas', hova='pd')
 
 
 if __name__ == '__main__':

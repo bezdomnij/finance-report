@@ -4,11 +4,12 @@ import logging
 import urllib
 from sys import argv
 from urllib import request
+
 from smb.SMBHandler import SMBHandler
 
-from apple_finrep import apples
-import stores
 import kobo
+import stores
+from apple_finrep import apples
 
 
 def discover(to_find):
@@ -39,8 +40,8 @@ def read_network():
 
 # Press the green button in the gutter to run the script.
 def report(hova='0'):
-    directory = '/Users/frank/pd/Nextcloud/szamitas'
-    # directory = 'h:/NextCloud/Finance/szamitas'
+    # directory = '/Users/frank/pd/Nextcloud/szamitas'
+    directory = 'h:/NextCloud/Finance/szamitas'
 
     stores.tfsymbols(hova)
     stores.amz_read(hova)
