@@ -43,8 +43,8 @@ def report(hova='19'):
     # directory = 'h:/NextCloud/Finance/szamitas'
 
     stores.tfsymbols(directory, hova)
-    stores.amz_read(directory, hova)
-    apples.apple(directory, hova)
+    stores.amz_read(hova)
+    apples.apple(hova)
     stores.bibliotheca(directory, hova)  # DELETE table first!!!
     stores.bn(directory, hova)
     stores.bookmate(directory, hova)

@@ -2,11 +2,10 @@ import logging
 from pathlib import Path
 
 import pandas as pd
-
+from config import MAIN_DIR, REPORT_MONTH
 from checker import data_checker
 from engineer import sql_writer as sqw
 
-SOURCE_DIR = '2022_02_february'
 DATA_DIR = 'amazon'
 
 
@@ -31,8 +30,8 @@ def write_to_db(df, table_name, hova='19', extras=None):
 
 
 def make_df(files, amazon, hova='0'):
-    marker = 'KEP'
     for f in files:
+        marker = 'KEP'
         df = pd.read_excel(f, header=0, index_col=None)
         if ' ' in df.columns:
             df.drop(df.columns[[27]], axis=1, inplace=True)
@@ -42,14 +41,14 @@ def make_df(files, amazon, hova='0'):
 
         szumma = df['Payment Amount'].sum()
 
-        if 'KEP' in f.stem:
+        if 'KEP_DASH' in f.stem.upper():
             currencies = df['Payment Amount Currency'].unique()
             currencies.sort()
             for c in currencies:
                 df2 = df[df['Payment Amount Currency'] == c]
                 print(f"{c}: {df2['Payment Amount'].sum():-18,.2f}")
 
-        if 'POD' in f.stem:
+        if 'PRINT_DASH' in f.stem.upper():
             currencies = df['Royalty Amount Currency'].unique()
             marker = 'POD'
             df = df.sort_values(by=['Royalty Amount Currency'])
@@ -58,12 +57,12 @@ def make_df(files, amazon, hova='0'):
                 df2 = df[df['Royalty Amount Currency'] == c]
                 print(f"{c}: {df2['Payment Amount'].sum():-18,.2f}")
 
-        print(f"\n{DATA_DIR}_{marker}, {SOURCE_DIR}, total: {szumma:-10,.2f}, \n{df.shape[0]} records")
+        print(f"\n{DATA_DIR.upper()}_{marker}, {REPORT_MONTH}, total: {szumma:-10,.2f}, \n{df.shape[0]} records")
         sqw.write_to_db(df, amazon[f], db_name='stage', action='replace', hova=hova, field_lens='vchall')
 
 
-def amz_read(dirpath, hova='0'):
-    p = Path(dirpath).joinpath(SOURCE_DIR).joinpath(DATA_DIR)
+def amz_read(hova='0'):
+    p = Path(MAIN_DIR).joinpath(REPORT_MONTH).joinpath(DATA_DIR)
     print(p)
     amazon = {}
     files = [item for item in p.iterdir() if item.suffix == '.xlsx' and item.stem[:2] != '~$']
@@ -74,7 +73,7 @@ def amz_read(dirpath, hova='0'):
             elif 'kep_dashboard' in item.stem or 'amazon_KEP' in item.stem:
                 amazon[item] = 'stg_fin2_10666_Amazon_kep'
             else:
-                print(f'Not regular amazon file in here, {dirpath}')
+                print(f'Not regular amazon file in here, {item}')
                 return
     else:
         print(f"Directory content not clean, has {len(files)} items.")
@@ -84,5 +83,4 @@ def amz_read(dirpath, hova='0'):
 
 if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO, filename='../datacamp.log', filemode='a')
-    # amz_read('/Users/frank/pd/Nextcloud/szamitas', hova='0')
-    amz_read('h:/Nextcloud/Finance/szamitas', hova='0')
+    amz_read(hova='0')

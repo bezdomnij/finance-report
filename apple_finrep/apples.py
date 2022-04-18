@@ -1,13 +1,12 @@
+import logging
 from pathlib import Path
 
 import numpy as np
 import pandas as pd
-import logging
-
+from config import MAIN_DIR, REPORT_MONTH
 from engineer import sql_writer as sqw
 
 DATA_DIR = 'apple'
-SOURCE_DIR = '2022_02_february'
 CURRENCIES = {
     'US': 'USD',
     'CH': 'CHF',
@@ -59,8 +58,8 @@ def read_file_content(c):
     return aggregated_df
 
 
-def read_apple(dir_path, hova='19'):
-    p = Path(dir_path).joinpath(SOURCE_DIR).joinpath(DATA_DIR)
+def read_apple(hova='19'):
+    p = Path(MAIN_DIR).joinpath(REPORT_MONTH).joinpath(DATA_DIR)
     total_df = pd.DataFrame()
     # files = [f for f in p.iterdir()]
     # template_df = pd.read_csv(files[0], sep='\t', index_col=None)
@@ -78,8 +77,8 @@ def read_apple(dir_path, hova='19'):
     # return pd.DataFrame(sum_df, index=None)
 
 
-def apple(dir_path, hova='19'):
-    resultset_df = read_apple(dir_path, hova=hova)
+def apple(hova='19'):
+    resultset_df = read_apple(hova=hova)
     print(resultset_df)
 
     writer = pd.ExcelWriter('output.xlsx', engine='xlsxwriter')
@@ -102,8 +101,7 @@ def apple(dir_path, hova='19'):
 
 
 def main():
-    # apple('/Users/frank/pd/Nextcloud/szamitas', 'pd')
-    apple('h:/NextCloud/Finance/szamitas', '19')
+    apple('0')
 
 
 if __name__ == '__main__':
