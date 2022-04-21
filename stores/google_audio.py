@@ -3,9 +3,9 @@ import pandas as pd
 from engineer import sql_writer as sqw
 from util import util
 import logging
+from config import MAIN_DIR, REPORT_MONTH
 
 DATA_DIR = 'google_audio'
-SOURCE_DIR = '2022_02_february'
 TABLE = 'stg_fin2_20012_google_audio'
 
 
@@ -20,9 +20,9 @@ def get_df(f):
 		return df
 
 
-def google_audio(finrep_dir, hova='0'):
+def google_audio(hova='0'):
 	files = []
-	src = Path(finrep_dir).joinpath(SOURCE_DIR).joinpath(DATA_DIR)
+	src = Path(MAIN_DIR).joinpath(REPORT_MONTH).joinpath(DATA_DIR)
 	for f in src.iterdir():
 		if f.suffix == '':
 			continue
@@ -58,4 +58,4 @@ def google_audio(finrep_dir, hova='0'):
 if __name__ == '__main__':
 	logging.basicConfig(level=logging.INFO, filename='datacamp.log', filemode='w', format='%(asctime)s %(message)s')
 	# google_audio('/Users/frank/pd/finance_report/2021_12_december', hova='0')
-	google_audio('h:/NextCloud/Finance/szamitas', hova='0')
+	google_audio(hova='0')
