@@ -3,6 +3,8 @@ from pathlib import Path
 
 import numpy as np
 import pandas as pd
+
+import util
 from config import MAIN_DIR, REPORT_MONTH
 from engineer import sql_writer as sqw
 
@@ -58,29 +60,30 @@ def read_file_content(c):
     return aggregated_df
 
 
-def read_apple(hova='19'):
+def read_apple(hova='0'):
     p = Path(MAIN_DIR).joinpath(REPORT_MONTH).joinpath(DATA_DIR)
     total_df = pd.DataFrame()
-    # files = [f for f in p.iterdir()]
+    files = util.get_file_list(p)
     # template_df = pd.read_csv(files[0], sep='\t', index_col=None)
     # total = pd.DataFrame(columns=[x for x in template_df.columns], index=None)  # collective df
-    for c in p.iterdir():
-        if c.suffix == '.txt':
-            total_df = pd.concat([total_df, read_file_content(c)])
+    if files:
+        for f in files:
+            if f.suffix == '.txt':
+                total_df = pd.concat([total_df, read_file_content(f)])
 
-    print("EXTENDED PARTNER SHARE", total_df['Extended Partner Share'].sum())
-    print("UNITS SOLD", int(total_df['Quantity'].sum()))
-    print("line count", total_df.shape[0])
-    # write!!!
-    sqw.write_to_db(total_df, 'stg_fin2_1_apple', action='replace', hova=hova, field_lens='vchall')
-    return pd.DataFrame(sum_df, index=range(1, 23))
-    # return pd.DataFrame(sum_df, index=None)
+        print("EXTENDED PARTNER SHARE", total_df['Extended Partner Share'].sum())
+        print("UNITS SOLD", int(total_df['Quantity'].sum()))
+        print("line count", total_df.shape[0])
+        # write!!!
+        sqw.write_to_db(total_df, 'stg_fin2_1_apple', action='replace', hova=hova, field_lens='vchall')
+        return pd.DataFrame(sum_df, index=range(1, 23))
+        # return pd.DataFrame(sum_df, index=None)
 
 
-def apple(hova='19'):
+def apple(hova='0'):
     resultset_df = read_apple(hova=hova)
     print(resultset_df)
-
+    # all txt files result - writing to Excel
     writer = pd.ExcelWriter('output.xlsx', engine='xlsxwriter')
     resultset_df.to_excel(writer, sheet_name='Sheet1', index=False, na_rep='NaN')
     workbook = writer.book
@@ -91,7 +94,7 @@ def apple(hova='19'):
     worksheet1.set_column('D:D', None, format1)
     worksheet1.set_column('C:C', None, f3)
 
-    # Auto-adjust columns' width
+    # Auto-adjust columns' width - writing to Excel
     for column in resultset_df:
         column_width = max(resultset_df[column].astype(str).map(len).max() + 4, len(column))
         col_idx = resultset_df.columns.get_loc(column)
@@ -101,7 +104,7 @@ def apple(hova='19'):
 
 
 def main():
-    apple('0')
+    apple('pd')
 
 
 if __name__ == '__main__':
