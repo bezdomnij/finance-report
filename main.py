@@ -52,7 +52,7 @@ def report(hova='0'):
     stores.cnpiec(directory, hova)
     stores.dangdang(directory, hova)
     stores.dibook(directory, hova)
-    stores.ekonyv_rw(directory, hova)
+    stores.ekonyv(directory, hova)
     stores.findaway(directory, hova)
     stores.gardners(directory, hova=hova)
     stores.google(directory, hova)

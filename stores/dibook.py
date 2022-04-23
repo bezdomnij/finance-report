@@ -1,16 +1,15 @@
 from pathlib import Path
-
+from config import MAIN_DIR, REPORT_MONTH
 import util
 
 TABLE = 'stg_fin2_15_dibook_v2'
-REPORT_MONTH = '2022_02_february'
 DATA_DIR = 'dibook'
 FILENAME = 'Elsz'
 SUM_FIELD = 'Beszállító árbevétel összeg nettó'
 
 
-def dibook(dirpath, hova='0'):
-    p = Path(dirpath).joinpath(REPORT_MONTH).joinpath(DATA_DIR)
+def dibook(hova='0'):
+    p = Path(MAIN_DIR).joinpath(REPORT_MONTH).joinpath(DATA_DIR)
     for f in p.iterdir():
         if f.is_file() and f.suffix in ['.xls', '.xlsx'] and FILENAME in f.stem:
             dimensions = util.get_content_xl_onesheet(f, TABLE, hova=hova, sum_field=SUM_FIELD,
@@ -19,5 +18,4 @@ def dibook(dirpath, hova='0'):
 
 
 if __name__ == '__main__':
-    # dibook('/Users/frank/pd/Nextcloud/szamitas', hova='0')
-    dibook('h:/Nextcloud/Finance/szamitas', hova='0')
+    dibook(hova='pd')

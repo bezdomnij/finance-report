@@ -10,6 +10,7 @@ from engineer import sql_writer as sqw
 
 DATA_DIR = 'bibliotheca'
 TABLE = 'stg_fin2_39_bibliotheca'
+SUM_FIELD = 'Total proceeds due to publisher'
 
 
 def read_file_content(f):
@@ -22,8 +23,8 @@ def read_file_content(f):
             print(f'error: {e} es {e.__str__}')
             logging.exception(msg=f"ERR: {e}\nazonkivul: {e.__str__()}")
     if df.shape[0] != 0:  # only if there is any content
-        print(f"{f.parents[0].stem.lower()} barmi is, itt: '{f.name}', {df.shape[0]} db record", end=" -- ")
-        print(round(df['Total proceeds due to publisher'].sum(), 2))
+        print(f"{f.parents[0].stem.lower()} barmi is, itt: '{f.name}', "
+              f"{df.shape[0]} db record, osszeg: {round(df[SUM_FIELD].sum(), 2):10,.2f}")
         return df, df.shape[0]
 
 
@@ -32,8 +33,6 @@ def bibliotheca(hova='0'):
     total_df = pd.DataFrame()
     all_row_count = 0
     files = util.get_file_list(p)
-    files = [f for f in files if f.suffix == '.xlsx']
-    # multiple files system!!!
     if files:
         for f in files:
             whatever = read_file_content(f)
@@ -48,7 +47,7 @@ def bibliotheca(hova='0'):
 
 
 def main():
-    bibliotheca('0')
+    bibliotheca('pd')
 
 
 if __name__ == '__main__':
