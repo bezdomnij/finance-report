@@ -6,7 +6,7 @@ from .bookmate import bookmate
 from .cnpiec import cnpiec
 from .dangdang import dangdang
 from .dibook import dibook
-from .ekonyv import ekonyv_rw
+from .ekonyv import ekonyv
 from .findaway import findaway
 from .gardners import gardners
 from .google import google
