@@ -30,7 +30,7 @@ def dreame_month(hova='0'):
 
 
 def main():
-    dreame_month('pd')
+    dreame_month('0')
 
 
 if __name__ == '__main__':

@@ -29,7 +29,7 @@ def ekonyv(hova='0'):
 
 
 def main():
-    ekonyv('pd')
+    ekonyv('0')
 
 
 if __name__ == '__main__':
