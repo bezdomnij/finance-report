@@ -59,9 +59,9 @@ def report(hova='0'):
     stores.google_audio(hova)
     stores.hoopla(hova)
     stores.ireader(hova)
-    kobo.kobo(directory, hova)
-    kobo.kobo_audio(directory, hova)
-    kobo.kobo_plus(directory, hova)
+    kobo.kobo(hova)
+    kobo.kobo_audio(hova)
+    kobo.kobo_plus(hova)
     stores.libreka(hova)
     stores.mackin(hova)
     stores.odilo(hova)
@@ -77,6 +77,6 @@ if __name__ == '__main__':
         print(argv)
         discover(argv[1:])
     # HOVA IRUNK?
-    report('0')
+    report('19')
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
