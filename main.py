@@ -40,9 +40,6 @@ def read_network():
 
 # Press the green button in the gutter to run the script.
 def report(hova='0'):
-    # directory = '/Users/frank/pd/Nextcloud/szamitas'
-    directory = 'h:/NextCloud/Finance/szamitas'
-
     stores.tfsymbols(hova)
     stores.amz_read(hova)
     apples.apple(hova)
