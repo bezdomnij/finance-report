@@ -10,8 +10,8 @@ from pathlib import Path
 import util
 from config import MAIN_DIR, REPORT_MONTH
 
-TABLE_1 = 'stg_rts2_32_bookmate_revshare'
-TABLE_2 = 'stg_rts2_32_bookmate_subscr'
+TABLE_1 = 'stg_fin2_32_bookmate_revshare'
+TABLE_2 = 'stg_fin2_32_bookmate_subscr'
 FILENAME_1 = 'REVSHARE (Content 2 Connect)'
 FILENAME_2 = 'PublishDrive (Content 2 Connect)'
 SOURCE_DIR = '2022_08_aug'
