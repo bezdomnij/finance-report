@@ -1,5 +1,5 @@
 from pathlib import Path
-from config import MAIN_DIR, REPORT_MONTH
+from config import MAIN_DIR, REPORT_MONTH, HOVA
 import util
 
 TABLE = 'stg_fin2_15_dibook_v2'
@@ -8,7 +8,7 @@ FILENAME = 'Elsz'
 SUM_FIELD = 'Beszállító árbevétel összeg nettó'
 
 
-def dibook(hova='0'):
+def dibook(hova=HOVA):
     p = Path(MAIN_DIR).joinpath(REPORT_MONTH).joinpath(DATA_DIR)
     files = util.get_file_list(p)
     if files:

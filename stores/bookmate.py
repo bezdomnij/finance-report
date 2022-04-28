@@ -8,7 +8,7 @@ multiple destinations - two tables
 
 from pathlib import Path
 import util
-from config import MAIN_DIR, REPORT_MONTH
+from config import MAIN_DIR, REPORT_MONTH, HOVA
 
 TABLE_1 = 'stg_fin2_32_bookmate_revshare'
 TABLE_2 = 'stg_fin2_32_bookmate_subscr'
@@ -21,7 +21,7 @@ SUM_FIELD = 'Revenue'
 
 # file, table, hova, sumfield, nafield, header=0
 
-def bookmate(hova='0'):
+def bookmate(hova=HOVA):
     p = Path(MAIN_DIR).joinpath(REPORT_MONTH).joinpath(DATA_DIR)
     szumma = 0
     record_count = 0

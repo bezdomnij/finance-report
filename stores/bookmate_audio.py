@@ -2,7 +2,7 @@ from pathlib import Path
 import util
 from engineer import sql_writer as sqw
 import pandas as pd
-from config import MAIN_DIR, REPORT_MONTH
+from config import MAIN_DIR, REPORT_MONTH, HOVA
 
 TABLE = 'stg_fin2_20032_bookmate_audio'
 FILENAME = 'PublishDrive__Content_2_Connect__Audio_'
@@ -12,7 +12,7 @@ DATA_DIR = 'bookmate audio'
 SUM_FIELD = 'Converted Revenue'
 
 
-def bookmate_audio(hova='0'):
+def bookmate_audio(hova=HOVA):
     p = Path(MAIN_DIR).joinpath(SOURCE_DIR).joinpath(DATA_DIR)
     files = util.get_file_list(p)
     if files:

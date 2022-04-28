@@ -1,7 +1,7 @@
 from pathlib import Path
 import pandas as pd
 import util
-from config import MAIN_DIR
+from config import MAIN_DIR, HOVA
 
 TABLE = 'stg_fin2_42_Dreame_Q'
 FILENAME = 'PublishDrive-Sales Report-Q'
@@ -14,7 +14,7 @@ DATA_DIR = 'dreame'
 SUM_FIELD = 'Royalties(US$)'
 
 
-def dreame_month(hova='0'):
+def dreame_month(hova=HOVA):
     p = Path(MAIN_DIR).joinpath(SOURCE_DIR).joinpath(DATA_DIR)
 
     # disable chained assignments

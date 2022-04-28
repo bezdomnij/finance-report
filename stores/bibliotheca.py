@@ -5,7 +5,7 @@ from pathlib import Path
 import pandas as pd
 
 import util
-from config import MAIN_DIR, REPORT_MONTH
+from config import MAIN_DIR, REPORT_MONTH, HOVA
 from engineer import sql_writer as sqw
 
 DATA_DIR = 'bibliotheca'
@@ -28,7 +28,7 @@ def read_file_content(f):
         return df, df.shape[0]
 
 
-def bibliotheca(hova='0'):
+def bibliotheca(hova=HOVA):
     p = Path(MAIN_DIR).joinpath(REPORT_MONTH).joinpath(DATA_DIR)
     total_df = pd.DataFrame()
     all_row_count = 0

@@ -3,7 +3,7 @@ import pandas as pd
 
 import util
 from engineer import sql_writer as sqw
-from config import MAIN_DIR, REPORT_MONTH
+from config import MAIN_DIR, REPORT_MONTH, HOVA
 
 TABLE = 'stg_rts2_40_koboplus'
 FILENAME = 'Sub_PublishDrive Kft_CONTENT2CONNECT_DRM_'
@@ -15,7 +15,7 @@ SUM_FIELD = 'Total publisher revenue share in payable currency ($)'
 # adjust MONTH to pick the source file
 
 
-def kobo_plus(hova='0'):
+def kobo_plus(hova=HOVA):
     p = Path(MAIN_DIR).joinpath(REPORT_MONTH).joinpath(DATA_DIR)
     files = util.get_file_list(p)
     if files is None:

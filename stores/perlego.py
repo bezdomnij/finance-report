@@ -1,7 +1,7 @@
 from pathlib import Path
 import pandas as pd
 from engineer import sql_writer as sqw
-from config import MAIN_DIR, REPORT_MONTH
+from config import MAIN_DIR, REPORT_MONTH, HOVA
 import util
 
 TABLE = 'stg_fin2_37_perlego'
@@ -11,7 +11,7 @@ SUM_FIELD = 'royalty_share'
 OFFSET = -1
 
 
-def perlego(hova='0'):
+def perlego(hova=HOVA):
     """
     All perlego files in source directory back to 19. All assembled together and written once to db
     :param hova: server to write to

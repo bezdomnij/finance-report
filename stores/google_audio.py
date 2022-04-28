@@ -3,7 +3,7 @@ import pandas as pd
 from engineer import sql_writer as sqw
 from util import util
 import logging
-from config import MAIN_DIR, REPORT_MONTH
+from config import MAIN_DIR, REPORT_MONTH, HOVA
 
 DATA_DIR = 'google_audio'
 TABLE = 'stg_fin2_20012_google_audio'
@@ -20,17 +20,17 @@ def get_df(f):
 		return df
 
 
-def google_audio(hova='0'):
-	files = []
-	src = Path(MAIN_DIR).joinpath(REPORT_MONTH).joinpath(DATA_DIR)
-	for f in src.iterdir():
-		if f.suffix == '':
-			continue
-		ftype, period = util.check_google_file_name(f.name)
-		if ftype == 'ga':
-			files.append(f)
-	for f in files:
-		df = get_df(f)
+def google_audio(hova=HOVA):
+    files = []
+    src = Path(MAIN_DIR).joinpath(REPORT_MONTH).joinpath(DATA_DIR)
+    for f in src.iterdir():
+        if f.suffix == '':
+            continue
+        ftype, period = util.check_google_file_name(f.name)
+        if ftype == 'ga':
+            files.append(f)
+    for f in files:
+        df = get_df(f)
 		if df.shape[0] > 0:
 			print(f"{f.name}, SUM: {df['Earnings Amount'].astype(float).sum():.2f}")
 

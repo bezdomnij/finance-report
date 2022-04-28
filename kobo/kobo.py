@@ -1,5 +1,5 @@
 from pathlib import Path
-from config import MAIN_DIR, REPORT_MONTH
+from config import MAIN_DIR, REPORT_MONTH, HOVA
 import util
 from engineer import sql_writer as sqw
 
@@ -10,7 +10,7 @@ DATA_DIR = 'kobo'
 SUM_FIELD = 'Net Due (Payable Currency)'
 
 
-def kobo(hova='0'):
+def kobo(hova=HOVA):
     p = Path(MAIN_DIR).joinpath(REPORT_MONTH).joinpath(DATA_DIR)
     files = util.get_file_list(p)
 

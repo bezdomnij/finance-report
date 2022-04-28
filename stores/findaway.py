@@ -3,7 +3,7 @@ from pathlib import Path
 import util
 from engineer import sql_writer as sqw
 import pandas as pd
-from config import MAIN_DIR, REPORT_MONTH
+from config import MAIN_DIR, REPORT_MONTH, HOVA
 
 TABLE = 'stg_fin2_20101_findaway_'
 FILENAME = 'Digital Royalty)'
@@ -11,7 +11,7 @@ DATA_DIR = 'findaway'
 SUM_FIELD = 'Royalty Payable'
 
 
-def findaway(hova='0'):
+def findaway(hova=HOVA):
     p = Path(MAIN_DIR).joinpath(REPORT_MONTH).joinpath(DATA_DIR)
     files = util.get_file_list(p)
     record_count = 0

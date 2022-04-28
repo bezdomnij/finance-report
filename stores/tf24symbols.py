@@ -1,7 +1,7 @@
 from pathlib import Path
 
 import pandas as pd
-from config import MAIN_DIR, REPORT_MONTH
+from config import MAIN_DIR, REPORT_MONTH, HOVA
 import util
 
 TABLE = 'stg_fin2_28_24symbols_data'
@@ -10,7 +10,7 @@ DATA_DIR = '24symbols'
 SUM_FIELD = 'Income to invoice'
 
 
-def tfsymbols(hova='0'):
+def tfsymbols(hova=HOVA):
     p = Path(MAIN_DIR).joinpath(REPORT_MONTH).joinpath(DATA_DIR)
     # disable chained assignments
     pd.options.mode.chained_assignment = None

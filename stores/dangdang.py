@@ -1,7 +1,7 @@
 from pathlib import Path
 import pandas as pd
 from engineer import sql_writer as sqw
-from config import MAIN_DIR, REPORT_MONTH
+from config import MAIN_DIR, REPORT_MONTH, HOVA
 import util
 
 TABLE = 'stg_fin2_38_dangdang'
@@ -10,7 +10,7 @@ DATA_DIR = 'dangdang'
 SUM_FIELD = 'Payment Amount'
 
 
-def dangdang(hova='0'):
+def dangdang(hova=HOVA):
     p = Path(MAIN_DIR).joinpath(REPORT_MONTH).joinpath(DATA_DIR)
     # disable chained assignments
     pd.options.mode.chained_assignment = None

@@ -3,7 +3,7 @@ from pathlib import Path
 import util
 from engineer import sql_writer as sqw
 import pandas as pd
-from config import MAIN_DIR, REPORT_MONTH
+from config import MAIN_DIR, REPORT_MONTH, HOVA
 
 TABLE = 'stg_fin2_41_hoopla'
 FILENAME = '-Publish Drive Reporting'
@@ -11,7 +11,7 @@ DATA_DIR = 'hoopla'
 SUM_FIELD = 'Royalty Due'
 
 
-def hoopla(hova='0'):
+def hoopla(hova=HOVA):
     p = Path(MAIN_DIR).joinpath(REPORT_MONTH).joinpath(DATA_DIR)
     files = util.get_file_list(p)
     if files:

@@ -1,7 +1,7 @@
 from pathlib import Path
 import pandas as pd
 from util import util
-from config import MAIN_DIR, REPORT_MONTH
+from config import MAIN_DIR, REPORT_MONTH, HOVA
 
 TABLE = 'stg_rts2_35_cnpiec'
 FILENAME = '_CNPeReading Sales Report_PublishDrive'
@@ -9,7 +9,7 @@ DATA_DIR = 'cnpiec'
 SUM_FIELD = 'Net amount to Publisher'
 
 
-def cnpiec(hova='0'):
+def cnpiec(hova=HOVA):
     p = Path(MAIN_DIR).joinpath(REPORT_MONTH).joinpath(DATA_DIR)
     # disable chained assignments
     files = util.get_file_list(p)

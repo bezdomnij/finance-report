@@ -3,7 +3,7 @@ import pandas as pd
 
 import util
 from engineer import sql_writer as sqw
-from config import MAIN_DIR, REPORT_MONTH
+from config import MAIN_DIR, REPORT_MONTH, HOVA
 
 TABLE = 'stg_rts2_06_ekonyv'
 FILENAME = '-ekonyv-fogyas'
@@ -11,7 +11,7 @@ DATA_DIR = 'ekönyv'
 SUM_FIELD = 'Nettó fizetendő'
 
 
-def ekonyv(hova='0'):
+def ekonyv(hova=HOVA):
     p = Path(MAIN_DIR).joinpath(REPORT_MONTH).joinpath(DATA_DIR)
     files = util.get_file_list(p)
     if files:

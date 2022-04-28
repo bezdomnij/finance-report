@@ -28,7 +28,7 @@ import pandas as pd
 
 import util
 from engineer import sql_writer as sqw
-from config import MAIN_DIR, REPORT_MONTH
+from config import MAIN_DIR, REPORT_MONTH, HOVA
 
 TABLE = 'stg_rts2_20002_kobo_audio'
 FILENAME = 'Content 2 Connect Audio_CONTENT2CONNECT_AUDIO_'
@@ -36,7 +36,7 @@ DATA_DIR = 'kobo audio'
 SUM_FIELD = 'Net Due (Payable Currency)'
 
 
-def kobo_audio(hova='0'):
+def kobo_audio(hova=HOVA):
     p = Path(MAIN_DIR).joinpath(REPORT_MONTH).joinpath(DATA_DIR)
     files = util.get_file_list(p)
     if files is None:

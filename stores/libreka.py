@@ -4,14 +4,14 @@ import util
 from engineer import sql_writer as sqw
 import pandas as pd
 import numpy as np
-from config import MAIN_DIR, REPORT_MONTH
+from config import MAIN_DIR, REPORT_MONTH, HOVA
 
 DATA_DIR = 'libreka'
 TABLE_EBOOK = 'stg_fin2_16_tolino_libreka_agency'
 TABLE_SUB = 'stg_fin2_16_tolino_libreka_subscr'
 
 
-def libreka(hova='0'):
+def libreka(hova=HOVA):
     sheet_names = ['E-Book-Verkäufe', 'Hörbuch-Verkäufe', 'Kostenlostitel', 'Abo und Flatrate']
     df_dict = {}
     libreka_all_ebook = pd.DataFrame()

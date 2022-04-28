@@ -3,7 +3,7 @@ from pathlib import Path
 import pandas as pd
 
 import util
-from config import MAIN_DIR, REPORT_MONTH
+from config import MAIN_DIR, REPORT_MONTH, HOVA
 from engineer import sql_writer as sqw
 
 DATA_DIR = 'gardners'
@@ -38,7 +38,7 @@ def forget_comma(one, two, three):
     return temp1.replace(',', ';'), temp2.replace(',', ';'), temp3.replace(',', ';')
 
 
-def gardners(hova='0'):
+def gardners(hova=HOVA):
     p = Path(MAIN_DIR).joinpath(REPORT_MONTH).joinpath(DATA_DIR)
     files = util.get_file_list(p)
     if files:

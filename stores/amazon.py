@@ -2,7 +2,7 @@ import logging
 from pathlib import Path
 import util
 import pandas as pd
-from config import MAIN_DIR, REPORT_MONTH
+from config import MAIN_DIR, REPORT_MONTH, HOVA
 from checker import data_checker
 from engineer import sql_writer as sqw
 
@@ -30,7 +30,7 @@ DATA_DIR = 'amazon'
 # engine.dispose()
 
 
-def make_df(files, amazon, hova='0'):
+def make_df(files, amazon, hova=HOVA):
     for f in files:
         marker = 'KEP'
         df = pd.read_excel(f, header=0, index_col=None)
@@ -62,7 +62,7 @@ def make_df(files, amazon, hova='0'):
         sqw.write_to_db(df, amazon[f], db_name='stage', action='replace', hova=hova, field_lens='vchall')
 
 
-def amz_read(hova='0'):
+def amz_read(hova=HOVA):
     p = Path(MAIN_DIR).joinpath(REPORT_MONTH).joinpath(DATA_DIR)
     print(p)
     amazon = {}

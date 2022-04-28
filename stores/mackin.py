@@ -3,7 +3,7 @@ import pandas as pd
 
 import util
 from engineer import sql_writer as sqw
-from config import MAIN_DIR, REPORT_MONTH
+from config import MAIN_DIR, REPORT_MONTH, HOVA
 
 TABLE = 'stg_fin2_36_mackin_data'
 FILENAME = 'PUBLISHDRIVE_EBOOKS_2022_'
@@ -11,7 +11,7 @@ DATA_DIR = 'mackin'
 SUM_FIELD = 'Ext Cost'
 
 
-def mackin(hova='0'):
+def mackin(hova=HOVA):
     """
     ireader sales needs catalog info, sales file has no isbn, just ireader id
     get the isbn from the catalog that has both

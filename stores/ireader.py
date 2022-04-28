@@ -3,7 +3,7 @@ import pandas as pd
 
 import util
 from engineer import sql_writer as sqw
-from config import MAIN_DIR, REPORT_MONTH
+from config import MAIN_DIR, REPORT_MONTH, HOVA
 
 TABLE = 'stg_fin2_46_ireader'
 FILENAME = 'PublishDrive_Monthly Sales Detail Data@'
@@ -11,7 +11,7 @@ DATA_DIR = 'ireader'
 SUM_FIELD = 'Sharing Amount'
 
 
-def ireader(hova='0'):
+def ireader(hova=HOVA):
     """
     ireader sales needs catalog info, sales file has no isbn, just ireader id
     get the isbn from the catalog that has both

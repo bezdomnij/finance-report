@@ -2,7 +2,7 @@ from pathlib import Path
 import pandas as pd
 from engineer import sql_writer as sqw
 import logging
-from config import MAIN_DIR, REPORT_MONTH
+from config import MAIN_DIR, REPORT_MONTH, HOVA
 
 TABLE = 'stg_fin2_5_bn'
 FILENAME = 'export'
@@ -14,7 +14,7 @@ def calc_sum(df):
     return round(df['Total Cost Payment Currency'].sum(), 3)
 
 
-def bn(hova='0'):
+def bn(hova=HOVA):
     df = pd.DataFrame()
     p = Path(MAIN_DIR).joinpath(REPORT_MONTH).joinpath(DATA_DIR)
     files = [f for f in p.iterdir() if f.suffix == '.csv']

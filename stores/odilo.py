@@ -8,7 +8,7 @@ multiple destinations - two tables
 
 from pathlib import Path
 import util
-from config import MAIN_DIR, REPORT_MONTH
+from config import MAIN_DIR, REPORT_MONTH, HOVA
 
 TABLE_1 = 'stg_fin2_33_odilo_ppu'
 TABLE_2 = 'stg_fin2_33_odilo_agency'
@@ -19,7 +19,7 @@ SUM_FIELD = 'Totals (USD)'
 # SUM_FIELD = 'Totals'  # valamelyik
 
 
-def odilo(hova='0'):
+def odilo(hova=HOVA):
     p = Path(MAIN_DIR).joinpath(REPORT_MONTH).joinpath(DATA_DIR)
     szumma = 0
     record_count = 0

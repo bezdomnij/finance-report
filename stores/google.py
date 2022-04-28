@@ -1,6 +1,6 @@
 import logging
 from pathlib import Path
-from config import MAIN_DIR, REPORT_MONTH
+from config import MAIN_DIR, REPORT_MONTH, HOVA
 import pandas as pd
 import util
 from engineer import sql_writer as sqw
@@ -9,7 +9,7 @@ DATA_DIR = 'google'
 TABLE = 'stg_fin2_12_googleplay'
 
 
-def google(hova='0'):
+def google(hova=HOVA):
     df = pd.DataFrame()
     src = Path(MAIN_DIR).joinpath(REPORT_MONTH).joinpath(DATA_DIR)
     files = util.get_file_list(src)

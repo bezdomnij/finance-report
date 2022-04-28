@@ -39,31 +39,31 @@ def read_network():
 
 
 # Press the green button in the gutter to run the script.
-def report(hova='0'):
-    stores.tfsymbols(hova)
-    stores.amz_read(hova)
-    apples.apple(hova)
-    stores.bibliotheca(hova)  # DELETE table first!!!
-    stores.bn(hova)
-    stores.bookmate(hova)
-    stores.cnpiec(hova)
-    stores.dangdang(hova)
-    stores.dibook(hova)
-    stores.ekonyv(hova)
-    stores.findaway(hova)
-    stores.gardners(hova)
-    stores.google(hova)
-    stores.google_audio(hova)
-    stores.hoopla(hova)
-    stores.ireader(hova)
-    kobo.kobo(hova)
-    kobo.kobo_audio(hova)
-    kobo.kobo_plus(hova)
-    stores.libreka(hova)
-    stores.mackin(hova)
-    stores.odilo(hova)
-    stores.perlego(hova)
-    stores.scribd(hova)
+def report():
+    stores.tfsymbols()
+    stores.amz_read()
+    apples.apple()
+    stores.bibliotheca()  # DELETE table first!!!
+    stores.bn()
+    stores.bookmate()
+    stores.cnpiec()
+    stores.dangdang()
+    stores.dibook()
+    stores.ekonyv()
+    stores.findaway()
+    stores.gardners()
+    stores.google()
+    stores.google_audio()
+    stores.hoopla()
+    stores.ireader()
+    kobo.kobo()
+    kobo.kobo_audio()
+    kobo.kobo_plus()
+    stores.libreka()
+    stores.mackin()
+    stores.odilo()
+    stores.perlego()
+    stores.scribd()
 
 
 if __name__ == '__main__':
@@ -74,6 +74,6 @@ if __name__ == '__main__':
         print(argv)
         discover(argv[1:])
     # HOVA IRUNK?
-    report('19')
+    report()
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/

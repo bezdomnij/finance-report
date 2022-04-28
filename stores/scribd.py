@@ -4,7 +4,7 @@ import pandas as pd
 
 import util
 from engineer import sql_writer as sqw
-from config import MAIN_DIR, REPORT_MONTH
+from config import MAIN_DIR, REPORT_MONTH, HOVA
 
 FILENAME_1 = 'PublishDrive_scribd_subscriptions_payouts_'
 FILENAME_2 = 'PublishDrive2_scribd_subscriptions_payouts_'
@@ -13,7 +13,7 @@ DATA_DIR = 'scribd'
 SUM_FIELD = 'Amount owed for this interaction'
 
 
-def scribd(hova='0'):
+def scribd(hova=HOVA):
     all_df = pd.DataFrame()
     p = Path(MAIN_DIR).joinpath(REPORT_MONTH).joinpath(DATA_DIR)
     files = util.get_file_list(p)
