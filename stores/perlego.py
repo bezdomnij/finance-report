@@ -44,7 +44,7 @@ def perlego(hova='0'):
 
 
 def main():
-    perlego(hova='19')
+    perlego(hova='pd')
 
 
 if __name__ == '__main__':
