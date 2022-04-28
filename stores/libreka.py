@@ -1,22 +1,25 @@
 from pathlib import Path
+
+import util
 from engineer import sql_writer as sqw
 import pandas as pd
 import numpy as np
+from config import MAIN_DIR, REPORT_MONTH
 
 DATA_DIR = 'libreka'
-REPORT_MONTH = '2022_02_february'
 TABLE_EBOOK = 'stg_fin2_16_tolino_libreka_agency'
 TABLE_SUB = 'stg_fin2_16_tolino_libreka_subscr'
 
 
-def libreka(dirpath, hova='0'):
+def libreka(hova='0'):
     sheet_names = ['E-Book-Verkäufe', 'Hörbuch-Verkäufe', 'Kostenlostitel', 'Abo und Flatrate']
     df_dict = {}
     libreka_all_ebook = pd.DataFrame()
     libreka_all_sub = pd.DataFrame()
-    p = Path(dirpath).joinpath(REPORT_MONTH).joinpath(DATA_DIR)
     ebook_sum, sub_sum = 0, 0
-    for f in p.iterdir():
+    p = Path(MAIN_DIR).joinpath(REPORT_MONTH).joinpath(DATA_DIR)
+    files = util.get_file_list(p)
+    for f in files:
         if f.suffix == '.xlsx' and '5288812' in f.stem and f.stem[:2] != '~$':
             try:
                 df_dict = pd.read_excel(f, sheet_name=None, header=0)
@@ -55,8 +58,7 @@ def libreka(dirpath, hova='0'):
 
 
 def main():
-    # main('/Users/frank/pd/sales_report', hova='0')
-    libreka('h:/NextCloud/Finance/szamitas', hova='19')
+    libreka(hova='19')
 
 
 if __name__ == '__main__':
