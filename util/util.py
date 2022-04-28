@@ -85,10 +85,9 @@ def get_file_list(p):
     try:
         files = [f for f in p.iterdir()]
     except FileNotFoundError as e:
-        print(f'{p.name.upper()} - {e}\n')
+        print(f'apparenty the {p.stem} directory is not there\n{p.name.upper()} - {e}\n')
         return None
-    else:
-        return files
+    return files
 
 
 def get_path(dirpath, directory):
