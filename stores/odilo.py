@@ -8,21 +8,24 @@ multiple destinations - two tables
 
 from pathlib import Path
 import util
+from config import MAIN_DIR, REPORT_MONTH
 
 TABLE_1 = 'stg_fin2_33_odilo_ppu'
 TABLE_2 = 'stg_fin2_33_odilo_agency'
-FILENAME_1 = 'RE_February_2022_PublishDrive_PPU_Sales_Report'
-FILENAME_2 = 'RE_February_2022_PublishDrive_Sales_Report'
-SOURCE_DIR = '2022_02_february'
-REPORT_MONTH = '2022_02_february'
+FILENAME_1 = '_PublishDrive_PPU_Sales_Report'
+FILENAME_2 = '_PublishDrive_Sales_Report'
 DATA_DIR = 'odilo'
-SUM_FIELD = 'Totals'
+SUM_FIELD = 'Totals (USD)'
 
 
-def odilo(dirpath, hova='0'):
-    p = Path(dirpath).joinpath(SOURCE_DIR).joinpath(DATA_DIR)
+# SUM_FIELD = 'Totals'  # valamelyik
+
+
+def odilo(hova='0'):
+    p = Path(MAIN_DIR).joinpath(REPORT_MONTH).joinpath(DATA_DIR)
     szumma = 0
     record_count = 0
+    print(p)
 
     for f in p.iterdir():
         r, s = 0, 0
@@ -38,8 +41,7 @@ def odilo(dirpath, hova='0'):
 
 
 def main():
-    odilo('/Users/frank/pd/Nextcloud/szamitas', hova='0')
-    # odilo('h:/Nextcloud/Finance/szamitas', hova='0')
+    odilo(hova='19')
 
 
 if __name__ == '__main__':

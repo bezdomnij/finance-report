@@ -40,7 +40,7 @@ def perlego(hova='0'):
 
     szumma = df_all[SUM_FIELD].astype('float64').sum()
     print(f"{DATA_DIR}, {REPORT_MONTH}, total: {szumma:-10,.2f}\n")
-    print(df_all.head())
+    print(df_all.tail())
     df_all = df_all.sort_values(by='Date')
     sqw.write_to_db(df_all, TABLE, hova=hova, action='replace', field_lens='vchall')
 
