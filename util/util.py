@@ -76,7 +76,8 @@ def get_content_xl_onesheet(file, table, hova, sum_field, na_field, header=0, sh
         record_count = df.shape[0]
         # print(df.columns)
     print(
-        f"{file.parents[0].stem.lower()} | file: {file.stem}, osszege: {round(szumma, 3):-18,.2f}, {record_count} records")
+        f"{file.parents[0].stem.lower()} | file: {file.stem}, osszege: "
+        f"{round(szumma, 3):-18,.2f}, {record_count} records")
     sqw.write_to_db(df, table, db_name='stage', action='replace', field_lens='vchall', hova=hova)
     return record_count, szumma
 
@@ -85,7 +86,7 @@ def get_file_list(p):
     try:
         files = [f for f in p.iterdir()]
     except FileNotFoundError as e:
-        print(f'apparenty the {p.stem} directory is not there\n{p.name.upper()} - {e}\n')
+        print(f'apparenty the `{p.stem}` directory is not there\n{p.name.upper()} - {e}\n')
         return None
     return files
 

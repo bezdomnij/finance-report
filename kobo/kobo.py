@@ -24,17 +24,16 @@ def kobo(hova='0'):
                 szumma = df2[SUM_FIELD].sum()
                 size = df2.shape[0]
                 print('!!! A frame merete', df2.shape[0])
+                print(f.stem)
                 if 'DRM' in f.stem:
                     marker = '_DRM'
-                    print(f)
                     print(f"{DATA_DIR}{marker}, {REPORT_MONTH}, {size} records, total: {szumma:-12,.3f}")
                     sqw.write_to_db(df2, TABLE_1, hova=hova, field_lens='vchall')
                 else:
-                    print(f)
                     print(f"{DATA_DIR}{marker}, {REPORT_MONTH}, {size} records, total: {szumma:-12,.3f}")
                     sqw.write_to_db(df2, TABLE_2, hova=hova, field_lens='vchall')
     else:
-        print(f"Looks like the {DATA_DIR} directory is empty.")
+        print(f"Looks like the `{DATA_DIR}` directory is empty.")
 
 
 def main():

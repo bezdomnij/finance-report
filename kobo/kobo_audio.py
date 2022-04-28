@@ -25,30 +25,37 @@ df2 = df.rename({
 
 from pathlib import Path
 import pandas as pd
+
+import util
 from engineer import sql_writer as sqw
+from config import MAIN_DIR, REPORT_MONTH
 
 TABLE = 'stg_rts2_20002_kobo_audio'
-FILENAME = 'Content 2 Connect Audio_CONTENT2CONNECT_AUDIO_Feb 2022'
-SOURCE_DIR = '2022_02_february'
-REPORT_MONTH = '2022_02_february'
+FILENAME = 'Content 2 Connect Audio_CONTENT2CONNECT_AUDIO_'
 DATA_DIR = 'kobo audio'
 SUM_FIELD = 'Net Due (Payable Currency)'
 
 
-def kobo_audio(dirpath, hova='0'):
-    p = Path(dirpath).joinpath(SOURCE_DIR).joinpath(DATA_DIR)
-    for file in p.iterdir():
-        if file.stem[:2] != '~$' and 'Sub' not in file.stem:
-            df = pd.read_excel(file, sheet_name='Details', header=0)
-            szumma = df[SUM_FIELD].sum()
-            print(f"{DATA_DIR}, {REPORT_MONTH}, total: {szumma:-10,.3f}")
-            print(df.shape[0], 'records')
-            sqw.write_to_db(df, TABLE, hova=hova, field_lens='vchall')
+def kobo_audio(hova='0'):
+    p = Path(MAIN_DIR).joinpath(REPORT_MONTH).joinpath(DATA_DIR)
+    files = util.get_file_list(p)
+    if files is None:
+        return
+    if len(files) > 0:
+        for file in p.iterdir():
+            if file.stem[:2] != '~$' and 'Sub' not in file.stem:
+                df = pd.read_excel(file, sheet_name='Details', header=0)
+                szumma = df[SUM_FIELD].sum()
+                print(file.stem)
+                print(f"{DATA_DIR}, {REPORT_MONTH}, total: {szumma:-10,.3f}")
+                print(df.shape[0], 'records')
+                sqw.write_to_db(df, TABLE, hova=hova, field_lens='vchall')
+    else:
+        print(f"Looks like the `{DATA_DIR}` directory is empty.")
 
 
 def main():
-    kobo_audio('h:/NextCloud/Finance/szamitas', hova='0')
-    # kobo_audio('/Users/frank/pd/Nextcloud', hova='0')
+    kobo_audio(hova='0')
 
 
 if __name__ == '__main__':
