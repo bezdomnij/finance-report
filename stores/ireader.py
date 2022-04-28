@@ -5,7 +5,7 @@ import util
 from engineer import sql_writer as sqw
 from config import MAIN_DIR, REPORT_MONTH
 
-TABLE = 'stg_rts2_46_ireader'
+TABLE = 'stg_fin2_46_ireader'
 FILENAME = 'PublishDrive_Monthly Sales Detail Data@'
 DATA_DIR = 'ireader'
 SUM_FIELD = 'Sharing Amount'

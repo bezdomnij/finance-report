@@ -32,9 +32,7 @@ def perlego(hova='0'):
             if OFFSET != 0:
                 base_date = util.set_date(REPORT_MONTH, OFFSET)
             df['Date'] = base_date[:4] + '-' + base_date[5:7] + '-15'
-            # df['Date'] = f.stem[:4] + '-' + f.stem[4:6] + '-15'
             df[SUM_FIELD] = df[SUM_FIELD].str.strip().str.slice(start=1)
-
             print(f"{f.stem}\t{round(df[SUM_FIELD].astype('float64').sum(), 2)}\t{df.shape[0]}\trecords")
             df_all = df_all.append(df)
 
