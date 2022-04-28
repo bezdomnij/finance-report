@@ -12,6 +12,15 @@ def get_period(fname):
     return prog.findall(fname)
 
 
+def set_date(report_month, offset):
+    parts = report_month.split('_')
+    year, month = int(parts[0]), int(parts[1])
+    temp_month = month + offset
+    month = month + offset if temp_month != 0 else 12
+    year = year if temp_month != 0 else year - 1
+    return '_'.join([str(year), str(month).zfill(2)])
+
+
 def check_google_file_name(fname):
     result = get_period(fname)
     name_and_extension = fname.split('.')
