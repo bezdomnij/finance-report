@@ -32,6 +32,7 @@ def google(hova=HOVA):
             finally:
                 # print(df.columns)
                 # print(df.info)
+                print(f.stem)
                 df['Earnings Amount'] = df['Earnings Amount'].str.replace(',', '.')
                 print(f"{f.name} SUM: {df['Earnings Amount'].astype(float).sum():.2f}, row count: {df.shape[0]}")
         sqw.write_to_db(df, TABLE, action='replace', hova=hova, field_lens='vchall')
@@ -39,4 +40,4 @@ def google(hova=HOVA):
 
 if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO, filename='datacamp.log', filemode='w', format='%(asctime)s %(message)s')
-    google(hova='19')
+    google(hova='pd')
