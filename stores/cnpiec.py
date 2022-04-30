@@ -23,7 +23,7 @@ def cnpiec(hova=HOVA):
                 record_count, szumma = util.get_content_xl_onesheet(f, TABLE, hova, SUM_FIELD, 'Order date', header=0)
                 print(f"{DATA_DIR}, {REPORT_MONTH}, osszeg: {szumma:-10,.2f}, {record_count} records\n")
     else:
-        print(f"Looks like the `{DATA_DIR}` directory is empty.")
+        util.empty(DATA_DIR)
 
 
 def main():

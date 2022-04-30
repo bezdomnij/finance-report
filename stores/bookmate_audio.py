@@ -33,7 +33,7 @@ def bookmate_audio(hova=HOVA):
                 print(f"{DATA_DIR.upper()}, file: {f.stem},\t, report: {REPORT_MONTH}, "
                       f"total: {szumma:-10,.2f}\t, {record_count} records")
     else:
-        print(f"Looks like the `{DATA_DIR}` directory is empty.")
+        util.empty(DATA_DIR)
 
 
 def main():

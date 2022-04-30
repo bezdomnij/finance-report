@@ -56,11 +56,11 @@ def libreka(hova=HOVA):
         print(libreka_all_ebook['Datum'].min(), libreka_all_ebook['Datum'].max())
         print(libreka_all_sub['Datum'].min(), libreka_all_sub['Datum'].max())
 
-        print(f"ebooks: {ebook_sum:-10,.2f}; subs: {sub_sum:-10,.2f}; sumsum: {ebook_sum + sub_sum:-10,.2f}")
         sqw.write_to_db(libreka_all_sub, TABLE_SUB, field_lens='vchall', hova=hova, action='replace')
         sqw.write_to_db(libreka_all_ebook, TABLE_EBOOK, field_lens='vchall', hova=hova, action='replace')
+        print(f"ebooks: {ebook_sum:-10,.2f}; subs: {sub_sum:-10,.2f}; sumsum: {ebook_sum + sub_sum:-10,.2f}\n")
     else:
-        print(f"Looks like the `{DATA_DIR}` directory is empty.")
+        util.empty(DATA_DIR)
 
 
 def main():

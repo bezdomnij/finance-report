@@ -36,7 +36,7 @@ def ireader(hova=HOVA):
                 sqw.write_to_db(df, TABLE, action='replace', hova=hova, field_lens='vchall')
                 print(f"{DATA_DIR.upper()} | {REPORT_MONTH}, total: {szumma:-10,.3f}\t{record_count:10,d} records\n")
     else:
-        print(f"Looks like the `{DATA_DIR}` directory is empty.")
+        util.empty(DATA_DIR)
 
 
 def main():

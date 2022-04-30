@@ -29,7 +29,7 @@ def dreame_month(hova=HOVA):
                 print(f"{DATA_DIR.upper()}, file: {f.stem},\t, report: {SOURCE_DIR}, "
                       f"total: {szumma:-10,.2f}\t, {record_count} records\n")
     else:
-        print(f"Looks like the `{DATA_DIR}` directory is empty.")
+        util.empty(DATA_DIR)
 
 
 def main():

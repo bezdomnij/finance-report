@@ -32,7 +32,7 @@ def google_audio(hova=HOVA):
     for f in files:
         df = get_df(f)
         if df.shape[0] > 0:
-            print(f"{f.name}, SUM: {df['Earnings Amount'].astype(float).sum():.2f}")
+            print(f"{DATA_DIR.upper()} | {f.name}, SUM: {df['Earnings Amount'].astype(float).sum():.2f}\n")
 
     # finds the latest and write that one to sql
     if len(files) > 1:

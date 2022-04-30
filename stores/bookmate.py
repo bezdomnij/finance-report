@@ -41,7 +41,7 @@ def bookmate(hova=HOVA):
 
         print(f"{DATA_DIR}, {REPORT_MONTH}, total: {szumma:-10,.3f}, {record_count} records\n")
     else:
-        print(f"Looks like the `{DATA_DIR}` directory is empty.")
+        util.empty(DATA_DIR)
 
 
 if __name__ == '__main__':

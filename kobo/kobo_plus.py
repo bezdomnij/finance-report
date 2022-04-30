@@ -28,12 +28,13 @@ def kobo_plus(hova=HOVA):
                 renamed_cols = dict(zip(df.columns, col2))
                 df2 = df.rename(columns=renamed_cols)
                 szumma = df2[SUM_FIELD].sum()
+                record_count = df.shape[0]
                 print(f.stem)
-                print(f"{DATA_DIR}, {REPORT_MONTH}, total: {szumma:-10,.3f}")
-                print(df2.shape[0], 'records')
                 sqw.write_to_db(df2, TABLE, hova=hova, field_lens='vchall')
+                print(
+                    f"{(DATA_DIR + ' PLUS').upper()} | {REPORT_MONTH}, total: {szumma:-10,.2f}, {record_count:10,d} records\n")
     else:
-        print(f"Looks like the `{DATA_DIR}` directory is empty.")
+        util.empty(DATA_DIR)
 
 
 def main():

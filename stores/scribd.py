@@ -40,7 +40,7 @@ def scribd(hova=HOVA):
         sqw.write_to_db(all_df, TABLE, db_name='stage', action='replace', field_lens='vchall', hova=hova)
         print(f"{DATA_DIR.upper()} | {REPORT_MONTH}, total: {szumma:-10,.2f} | {record_count:10d} records\n")
     else:
-        print(f"Looks like the `{DATA_DIR}` directory is empty.")
+        util.empty(DATA_DIR)
 
 
 def main():

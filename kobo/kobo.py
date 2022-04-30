@@ -27,13 +27,12 @@ def kobo(hova=HOVA):
                 print(f.stem)
                 if 'DRM' in f.stem:
                     marker = '_DRM'
-                    print(f"{DATA_DIR}{marker}, {REPORT_MONTH}, {size} records, total: {szumma:-12,.3f}")
                     sqw.write_to_db(df2, TABLE_1, hova=hova, field_lens='vchall')
                 else:
-                    print(f"{DATA_DIR}{marker}, {REPORT_MONTH}, {size} records, total: {szumma:-12,.3f}")
                     sqw.write_to_db(df2, TABLE_2, hova=hova, field_lens='vchall')
+                print(f"{(DATA_DIR + marker).upper()}, {REPORT_MONTH}, {size} records, total: {szumma:-12,.3f}\n")
     else:
-        print(f"Looks like the `{DATA_DIR}` directory is empty.")
+        util.empty(DATA_DIR)
 
 
 def main():

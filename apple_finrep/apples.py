@@ -66,7 +66,7 @@ def read_apple(hova=HOVA):
     files = util.get_file_list(p)
     # template_df = pd.read_csv(files[0], sep='\t', index_col=None)
     # total = pd.DataFrame(columns=[x for x in template_df.columns], index=None)  # collective df
-    if files:
+    if len(files) > 0:
         for f in files:
             if f.suffix == '.txt':
                 total_df = pd.concat([total_df, read_file_content(f)])
@@ -78,6 +78,8 @@ def read_apple(hova=HOVA):
         sqw.write_to_db(total_df, 'stg_fin2_1_apple', action='replace', hova=hova, field_lens='vchall')
         return pd.DataFrame(sum_df, index=range(1, 23))
         # return pd.DataFrame(sum_df, index=None)
+    else:
+        util.empty(DATA_DIR)
 
 
 def apple(hova=HOVA):

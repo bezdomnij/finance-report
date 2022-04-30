@@ -85,7 +85,7 @@ def amz_read(hova=HOVA):
             return
         make_df(files, amazon, hova)
     else:
-        print(f"Looks like the `{DATA_DIR}` directory is empty.")
+        util.empty(DATA_DIR)
 
 
 if __name__ == '__main__':

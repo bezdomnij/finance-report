@@ -29,7 +29,7 @@ def ekonyv(hova=HOVA):
                 szumma = df[SUM_FIELD].sum()
                 print(f"{DATA_DIR}, {REPORT_MONTH}, total: {szumma:-10,.3f}\n")
     else:
-        print(f"Looks like the `{DATA_DIR}` directory is empty.")
+        util.empty(DATA_DIR)
 
 
 def main():

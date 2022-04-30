@@ -36,10 +36,11 @@ def google(hova=HOVA):
                 # print(df.info)
                 print(f.stem)
                 df['Earnings Amount'] = df['Earnings Amount'].str.replace(',', '.')
-                print(f"{f.name} SUM: {df['Earnings Amount'].astype(float).sum():.2f}, row count: {df.shape[0]}")
-        sqw.write_to_db(df, TABLE, action='replace', hova=hova, field_lens='vchall')
+                sqw.write_to_db(df, TABLE, action='replace', hova=hova, field_lens='vchall')
+                print(f"{DATA_DIR.upper()} | {f.name} SUM: {df['Earnings Amount'].astype(float).sum():.2f}, "
+                      f"row count: {df.shape[0]} records\n")
     else:
-        print(f"Looks like the `{DATA_DIR}` directory is empty.")
+        util.empty(DATA_DIR)
 
 
 if __name__ == '__main__':

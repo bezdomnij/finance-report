@@ -46,12 +46,12 @@ def kobo_audio(hova=HOVA):
             if file.stem[:2] != '~$' and 'Sub' not in file.stem:
                 df = pd.read_excel(file, sheet_name='Details', header=0)
                 szumma = df[SUM_FIELD].sum()
+                record_count = df.shape[0]
                 print(file.stem)
-                print(f"{DATA_DIR}, {REPORT_MONTH}, total: {szumma:-10,.3f}")
-                print(df.shape[0], 'records')
                 sqw.write_to_db(df, TABLE, hova=hova, field_lens='vchall')
+                print(f"{DATA_DIR.upper()} | {REPORT_MONTH}, total: {szumma:-10,.2f}, {record_count:10,d} records\n")
     else:
-        print(f"Looks like the `{DATA_DIR}` directory is empty.")
+        util.empty(DATA_DIR)
 
 
 def main():

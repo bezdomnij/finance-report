@@ -40,12 +40,13 @@ def perlego(hova=HOVA):
                 df_all = df_all.append(df)
 
         szumma = df_all[SUM_FIELD].astype('float64').sum()
+        sqw.write_to_db(df_all, TABLE, hova=hova, action='replace', field_lens='vchall')
         print(f"{DATA_DIR.upper()} | {REPORT_MONTH}, total: {szumma:-10,.2f}\n")
         print(df_all.tail())
-        df_all = df_all.sort_values(by='Date')
-        sqw.write_to_db(df_all, TABLE, hova=hova, action='replace', field_lens='vchall')
+        print()
+        # df_all = df_all.sort_values(by='Date')
     else:
-        print(f"Looks like the `{DATA_DIR}` directory is empty.")
+        util.empty(DATA_DIR)
 
 
 def main():

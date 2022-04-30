@@ -61,10 +61,11 @@ def gardners(hova=HOVA):
                 df = df[df[SUM_FIELD] != '']
                 df[SUM_FIELD] = df[SUM_FIELD].astype(float)
                 szumma = df[SUM_FIELD].sum()
+                record_count = df.shape[0]
                 sqw.write_to_db(df, TABLE, action='replace', hova=hova, field_lens='vchall')
-                print(f"{DATA_DIR}, {REPORT_MONTH}, total: {szumma:-10,.2f}\n")
+                print(f"{DATA_DIR.upper()} | {REPORT_MONTH}, total: {szumma:-10,.2f}, {record_count} records\n")
     else:
-        print(f"Looks like the `{DATA_DIR}` directory is empty.")
+        util.empty(DATA_DIR)
 
 
 def main():

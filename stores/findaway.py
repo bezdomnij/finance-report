@@ -28,9 +28,9 @@ def findaway(hova=HOVA):
                     record_count += df.shape[0]
                     table = TABLE + s.lower()
                     sqw.write_to_db(df, table, hova=hova, action='replace', field_lens='vchall')
-                print(record_count)
+                print(f"{DATA_DIR.upper()} | {record_count} records\n")
     else:
-        print(f"Looks like the `{DATA_DIR}` directory is empty.")
+        util.empty(DATA_DIR)
 
 
 def main():

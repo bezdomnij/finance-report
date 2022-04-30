@@ -31,7 +31,7 @@ def dangdang(hova=HOVA):
                 print(f"{DATA_DIR.upper()} {REPORT_MONTH}, osszeg: {szumma:-10,.2f}, {record_count} records\n")
                 sqw.write_to_db(df, TABLE, action='replace', hova=hova, field_lens='vchall')
     else:
-        print(f"Looks like the `{DATA_DIR}` directory is empty.")
+        util.empty(DATA_DIR)
 
 
 def main():

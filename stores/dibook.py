@@ -20,7 +20,7 @@ def dibook(hova=HOVA):
                                                           na_field='ISBN', header=0)
                 print(f"{DATA_DIR} | {REPORT_MONTH}, {dimensions[0]} records, total: {dimensions[1]:-16,.2f}\n")
     else:
-        print(f"Looks like the `{DATA_DIR}` directory is empty.")
+        util.empty(DATA_DIR)
 
 
 if __name__ == '__main__':

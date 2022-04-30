@@ -38,9 +38,9 @@ def odilo(hova=HOVA):
                 record_count += r
                 szumma += s
 
-        print(f"{DATA_DIR.upper()}, {REPORT_MONTH}, total: {szumma:-10,.2f}, {record_count:10,d} records\n")
+        print(f"{DATA_DIR.upper()} | {REPORT_MONTH}, total: {szumma:-10,.2f}, {record_count:10,d} records\n")
     else:
-        print(f"Looks like the `{DATA_DIR}` directory is empty.")
+        util.empty(DATA_DIR)
 
 
 def main():
