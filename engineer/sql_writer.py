@@ -1,12 +1,13 @@
 import logging
 import os
 import sys
-
+from dotenv import load_dotenv
 import sqlalchemy.sql.sqltypes
 from sqlalchemy import create_engine, exc
 
 
 def write_to_db(df, table_name, db_name='stage', action='replace', hova='19', field_lens=None):
+    load_dotenv()
     if hova == '0':
         return
     if field_lens is None:
@@ -40,13 +41,14 @@ def write_to_db(df, table_name, db_name='stage', action='replace', hova='19', fi
 
 def get_engine(which_one, db_name='stage'):
     if which_one == '19':
-        username = os.getenv('U_19')
-        pw = os.getenv('P_19')
-        server = '192.168.2.19'
+        # username = os.getenv('U_19')
+        username = os.getenv('S19_USER')
+        pw = os.getenv('S19_PW')
+        server = os.getenv('SERVER_1')
     elif which_one == 'pd':
-        username = os.getenv('U_PD')
-        pw = os.getenv('P_PD')
-        server = '10.123.4.13'
+        username = os.getenv('PD_USER')
+        pw = os.getenv('PD_PW')
+        server = os.getenv('SERVER_2')
     else:
         print("No destination SERVER given! Exiting")
         sys.exit(1)
