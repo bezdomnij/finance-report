@@ -58,7 +58,8 @@ def libreka(hova=HOVA):
 
         sqw.write_to_db(libreka_all_sub, TABLE_SUB, field_lens='vchall', hova=hova, action='replace')
         sqw.write_to_db(libreka_all_ebook, TABLE_EBOOK, field_lens='vchall', hova=hova, action='replace')
-        print(f"ebooks: {ebook_sum:-10,.2f}; subs: {sub_sum:-10,.2f}; sumsum: {ebook_sum + sub_sum:-10,.2f}\n")
+        print(f"{DATA_DIR.upper()} | ebooks: {ebook_sum:-10,.2f}; subs: {sub_sum:-10,.2f}; "
+              f"sumsum: {ebook_sum + sub_sum:-10,.2f}\n")
     else:
         util.empty(DATA_DIR)
 

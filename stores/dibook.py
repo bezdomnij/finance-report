@@ -18,7 +18,7 @@ def dibook(hova=HOVA):
             if f.is_file() and f.suffix in ['.xls', '.xlsx'] and FILENAME in f.stem:
                 dimensions = util.get_content_xl_onesheet(f, TABLE, hova=hova, sum_field=SUM_FIELD,
                                                           na_field='ISBN', header=0)
-                print(f"{DATA_DIR} | {REPORT_MONTH}, {dimensions[0]} records, total: {dimensions[1]:-16,.2f}\n")
+                print(f"{DATA_DIR.upper()} | {REPORT_MONTH}, {dimensions[0]} records, total: {dimensions[1]:-16,.2f}\n")
     else:
         util.empty(DATA_DIR)
 

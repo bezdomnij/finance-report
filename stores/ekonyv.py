@@ -27,7 +27,7 @@ def ekonyv(hova=HOVA):
                 print(f"{df.shape[0]} db, Összesen ekönyv: {round(df['Nettó fizetendő'].sum(), 2)}")
                 sqw.write_to_db(df, TABLE, hova=hova, action='replace', field_lens='vchall')
                 szumma = df[SUM_FIELD].sum()
-                print(f"{DATA_DIR}, {REPORT_MONTH}, total: {szumma:-10,.3f}\n")
+                print(f"{DATA_DIR.upper()}, {REPORT_MONTH}, total: {szumma:-10,.3f}\n")
     else:
         util.empty(DATA_DIR)
 

@@ -70,10 +70,10 @@ def read_apple(hova=HOVA):
         for f in files:
             if f.suffix == '.txt':
                 total_df = pd.concat([total_df, read_file_content(f)])
-        # print("EXTENDED PARTNER SHARE", total_df['Extended Partner Share'].sum())
+        print("EXTENDED PARTNER SHARE", total_df['Extended Partner Share'].sum())
 
         print("UNITS SOLD", int(total_df['Quantity'].sum()))
-        print("line count", total_df.shape[0])
+        print(f"{DATA_DIR.upper()} | {total_df.shape[0]} records\n")
         # write!!!
         sqw.write_to_db(total_df, 'stg_fin2_1_apple', action='replace', hova=hova, field_lens='vchall')
         return pd.DataFrame(sum_df, index=range(1, 23))
@@ -84,7 +84,7 @@ def read_apple(hova=HOVA):
 
 def apple(hova=HOVA):
     resultset_df = read_apple(hova=hova)
-    print(resultset_df)
+    # print(resultset_df)
     # all txt files result - writing to Excel
     writer = pd.ExcelWriter('output.xlsx', engine='xlsxwriter')
     resultset_df.to_excel(writer, sheet_name='Sheet1', index=False, na_rep='NaN')
