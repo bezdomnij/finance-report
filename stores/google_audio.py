@@ -10,14 +10,14 @@ TABLE = 'stg_fin2_20012_google_audio'
 
 
 def get_df(f):
-	df = pd.DataFrame()
-	try:
-		df = pd.read_csv(f, encoding='utf-16', sep='\t', header=0, index_col=None)
-	except Exception as e:
-		print(f"mar konvertaltuk..., error: {e}")
-		df = pd.read_csv(f, encoding='utf-8', sep='\t', header=0, index_col=None)
-	finally:
-		return df
+    df = pd.DataFrame()
+    try:
+        df = pd.read_csv(f, encoding='utf-16', sep='\t', header=0, index_col=None)
+    except Exception as e:
+        print(f"mar konvertaltuk..., error: {e}")
+        df = pd.read_csv(f, encoding='utf-8', sep='\t', header=0, index_col=None)
+    finally:
+        return df
 
 
 def google_audio(hova=HOVA):
@@ -31,31 +31,31 @@ def google_audio(hova=HOVA):
             files.append(f)
     for f in files:
         df = get_df(f)
-		if df.shape[0] > 0:
-			print(f"{f.name}, SUM: {df['Earnings Amount'].astype(float).sum():.2f}")
+        if df.shape[0] > 0:
+            print(f"{f.name}, SUM: {df['Earnings Amount'].astype(float).sum():.2f}")
 
-	# finds the latest and write that one to sql
-	if len(files) > 1:
-		period_file = {}
-		for f in files:
-			name_parts = f.stem.split('_')
-			period = tuple(name_parts[-1].split('-'))
-			f_key = int(period[0]) * 100 + int(period[1])
-			# print(f_key)
-			period_file[f_key] = f
-		the_one_to_write = period_file[sorted(period_file.keys())[-1]]
-		df = get_df(the_one_to_write)
-	elif len(files) == 1:
-		df = get_df(files[0])
-	else:
-		print("No writeable Google file there...")
-		return
-	# df.info()
+    # finds the latest and write that one to sql
+    if len(files) > 1:
+        period_file = {}
+        for f in files:
+            name_parts = f.stem.split('_')
+            period = tuple(name_parts[-1].split('-'))
+            f_key = int(period[0]) * 100 + int(period[1])
+            # print(f_key)
+            period_file[f_key] = f
+        the_one_to_write = period_file[sorted(period_file.keys())[-1]]
+        df = get_df(the_one_to_write)
+    elif len(files) == 1:
+        df = get_df(files[0])
+    else:
+        print("No writeable Google file there...")
+        return
+    # df.info()
 
-	sqw.write_to_db(df, TABLE, action='replace', hova=hova)
+    sqw.write_to_db(df, TABLE, action='replace', hova=hova)
 
 
 if __name__ == '__main__':
-	logging.basicConfig(level=logging.INFO, filename='datacamp.log', filemode='w', format='%(asctime)s %(message)s')
-	# google_audio('/Users/frank/pd/finance_report/2021_12_december', hova='0')
-	google_audio(hova='pd')
+    logging.basicConfig(level=logging.INFO, filename='datacamp.log', filemode='w', format='%(asctime)s %(message)s')
+    # google_audio('/Users/frank/pd/finance_report/2021_12_december', hova='0')
+    google_audio(hova='pd')
