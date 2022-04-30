@@ -21,33 +21,26 @@ def ireader(hova=HOVA):
     """
     p = Path(MAIN_DIR).joinpath(REPORT_MONTH).joinpath(DATA_DIR)
     files = util.get_file_list(p)
+    if files is None:
+        return
     # disable chained assignments
     pd.options.mode.chained_assignment = None
-    print(p)
-    for f in files:
-        if f.suffix == '.csv' and FILENAME in f.stem:  # .csv!!!
-            df = pd.read_csv(f, encoding='utf-8', header=0)
-            # print(f.name)
-            # print(df.columns)
-            print(df.shape[0], 'records')
-            szumma = df[SUM_FIELD].sum()
-            print(f"{DATA_DIR}, {REPORT_MONTH}, total: {szumma:-10,.3f}\n")
-            sqw.write_to_db(df, TABLE, action='replace', hova=hova, field_lens='vchall')
-        # elif 'Work' in f.stem:
-        #     dfc = pd.read_csv(f, header=0, encoding='utf-8', index_col=None)
-        #     cols = list(dfc.columns)
-        #     print(f)
-        #     print(cols)
-        #     dfc = dfc.fillna(0)
-        #     dfc['ISBN'] = dfc['ISBN'].astype('int64').astype('str')
-        #     # dfc['ISBN'] = dfc['ISBN'].astype("str")
-        #     dfc2 = dfc[['ID', 'Title', 'Author', 'ISBN', 'Format']]
-        #     dfc2.info()
-        #     # sqw.write_to_db(dfc2, 'ireader_cat', hova=hova)
+    if len(files) > 0:
+        print(p)
+        for f in files:
+            if f.suffix == '.csv' and FILENAME in f.stem:  # .csv!!!
+                df = pd.read_csv(f, encoding='utf-8', header=0)
+                print(f.name)
+                record_count = df.shape[0]
+                szumma = df[SUM_FIELD].sum()
+                sqw.write_to_db(df, TABLE, action='replace', hova=hova, field_lens='vchall')
+                print(f"{DATA_DIR.upper()} | {REPORT_MONTH}, total: {szumma:-10,.3f}\t{record_count:10,d} records\n")
+    else:
+        print(f"Looks like the `{DATA_DIR}` directory is empty.")
 
 
 def main():
-    ireader(hova='0')
+    ireader(hova='19')
 
 
 if __name__ == '__main__':

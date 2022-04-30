@@ -58,8 +58,8 @@ def make_df(files, amazon, hova=HOVA):
                 df2 = df[df['Royalty Amount Currency'] == c]
                 print(f"{c}: {df2['Payment Amount'].sum():-18,.2f}")
 
-        print(f"\n{DATA_DIR.upper()}_{marker}, {REPORT_MONTH}, total: {szumma:-10,.2f}, \n{df.shape[0]} records")
         sqw.write_to_db(df, amazon[f], db_name='stage', action='replace', hova=hova, field_lens='vchall')
+        print(f"{DATA_DIR.upper()}_{marker} | {REPORT_MONTH}, {df.shape[0]} records, total: {szumma:-10,.2f}\n")
 
 
 def amz_read(hova=HOVA):
@@ -67,7 +67,9 @@ def amz_read(hova=HOVA):
     print(p)
     amazon = {}
     files = util.get_file_list(p)
-    if files:
+    if files is None:
+        return
+    if len(files) > 0:
         files = [f for f in files if f.suffix == '.xlsx' and f.stem[:2] != '~$']
         if len(files) == 2:
             for item in files:
@@ -82,8 +84,10 @@ def amz_read(hova=HOVA):
             print(f"Directory content not clean, has {len(files)} items.")
             return
         make_df(files, amazon, hova)
+    else:
+        print(f"Looks like the `{DATA_DIR}` directory is empty.")
 
 
 if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO, filename='../datacamp.log', filemode='a')
-    amz_read(hova='19')
+    amz_read(hova='0')

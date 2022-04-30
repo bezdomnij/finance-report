@@ -15,15 +15,21 @@ def tfsymbols(hova=HOVA):
     # disable chained assignments
     pd.options.mode.chained_assignment = None
     files = util.get_file_list(p)
-    for f in files:
-        if f.suffix == '.xlsx' and FILENAME in f.stem and f.name[:2] != '~$':
-            dimensions = util.get_content_xl_onesheet(f, TABLE, hova=hova, sum_field=SUM_FIELD,
-                                                      na_field='', header=5)
-            print(f"{DATA_DIR.upper()} | {REPORT_MONTH}, {dimensions[0]} records, total: {dimensions[1]:-10,.2f}\n")
+    if files is None:
+        return
+    if len(files) > 0:
+        for f in files:
+            if f.suffix == '.xlsx' and FILENAME in f.stem and f.name[:2] != '~$':
+                dimensions = util.get_content_xl_onesheet(f, TABLE, hova=hova, sum_field=SUM_FIELD,
+                                                          na_field='', header=5)
+                print(f"{DATA_DIR.upper()} | {REPORT_MONTH}, {dimensions[0]} records, total: {dimensions[1]:-10,.2f}\n")
+
+    else:
+        print(f"Looks like the `{DATA_DIR}` directory is empty.")
 
 
 def main():
-    tfsymbols(hova='19')
+    tfsymbols(hova='0')
 
 
 if __name__ == '__main__':

@@ -14,7 +14,9 @@ SUM_FIELD = 'Nettó fizetendő'
 def ekonyv(hova=HOVA):
     p = Path(MAIN_DIR).joinpath(REPORT_MONTH).joinpath(DATA_DIR)
     files = util.get_file_list(p)
-    if files:
+    if files is None:
+        return
+    if len(files) > 0:
         for f in p.iterdir():
             if f.is_file() and f.suffix == '.xlsx' and FILENAME in f.stem and f.stem[:2] != '~$':
                 df = pd.read_excel(f, sheet_name='PublishDrive', header=12)
@@ -26,6 +28,8 @@ def ekonyv(hova=HOVA):
                 sqw.write_to_db(df, TABLE, hova=hova, action='replace', field_lens='vchall')
                 szumma = df[SUM_FIELD].sum()
                 print(f"{DATA_DIR}, {REPORT_MONTH}, total: {szumma:-10,.3f}\n")
+    else:
+        print(f"Looks like the `{DATA_DIR}` directory is empty.")
 
 
 def main():

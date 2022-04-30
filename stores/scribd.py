@@ -17,9 +17,11 @@ def scribd(hova=HOVA):
     all_df = pd.DataFrame()
     p = Path(MAIN_DIR).joinpath(REPORT_MONTH).joinpath(DATA_DIR)
     files = util.get_file_list(p)
+    if files is None:
+        return
     szumma = 0
     record_count = 0
-    if files:
+    if len(files) > 0:
         for f in files:
             if f.is_file() and (f.suffix == '.xlsx' or f.suffix == '.xls' or f.suffix == '.XLS') and (
                     FILENAME_1 in f.stem or FILENAME_2 in f.stem) and f.stem[:2] != '~$':
@@ -34,9 +36,11 @@ def scribd(hova=HOVA):
                     record_count += rc
                     szumma += szm
 
-    szumma = all_df[SUM_FIELD].sum()
-    print(f"{DATA_DIR}, {REPORT_MONTH}, total: {szumma:-10,.2f} | {record_count:10d} total record count\n")
-    sqw.write_to_db(all_df, TABLE, db_name='stage', action='replace', field_lens='vchall', hova=hova)
+        szumma = all_df[SUM_FIELD].sum()
+        sqw.write_to_db(all_df, TABLE, db_name='stage', action='replace', field_lens='vchall', hova=hova)
+        print(f"{DATA_DIR.upper()} | {REPORT_MONTH}, total: {szumma:-10,.2f} | {record_count:10d} records\n")
+    else:
+        print(f"Looks like the `{DATA_DIR}` directory is empty.")
 
 
 def main():

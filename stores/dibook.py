@@ -11,13 +11,17 @@ SUM_FIELD = 'Beszállító árbevétel összeg nettó'
 def dibook(hova=HOVA):
     p = Path(MAIN_DIR).joinpath(REPORT_MONTH).joinpath(DATA_DIR)
     files = util.get_file_list(p)
-    if files:
+    if files is None:
+        return
+    if len(files):
         for f in files:
             if f.is_file() and f.suffix in ['.xls', '.xlsx'] and FILENAME in f.stem:
                 dimensions = util.get_content_xl_onesheet(f, TABLE, hova=hova, sum_field=SUM_FIELD,
                                                           na_field='ISBN', header=0)
                 print(f"{DATA_DIR} | {REPORT_MONTH}, {dimensions[0]} records, total: {dimensions[1]:-16,.2f}\n")
+    else:
+        print(f"Looks like the `{DATA_DIR}` directory is empty.")
 
 
 if __name__ == '__main__':
-    dibook(hova='0')
+    dibook(hova='19')

@@ -15,11 +15,15 @@ def cnpiec(hova=HOVA):
     files = util.get_file_list(p)
     pd.options.mode.chained_assignment = None
     # file, table, hova, sum_field, na_field, header = 0
-    if files:
+    if files is None:
+        return
+    if len(files) > 0:
         for f in files:
             if f.suffix == '.xlsx' and FILENAME in f.stem and f.stem[:2] != '~$':
                 record_count, szumma = util.get_content_xl_onesheet(f, TABLE, hova, SUM_FIELD, 'Order date', header=0)
                 print(f"{DATA_DIR}, {REPORT_MONTH}, osszeg: {szumma:-10,.2f}, {record_count} records\n")
+    else:
+        print(f"Looks like the `{DATA_DIR}` directory is empty.")
 
 
 def main():

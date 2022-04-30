@@ -5,7 +5,7 @@ import numpy as np
 import pandas as pd
 
 import util
-from config import MAIN_DIR, REPORT_MONTH
+from config import MAIN_DIR, REPORT_MONTH, HOVA
 from engineer import sql_writer as sqw
 
 DATA_DIR = 'apple'
@@ -44,7 +44,7 @@ def read_file_content(c):
         location = c.stem.split('_')[-1]
         df = pd.read_csv(c, sep='\t', index_col=None)
         record_count = df.shape[0]
-        print(f"{c.name} record count: ", record_count)
+        # print(f"{c.name} record count: ", record_count)
         df['Vendor Identifier'] = df['Vendor Identifier'].astype(str).str.slice(stop=13)
         # print(df['Vendor Identifier'])
         df['Pre-order Flag'].replace({np.NAN: None}, inplace=True)
@@ -60,7 +60,7 @@ def read_file_content(c):
     return aggregated_df
 
 
-def read_apple(hova='0'):
+def read_apple(hova=HOVA):
     p = Path(MAIN_DIR).joinpath(REPORT_MONTH).joinpath(DATA_DIR)
     total_df = pd.DataFrame()
     files = util.get_file_list(p)
@@ -70,8 +70,8 @@ def read_apple(hova='0'):
         for f in files:
             if f.suffix == '.txt':
                 total_df = pd.concat([total_df, read_file_content(f)])
+        # print("EXTENDED PARTNER SHARE", total_df['Extended Partner Share'].sum())
 
-        print("EXTENDED PARTNER SHARE", total_df['Extended Partner Share'].sum())
         print("UNITS SOLD", int(total_df['Quantity'].sum()))
         print("line count", total_df.shape[0])
         # write!!!
@@ -80,7 +80,7 @@ def read_apple(hova='0'):
         # return pd.DataFrame(sum_df, index=None)
 
 
-def apple(hova='0'):
+def apple(hova=HOVA):
     resultset_df = read_apple(hova=hova)
     print(resultset_df)
     # all txt files result - writing to Excel
@@ -104,7 +104,7 @@ def apple(hova='0'):
 
 
 def main():
-    apple('pd')
+    apple('19')
 
 
 if __name__ == '__main__':

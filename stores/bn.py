@@ -32,7 +32,7 @@ def bn(hova=HOVA):
 
 
 def main():
-    bn('19')
+    bn('pd')
 
 
 if __name__ == '__main__':

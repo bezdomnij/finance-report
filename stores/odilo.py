@@ -25,17 +25,22 @@ def odilo(hova=HOVA):
     record_count = 0
     print(p)
     files = util.get_file_list(p)
-    for f in files:
-        r, s = 0, 0
-        if f.is_file() and (f.suffix == '.xlsx' or f.suffix == '.xls') and f.stem[:2] != '~$':
-            if FILENAME_1 in f.stem:
-                r, s = util.get_content_xl_onesheet(f, TABLE_1, hova, SUM_FIELD, 'Title', 1)
-            if FILENAME_2 in f.stem:
-                r, s = util.get_content_xl_onesheet(f, TABLE_2, hova, SUM_FIELD, 'Title', 1)
-            record_count += r
-            szumma += s
+    if files is None:
+        return
+    if len(files) > 0:
+        for f in files:
+            r, s = 0, 0
+            if f.is_file() and (f.suffix == '.xlsx' or f.suffix == '.xls') and f.stem[:2] != '~$':
+                if FILENAME_1 in f.stem:
+                    r, s = util.get_content_xl_onesheet(f, TABLE_1, hova, SUM_FIELD, 'Title', 1)
+                if FILENAME_2 in f.stem:
+                    r, s = util.get_content_xl_onesheet(f, TABLE_2, hova, SUM_FIELD, 'Title', 1)
+                record_count += r
+                szumma += s
 
-    print(f"{DATA_DIR}, {REPORT_MONTH}, total: {szumma:-10,.2f}, {record_count} records\n")
+        print(f"{DATA_DIR.upper()}, {REPORT_MONTH}, total: {szumma:-10,.2f}, {record_count:10,d} records\n")
+    else:
+        print(f"Looks like the `{DATA_DIR}` directory is empty.")
 
 
 def main():

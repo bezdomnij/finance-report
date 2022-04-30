@@ -16,7 +16,9 @@ def dangdang(hova=HOVA):
     pd.options.mode.chained_assignment = None
     # file, table, hova, sum_field, na_field, header = 0
     files = util.get_file_list(p)
-    if files:
+    if files is None:
+        return
+    if len(files) > 0:
         for f in files:
             if f.suffix == '.xlsx' and FILENAME in f.stem and f.stem[:2] != '~$':
                 df = pd.read_excel(f, header=7, index_col=None)
@@ -28,6 +30,8 @@ def dangdang(hova=HOVA):
                 szumma = df[SUM_FIELD].sum()
                 print(f"{DATA_DIR.upper()} {REPORT_MONTH}, osszeg: {szumma:-10,.2f}, {record_count} records\n")
                 sqw.write_to_db(df, TABLE, action='replace', hova=hova, field_lens='vchall')
+    else:
+        print(f"Looks like the `{DATA_DIR}` directory is empty.")
 
 
 def main():

@@ -13,7 +13,9 @@ def google(hova=HOVA):
     df = pd.DataFrame()
     src = Path(MAIN_DIR).joinpath(REPORT_MONTH).joinpath(DATA_DIR)
     files = util.get_file_list(src)
-    if files:
+    if files is None:
+        return
+    if len(files) > 0:
         for f in src.iterdir():
             if f.suffix == '':
                 continue
@@ -36,6 +38,8 @@ def google(hova=HOVA):
                 df['Earnings Amount'] = df['Earnings Amount'].str.replace(',', '.')
                 print(f"{f.name} SUM: {df['Earnings Amount'].astype(float).sum():.2f}, row count: {df.shape[0]}")
         sqw.write_to_db(df, TABLE, action='replace', hova=hova, field_lens='vchall')
+    else:
+        print(f"Looks like the `{DATA_DIR}` directory is empty.")
 
 
 if __name__ == '__main__':

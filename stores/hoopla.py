@@ -14,7 +14,9 @@ SUM_FIELD = 'Royalty Due'
 def hoopla(hova=HOVA):
     p = Path(MAIN_DIR).joinpath(REPORT_MONTH).joinpath(DATA_DIR)
     files = util.get_file_list(p)
-    if files:
+    if files is None:
+        return
+    if len(files) > 0:
         for f in files:
             if f.is_file() and f.suffix in ('.xls', '.xlsx', '.XLS') and FILENAME in f.stem and f.stem[:2] != '~$':
                 df = pd.read_excel(f, header=0, index_col=None)
@@ -23,8 +25,11 @@ def hoopla(hova=HOVA):
                 df.rename(columns=cols_map, inplace=True)
                 df.drop(df[df['Transaction ID'] == 'Grand Total'].index, inplace=True)
                 szumma = df[SUM_FIELD].sum()
-                print(f"{DATA_DIR}, {REPORT_MONTH}, total: {szumma:-10,.2f}\n")
+                record_count = df.shape[0]
                 sqw.write_to_db(df, TABLE, db_name='stage', action='replace', field_lens='vchall', hova=hova)
+                print(f"{DATA_DIR.upper()} | {REPORT_MONTH}, total: {szumma:-10,.2f}\t{record_count:10,d} records\n")
+    else:
+        print(f"Looks like the `{DATA_DIR}` directory is empty.")
 
 
 def main():

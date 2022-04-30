@@ -15,8 +15,10 @@ def findaway(hova=HOVA):
     p = Path(MAIN_DIR).joinpath(REPORT_MONTH).joinpath(DATA_DIR)
     files = util.get_file_list(p)
     record_count = 0
-    print(p)
-    if files:
+    if files is None:
+        return
+    if len(files) > 0:
+        print(p)
         for f in files:
             if f.is_file() and f.suffix == '.xlsx' and f.stem[:2] != '~$' and FILENAME in f.stem:
                 sheet_names = ['Library', 'Retail', 'Subscription', 'Pool']
@@ -27,6 +29,8 @@ def findaway(hova=HOVA):
                     table = TABLE + s.lower()
                     sqw.write_to_db(df, table, hova=hova, action='replace', field_lens='vchall')
                 print(record_count)
+    else:
+        print(f"Looks like the `{DATA_DIR}` directory is empty.")
 
 
 def main():

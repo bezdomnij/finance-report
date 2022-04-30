@@ -23,7 +23,7 @@ def read_file_content(f):
             print(f'error: {e} es {e.__str__}')
             logging.exception(msg=f"ERR: {e}\nazonkivul: {e.__str__()}")
     if df.shape[0] != 0:  # only if there is any content
-        print(f"{f.parents[0].stem.lower()} barmi is, itt: '{f.name}', "
+        print(f"{f.parents[0].stem.lower()} itt: '{f.name}', "
               f"{df.shape[0]} db record, osszeg: {round(df[SUM_FIELD].sum(), 2):10,.2f}")
         return df, df.shape[0]
 
@@ -33,17 +33,22 @@ def bibliotheca(hova=HOVA):
     total_df = pd.DataFrame()
     all_row_count = 0
     files = util.get_file_list(p)
-    if files:
+    if files is None:
+        return
+    if len(files) > 0:
+        print()
         for f in files:
-            whatever = read_file_content(f)
-            if whatever:
-                current_df, rc = whatever
+            df_props = read_file_content(f)
+            if df_props:
+                current_df, rc = df_props
                 total_df = pd.concat([total_df, current_df])
                 all_row_count += rc
-        print(f"{DATA_DIR.upper()} {all_row_count}, db record")
         # action append: replace give a row size error - before the change to other types part in get_types
         # !!! row size
         sqw.write_to_db(total_df, TABLE, field_lens='mas', action='replace', hova=hova)
+        print(f"{DATA_DIR.upper()} | {all_row_count}, db record")
+    else:
+        print(f"Looks like the `{DATA_DIR}` directory is empty.")
 
 
 def main():

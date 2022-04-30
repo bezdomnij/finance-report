@@ -15,7 +15,9 @@ SUM_FIELD = 'Converted Revenue'
 def bookmate_audio(hova=HOVA):
     p = Path(MAIN_DIR).joinpath(SOURCE_DIR).joinpath(DATA_DIR)
     files = util.get_file_list(p)
-    if files:
+    if files is None:
+        return
+    if len(files):
         for f in files:
             if f.is_file() and f.suffix in ('.xls', '.xlsx', '.XLS') and FILENAME in f.stem and f.stem[:2] != '~$':
                 df = pd.read_excel(f, header=0, index_col=None)
@@ -27,9 +29,11 @@ def bookmate_audio(hova=HOVA):
                 df['sale_date'] = REPORT_MONTH[:4] + '-' + REPORT_MONTH[5:7] + '-15'
                 szumma = df[SUM_FIELD].sum()
                 record_count = df.shape[0]
+                sqw.write_to_db(df, TABLE, db_name='stage', action='replace', field_lens='vchall', hova=hova)
                 print(f"{DATA_DIR.upper()}, file: {f.stem},\t, report: {REPORT_MONTH}, "
                       f"total: {szumma:-10,.2f}\t, {record_count} records")
-                sqw.write_to_db(df, TABLE, db_name='stage', action='replace', field_lens='vchall', hova=hova)
+    else:
+        print(f"Looks like the `{DATA_DIR}` directory is empty.")
 
 
 def main():

@@ -41,7 +41,9 @@ def forget_comma(one, two, three):
 def gardners(hova=HOVA):
     p = Path(MAIN_DIR).joinpath(REPORT_MONTH).joinpath(DATA_DIR)
     files = util.get_file_list(p)
-    if files:
+    if files is None:
+        return
+    if len(files) > 0:
         for f in files:
             print(f)
             if f.is_file() and FILENAME in f.stem and f.suffix in ('.csv', '.CSV'):
@@ -59,8 +61,10 @@ def gardners(hova=HOVA):
                 df = df[df[SUM_FIELD] != '']
                 df[SUM_FIELD] = df[SUM_FIELD].astype(float)
                 szumma = df[SUM_FIELD].sum()
-                print(f"{DATA_DIR}, {REPORT_MONTH}, total: {szumma:-10,.3f}\n")
                 sqw.write_to_db(df, TABLE, action='replace', hova=hova, field_lens='vchall')
+                print(f"{DATA_DIR}, {REPORT_MONTH}, total: {szumma:-10,.2f}\n")
+    else:
+        print(f"Looks like the `{DATA_DIR}` directory is empty.")
 
 
 def main():
