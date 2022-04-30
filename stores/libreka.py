@@ -9,57 +9,54 @@ from engineer import sql_writer as sqw
 DATA_DIR = 'libreka'
 TABLE_EBOOK = 'stg_fin2_16_tolino_libreka_agency'
 TABLE_SUB = 'stg_fin2_16_tolino_libreka_subscr'
+SUM_FIELD = 'Erlösanteil Geschäftspartner Netto'
+
+
+def get_content(f, df, s):
+    df['Datum'] = pd.to_datetime(df['Datum'], format="%d.%m.%Y").dt.date
+    df['month'] = pd.DatetimeIndex(df['Datum']).month
+    df.fillna(value='', inplace=True)
+    net_income = df[SUM_FIELD].sum()
+    print(f"{s} - {f.stem[-6:]}: {net_income:12,.2f}, {df['Datum'].min()}, "
+          f"{df['Datum'].max()}, - {f.stem[-2:]}, {df.shape[0]}, "
+          f"{df.groupby(['month']).size()}")
+    return df, net_income
 
 
 def libreka(hova=HOVA):
-    sheet_names = ['E-Book-Verkäufe', 'Hörbuch-Verkäufe', 'Kostenlostitel', 'Abo und Flatrate']
-    libreka_all_ebook = pd.DataFrame()
-    libreka_all_sub = pd.DataFrame()
-    ebook_sum, sub_sum = 0, 0
     p = Path(MAIN_DIR).joinpath(REPORT_MONTH).joinpath(DATA_DIR)
     files = util.get_file_list(p)
     if files is None:
         return
     if len(files) > 0:
+        sheet_names = ['E-Book-Verkäufe', 'Abo und Flatrate']
+        df_collection = {}
         for f in files:
             if f.suffix == '.xlsx' and '5288812' in f.stem and f.stem[:2] != '~$':
                 df_dict = pd.read_excel(f, sheet_name=None, header=0)
 
-                df_ebook = df_dict.get(sheet_names[0], pd.DataFrame())
-                df_sub = df_dict.get(sheet_names[-1], pd.DataFrame())
+                for s in sheet_names:  # collect dfs and sums
+                    # initialize
+                    table = str(s) + '_table'
+                    df_collection[s] = []  # pd.DataFrame()
+                    df_collection[s].append(pd.DataFrame())
+                    df_collection[s].append(0)
+                    df_collection[s].append(table)
 
-                ebook_net_inc = df_ebook['Erlösanteil Geschäftspartner Netto'].sum()
-                ebook_sum += ebook_net_inc
+                    # action on this df
+                    df = df_dict.get(s, pd.DataFrame())
+                    df, szumma = get_content(f, df, s)
+                    df_collection[s][0] = df_collection[s][0].append(df, ignore_index=True)
+                    df_collection[s][1] += szumma
+                    print(f"{s} min.Date: {df_collection[s][0]['Datum'].min()} | "
+                          f"max.Date: {df_collection[s][0]['Datum'].max()}")
 
-                sub_net_inc = df_sub['Erlösanteil Geschäftspartner Netto'].sum()
-                sub_sum += sub_net_inc
-
-                df_ebook['Datum'] = pd.to_datetime(df_ebook['Datum'], format="%d.%m.%Y").dt.date
-                df_ebook['month'] = pd.DatetimeIndex(df_ebook['Datum']).month
-
-                df_sub['Datum'] = pd.to_datetime(df_sub['Datum'], format="%d.%m.%Y").dt.date
-                df_sub['month'] = pd.DatetimeIndex(df_sub['Datum']).month
-
-                df_ebook = df_ebook.where(df_ebook.notna(), '')
-                df_sub.fillna(value='', inplace=True)
-
-                print(f"ebook - {f.stem[-6:]}: {ebook_net_inc:12,.2f}, {df_ebook['Datum'].min()}, "
-                      f"{df_ebook['Datum'].max()}, - {f.stem[-2:]}, {df_ebook.shape[0]}, "
-                      f"{df_ebook.groupby(['month']).size()}")
-                print(f"sub   - {f.stem[-6:]}: {sub_net_inc:12,.2f}, {df_sub['Datum'].min()}, "
-                      f"{df_sub['Datum'].max()}, - {f.stem[-2:]}, {df_sub.shape[0]}, "
-                      f"{df_sub.groupby(['month']).size()}")
-
-                libreka_all_ebook = libreka_all_ebook.append(df_ebook, ignore_index=True)
-                libreka_all_sub = libreka_all_sub.append(df_sub, ignore_index=True)
-
-        print(libreka_all_ebook['Datum'].min(), libreka_all_ebook['Datum'].max())
-        print(libreka_all_sub['Datum'].min(), libreka_all_sub['Datum'].max())
-
-        sqw.write_to_db(libreka_all_sub, TABLE_SUB, field_lens='vchall', hova=hova, action='replace')
-        sqw.write_to_db(libreka_all_ebook, TABLE_EBOOK, field_lens='vchall', hova=hova, action='replace')
-        print(f"{DATA_DIR.upper()} | ebooks: {ebook_sum:-10,.2f}; subs: {sub_sum:-10,.2f}; "
-              f"sumsum: {ebook_sum + sub_sum:-10,.2f}\n")
+        # for k, v in df_collection.items():
+        #     print(k, v)
+        # sqw.write_to_db(, TABLE_SUB, field_lens='vchall', hova=hova, action='replace')
+        # sqw.write_to_db(libreka_all_ebook, TABLE_EBOOK, field_lens='vchall', hova=hova, action='replace')
+        # print(f"{DATA_DIR.upper()} | ebooks: {ebook_sum:-10,.2f}; subs: {sub_sum:-10,.2f}; "
+        #       f"sumsum: {ebook_sum + sub_sum:-10,.2f}\n")
     else:
         util.empty(DATA_DIR)
 
