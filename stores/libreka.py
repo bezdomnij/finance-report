@@ -57,7 +57,7 @@ def libreka(hova=HOVA):
                           f"max.Date: {df_collection[s][1]['Datum'].max()}")
         for k, v in df_collection.items():
             sqw.write_to_db(v[1], v[0], field_lens='vchall', hova=hova, action='replace')
-            print(f"{DATA_DIR.upper()} | {v[0]}, {v[2]}\n")
+            print(f"{DATA_DIR.upper()} | {REPORT_MONTH}, {v[0]}, {v[2]:10,.2f}\n")
     else:
         util.empty(DATA_DIR)
 
