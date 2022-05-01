@@ -32,7 +32,7 @@ def google_audio(hova=HOVA):
             if df.shape[0] > 0:
                 sqw.write_to_db(df, TABLE, action='replace', hova=hova)
                 print(
-                    f"{DATA_DIR.upper()} | {df.shape[0]} records, total: "
+                    f"{DATA_DIR.upper()} | {REPORT_MONTH}, {df.shape[0]} records, total: "
                     f"{df['Earnings Amount'].astype(float).sum():.2f}\n")
     else:
         util.empty(DATA_DIR)

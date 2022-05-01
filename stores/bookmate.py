@@ -39,7 +39,7 @@ def bookmate(hova=HOVA):
                 record_count += r
                 szumma += s
 
-        print(f"{DATA_DIR}, {REPORT_MONTH}, total: {szumma:-10,.3f}, {record_count} records\n")
+        print(f"{DATA_DIR.upper()}, {REPORT_MONTH}, total: {szumma:-10,.3f}, {record_count} records\n")
     else:
         util.empty(DATA_DIR)
 

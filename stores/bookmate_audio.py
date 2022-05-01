@@ -7,13 +7,13 @@ from config import MAIN_DIR, REPORT_MONTH, HOVA
 TABLE = 'stg_fin2_20032_bookmate_audio'
 FILENAME = 'PublishDrive__Content_2_Connect__Audio_'
 # SOURCE_DIR = REPORT_MONTH
-SOURCE_DIR = '2022_05_may'
+# REPORT_MONTH = '2022_05_may'
 DATA_DIR = 'bookmate audio'
 SUM_FIELD = 'Converted Revenue'
 
 
 def bookmate_audio(hova=HOVA):
-    p = Path(MAIN_DIR).joinpath(SOURCE_DIR).joinpath(DATA_DIR)
+    p = Path(MAIN_DIR).joinpath(REPORT_MONTH).joinpath(DATA_DIR)
     files = util.get_file_list(p)
     if files is None:
         return

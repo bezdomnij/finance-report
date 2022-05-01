@@ -22,7 +22,7 @@ def kobo(hova=HOVA):
             if f.is_file() and f.stem[:2] != '~$' and 'Sub' not in f.stem and 'plus' not in f.stem:
                 print(f)
                 df2 = util.get_proper_df(f)
-                print(df2.columns)
+                # print(df2.columns)
                 szumma = df2[SUM_FIELD].sum()
                 size = df2.shape[0]
                 print('!!! A frame merete', df2.shape[0])
