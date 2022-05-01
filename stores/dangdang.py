@@ -25,7 +25,11 @@ def dangdang(hova=HOVA):
                 new_cols = [col.strip() for col in df.columns]
                 cols_map = dict(zip(df.columns, new_cols))
                 df.rename(columns=cols_map, inplace=True)
-                df = df[df['Title'].notna()]
+                try:
+                    df = df[df['Title'].notna()]
+                except KeyError as e:
+                    print(f"{DATA_DIR.upper()} header row pepblem? CHECK!\n")
+                    continue
                 record_count = df.shape[0]
                 szumma = df[SUM_FIELD].sum()
                 sqw.write_to_db(df, TABLE, action='replace', hova=hova, field_lens='vchall')
