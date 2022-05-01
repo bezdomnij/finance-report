@@ -70,7 +70,11 @@ def get_content_xl_onesheet(file, table, hova, sum_field, na_field, header=0, sh
     else:
         df = get_proper_df(file, sheet_name=sheet_name)
     if na_field != '':
-        df = df[df[na_field].notna()]
+        try:
+            df = df[df[na_field].notna()]
+        except KeyError as e:
+            print(f"KEY error, {e}, nothing is written.")
+            return 0, 0.00
     if not df.empty:
         try:
             szumma = df[sum_field].sum()

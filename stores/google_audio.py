@@ -21,39 +21,21 @@ def get_df(f):
 
 
 def google_audio(hova=HOVA):
-    files = []
     src = Path(MAIN_DIR).joinpath(REPORT_MONTH).joinpath(DATA_DIR)
-    for f in src.iterdir():
-        if f.suffix == '':
-            continue
-        ftype, period = util.check_google_file_name(f.name)
-        if ftype == 'ga':
-            files.append(f)
-    for f in files:
-        df = get_df(f)
-        if df.shape[0] > 0:
-            print(
-                f"{DATA_DIR.upper()} | {df.shape[0]} records, total: {df['Earnings Amount'].astype(float).sum():.2f}\n")
-
-    # finds the latest and write that one to sql
-    if len(files) > 1:
-        period_file = {}
-        for f in files:
-            name_parts = f.stem.split('_')
-            period = tuple(name_parts[-1].split('-'))
-            f_key = int(period[0]) * 100 + int(period[1])
-            # print(f_key)
-            period_file[f_key] = f
-        the_one_to_write = period_file[sorted(period_file.keys())[-1]]
-        df = get_df(the_one_to_write)
-    elif len(files) == 1:
-        df = get_df(files[0])
-    else:
-        print("No writeable Google file there...")
+    files = util.get_file_list(src)
+    if files is None:
         return
-    # df.info()
 
-    sqw.write_to_db(df, TABLE, action='replace', hova=hova)
+    if len(files) > 0:
+        for f in files:
+            df = get_df(f)
+            if df.shape[0] > 0:
+                sqw.write_to_db(df, TABLE, action='replace', hova=hova)
+                print(
+                    f"{DATA_DIR.upper()} | {df.shape[0]} records, total: "
+                    f"{df['Earnings Amount'].astype(float).sum():.2f}\n")
+    else:
+        util.empty(DATA_DIR)
 
 
 if __name__ == '__main__':

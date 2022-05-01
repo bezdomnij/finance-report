@@ -43,7 +43,7 @@ def kobo_audio(hova=HOVA):
         return
     if len(files) > 0:
         for file in p.iterdir():
-            if file.stem[:2] != '~$' and 'Sub' not in file.stem:
+            if file.stem[:2] != '~$' and 'sub' not in file.stem.lower():
                 df = pd.read_excel(file, sheet_name='Details', header=0)
                 szumma = df[SUM_FIELD].sum()
                 record_count = df.shape[0]

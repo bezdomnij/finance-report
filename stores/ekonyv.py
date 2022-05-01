@@ -19,7 +19,8 @@ def ekonyv(hova=HOVA):
     if len(files) > 0:
         for f in p.iterdir():
             if f.is_file() and f.suffix == '.xlsx' and FILENAME in f.stem and f.stem[:2] != '~$':
-                df = pd.read_excel(f, sheet_name='PublishDrive', header=12)
+                # df = pd.read_excel(f, sheet_name='PublishDrive', header=12)
+                df = pd.read_excel(f, header=12)
                 df.rename(columns={'Cím ': 'Cím'}, inplace=True)  # NON-STANDARD: remove space from field name
 
                 df = df[df['ISBN'].notna()]  # drop lines below data

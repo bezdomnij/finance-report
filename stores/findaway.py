@@ -24,7 +24,11 @@ def findaway(hova=HOVA):
             if f.is_file() and f.suffix == '.xlsx' and f.stem[:2] != '~$' and FILENAME in f.stem:
                 sheet_names = ['Library', 'Retail', 'Subscription', 'Pool']
                 for s in sheet_names:
-                    df = pd.read_excel(f, sheet_name=s, header=0)
+                    try:
+                        df = pd.read_excel(f, sheet_name=s, header=0)
+                    except ValueError as e:
+                        print(f"{s} sheet is not there!")
+                        continue
                     szm = df[SUM_FIELD].sum()
                     print(f"{szm:-10.2f} {s}, records: {df.shape[0]}")
                     szumma += szm

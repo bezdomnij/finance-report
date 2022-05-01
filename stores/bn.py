@@ -24,7 +24,7 @@ def bn(hova=HOVA):
         return
     if len(files) > 0:
         for f in files:
-            if f.is_file() and FILENAME in f.stem and f.suffix.lower() == '.csv':
+            if f.is_file() and (FILENAME in f.stem or 'bn' in f.stem) and f.suffix.lower() == '.csv':
                 df = pd.read_csv(f, header=0, sep=',')
                 print(f"{f.parents[0].stem.lower()} | {df.shape[0]} rows, {df.shape[1]}, columns")
                 df.drop(df.columns[[35]], axis=1, inplace=True)

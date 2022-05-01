@@ -17,15 +17,17 @@ def kobo(hova=HOVA):
     if files is None:
         return
     if len(files) > 0:
-        for f in p.iterdir():
+        for f in files:
             marker = '_NODRM'
-            if f.is_file() and f.stem[:2] != '~$' and 'Sub' not in f.stem:
+            if f.is_file() and f.stem[:2] != '~$' and 'Sub' not in f.stem and 'plus' not in f.stem:
+                print(f)
                 df2 = util.get_proper_df(f)
+                print(df2.columns)
                 szumma = df2[SUM_FIELD].sum()
                 size = df2.shape[0]
                 print('!!! A frame merete', df2.shape[0])
                 print(f.stem)
-                if 'DRM' in f.stem:
+                if '_DRM' in f.stem.upper():
                     marker = '_DRM'
                     sqw.write_to_db(df2, TABLE_1, hova=hova, field_lens='vchall')
                 else:

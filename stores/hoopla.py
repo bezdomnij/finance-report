@@ -23,7 +23,11 @@ def hoopla(hova=HOVA):
                 new_cols = [col.strip() for col in df.columns]
                 cols_map = dict(zip(df.columns, new_cols))
                 df.rename(columns=cols_map, inplace=True)
-                df.drop(df[df['Transaction ID'] == 'Grand Total'].index, inplace=True)
+                try:
+                    df.drop(df[df['Transaction ID'] == 'Grand Total'].index, inplace=True)
+                except KeyError as e:
+                    print(f"No drop field")
+                    df.drop(df[df['ISBN'] == ''].index, inplace=True)
                 szumma = df[SUM_FIELD].sum()
                 record_count = df.shape[0]
                 sqw.write_to_db(df, TABLE, db_name='stage', action='replace', field_lens='vchall', hova=hova)

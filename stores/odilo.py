@@ -29,6 +29,7 @@ def odilo(hova=HOVA):
         return
     if len(files) > 0:
         for f in files:
+            print(f)
             r, s = 0, 0
             if f.is_file() and (f.suffix == '.xlsx' or f.suffix == '.xls') and f.stem[:2] != '~$':
                 if FILENAME_1 in f.stem:

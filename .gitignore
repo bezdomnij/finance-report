@@ -171,3 +171,4 @@ __pypackages__/
 config.py
 **/datacamp.log
 **/.env
+**/output.xlsx
