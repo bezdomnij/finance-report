@@ -1,3 +1,9 @@
+"""
+able to handle multiple files in report directory
+collects dfs and sums in a dictionary - key is sheet name, value is a
+list of properties of the type (ebook, sub)
+"""
+
 from pathlib import Path
 
 import pandas as pd
@@ -47,11 +53,9 @@ def libreka(hova=HOVA):
                     df, szumma = get_content(f, df, s)
                     df_collection[s][1] = df_collection[s][1].append(df, ignore_index=True)
                     df_collection[s][2] += szumma
-
                     print(f"{s} min.Date: {df_collection[s][1]['Datum'].min()} | "
                           f"max.Date: {df_collection[s][1]['Datum'].max()}")
         for k, v in df_collection.items():
-            # print(k, v)
             sqw.write_to_db(v[1], v[0], field_lens='vchall', hova=hova, action='replace')
             print(f"{DATA_DIR.upper()} | {v[0]}, {v[2]}\n")
     else:
