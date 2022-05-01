@@ -28,8 +28,8 @@ def dangdang(hova=HOVA):
                 df = df[df['Title'].notna()]
                 record_count = df.shape[0]
                 szumma = df[SUM_FIELD].sum()
-                print(f"{DATA_DIR.upper()} {REPORT_MONTH}, osszeg: {szumma:-10,.2f}, {record_count} records\n")
                 sqw.write_to_db(df, TABLE, action='replace', hova=hova, field_lens='vchall')
+                print(f"{DATA_DIR.upper()} {REPORT_MONTH}, {record_count} records, total: {szumma:-10,.2f}\n")
     else:
         util.empty(DATA_DIR)
 

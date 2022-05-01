@@ -21,7 +21,7 @@ def cnpiec(hova=HOVA):
         for f in files:
             if f.suffix == '.xlsx' and FILENAME in f.stem and f.stem[:2] != '~$':
                 record_count, szumma = util.get_content_xl_onesheet(f, TABLE, hova, SUM_FIELD, 'Order date', header=0)
-                print(f"{DATA_DIR}, {REPORT_MONTH}, osszeg: {szumma:-10,.2f}, {record_count} records\n")
+                print(f"{DATA_DIR}, {REPORT_MONTH}, {record_count} records, total: {szumma:-10,.2f}\n")
     else:
         util.empty(DATA_DIR)
 

@@ -19,11 +19,11 @@ def google(hova=HOVA):
         for f in src.iterdir():
             if f.suffix == '':
                 continue
-            ftype, period = util.check_google_file_name(f.name)
-            year, month = period
-            if ftype == 'gg' and int(month) == 2:
-                files.append(f)
-                logging.info(msg=f'file found:{f}')
+            # ftype, period = util.check_google_file_name(f.name)
+            # year, month = period
+            # if ftype == 'gg' and int(month) == 2:
+            #     files.append(f)
+            #     logging.info(msg=f'file found:{f}')
         for f in files:
             try:
                 df = pd.read_csv(f, encoding='utf-8', sep='\t', header=0, index_col=None)
@@ -32,8 +32,6 @@ def google(hova=HOVA):
                 # print(f"az ebooks file nem utf-16..., error: {e}")
                 df = pd.read_csv(f, encoding='utf-16', sep='\t', header=0, index_col=None)
             finally:
-                # print(df.columns)
-                # print(df.info)
                 print(f.stem)
                 df['Earnings Amount'] = df['Earnings Amount'].str.replace(',', '.')
                 sqw.write_to_db(df, TABLE, action='replace', hova=hova, field_lens='vchall')
