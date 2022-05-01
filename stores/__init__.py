@@ -3,9 +3,11 @@ from .amazon import amz_read
 from .bibliotheca import bibliotheca
 from .bn import bn
 from .bookmate import bookmate
+from .bookmate_audio import bookmate_audio
 from .cnpiec import cnpiec
 from .dangdang import dangdang
 from .dibook import dibook
+from .dreame import dreame_month
 from .ekonyv import ekonyv
 from .findaway import findaway
 from .gardners import gardners

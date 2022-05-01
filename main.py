@@ -46,9 +46,11 @@ def report():
     stores.bibliotheca()  # DELETE table first!!!
     stores.bn()
     stores.bookmate()
+    stores.bookmate_audio()
     stores.cnpiec()
     stores.dangdang()
     stores.dibook()
+    stores.dreame_month()
     stores.ekonyv()
     stores.findaway()
     stores.gardners()

@@ -31,7 +31,7 @@ def bookmate_audio(hova=HOVA):
                 record_count = df.shape[0]
                 sqw.write_to_db(df, TABLE, db_name='stage', action='replace', field_lens='vchall', hova=hova)
                 print(f"{DATA_DIR.upper()}, file: {f.stem},\t, report: {REPORT_MONTH}, "
-                      f"total: {szumma:-10,.2f}\t, {record_count} records")
+                      f", {record_count} records, total: {szumma:-10,.2f}\n")
     else:
         util.empty(DATA_DIR)
 
