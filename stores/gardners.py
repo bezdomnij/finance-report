@@ -63,7 +63,7 @@ def gardners(hova=HOVA):
                 szumma = df[SUM_FIELD].sum()
                 record_count = df.shape[0]
                 sqw.write_to_db(df, TABLE, action='replace', hova=hova, field_lens='vchall')
-                print(f"{DATA_DIR.upper()} | {REPORT_MONTH}, total: {szumma:-10,.2f}, {record_count} records\n")
+                print(f"{DATA_DIR.upper()} | {REPORT_MONTH}, {record_count} records, total: {szumma:-10,.2f}\n")
     else:
         util.empty(DATA_DIR)
 

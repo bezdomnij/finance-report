@@ -46,7 +46,7 @@ def bibliotheca(hova=HOVA):
         # action append: replace give a row size error - before the change to other types part in get_types
         # !!! row size
         sqw.write_to_db(total_df, TABLE, field_lens='mas', action='replace', hova=hova)
-        print(f"{DATA_DIR.upper()} | {all_row_count} records\n")
+        print(f"{DATA_DIR.upper()} | {REPORT_MONTH}, {all_row_count} records\n")
     else:
         util.empty(DATA_DIR)
 

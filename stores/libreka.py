@@ -18,14 +18,11 @@ TABLE_SUB = 'stg_fin2_16_tolino_libreka_subscr'
 SUM_FIELD = 'Erlösanteil Geschäftspartner Netto'
 
 
-def get_content(f, df, s):
+def get_content(df):
     df['Datum'] = pd.to_datetime(df['Datum'], format="%d.%m.%Y").dt.date
     df['month'] = pd.DatetimeIndex(df['Datum']).month
     df.fillna(value='', inplace=True)
     net_income = df[SUM_FIELD].sum()
-    # print(f"{s} - {f.stem[-6:]}: {net_income:12,.2f}, {df['Datum'].min()}, "
-    #       f"{df['Datum'].max()}, - {f.stem[-2:]}, {df.shape[0]}, "
-    #       f"{df.groupby(['month']).size()}")
     return df, net_income
 
 
@@ -37,6 +34,7 @@ def libreka(hova=HOVA):
     if len(files) > 0:
         sheet_names = ['E-Book-Verkäufe', 'Abo und Flatrate']
         df_collection = dict.fromkeys(sheet_names)
+
         # init
         for s in sheet_names:
             table = TABLE_EBOOK if s == 'E-Book-Verkäufe' else TABLE_SUB
@@ -50,14 +48,16 @@ def libreka(hova=HOVA):
                 df_dict = pd.read_excel(f, sheet_name=None, header=0)
                 for s in sheet_names:
                     df = df_dict.get(s, pd.DataFrame())
-                    df, szumma = get_content(f, df, s)
+                    df, szumma = get_content(df)
                     df_collection[s][1] = df_collection[s][1].append(df, ignore_index=True)
                     df_collection[s][2] += szumma
                     print(f"{s} min.Date: {df_collection[s][1]['Datum'].min()} | "
                           f"max.Date: {df_collection[s][1]['Datum'].max()}")
+
         for k, v in df_collection.items():
             sqw.write_to_db(v[1], v[0], field_lens='vchall', hova=hova, action='replace')
             print(f"{DATA_DIR.upper()} | {REPORT_MONTH}, {v[0]}, {v[2]:10,.2f}\n")
+
     else:
         util.empty(DATA_DIR)
 

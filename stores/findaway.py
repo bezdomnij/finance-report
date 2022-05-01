@@ -20,15 +20,18 @@ def findaway(hova=HOVA):
     if len(files) > 0:
         print(p)
         for f in files:
+            szumma = 0
             if f.is_file() and f.suffix == '.xlsx' and f.stem[:2] != '~$' and FILENAME in f.stem:
                 sheet_names = ['Library', 'Retail', 'Subscription', 'Pool']
                 for s in sheet_names:
                     df = pd.read_excel(f, sheet_name=s, header=0)
-                    print(f"{df[SUM_FIELD].sum():-10.2f} {s}, records: {df.shape[0]}")
+                    szm = df[SUM_FIELD].sum()
+                    print(f"{szm:-10.2f} {s}, records: {df.shape[0]}")
+                    szumma += szm
                     record_count += df.shape[0]
                     table = TABLE + s.lower()
                     sqw.write_to_db(df, table, hova=hova, action='replace', field_lens='vchall')
-                print(f"{DATA_DIR.upper()} | {record_count} records\n")
+                print(f"{DATA_DIR.upper()} | {record_count} records, total {szumma:10,.2f}\n")
     else:
         util.empty(DATA_DIR)
 

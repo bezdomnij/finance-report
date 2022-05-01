@@ -31,7 +31,7 @@ def bn(hova=HOVA):
                 print(f"{f.parents[0].stem.lower()} | {df.shape[0]} rows, {df.shape[1]}, columns")
 
         sqw.write_to_db(df, TABLE, action='replace', field_lens='mas', hova=hova)
-        print(f"{DATA_DIR.upper()}: {REPORT_MONTH} |  total {calc_sum(df)}, {df.shape[0]} records\n")
+        print(f"{DATA_DIR.upper()} | {REPORT_MONTH}, {df.shape[0]} records, total {calc_sum(df)}\n")
     else:
         util.empty(DATA_DIR)
 

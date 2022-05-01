@@ -32,7 +32,7 @@ def google_audio(hova=HOVA):
     for f in files:
         df = get_df(f)
         if df.shape[0] > 0:
-            print(f"{DATA_DIR.upper()} | {f.name}, SUM: {df['Earnings Amount'].astype(float).sum():.2f}\n")
+            print(f"{DATA_DIR.upper()} | {df.shape[0]} records, SUM: {df['Earnings Amount'].astype(float).sum():.2f}\n")
 
     # finds the latest and write that one to sql
     if len(files) > 1:
@@ -58,4 +58,4 @@ def google_audio(hova=HOVA):
 if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO, filename='datacamp.log', filemode='w', format='%(asctime)s %(message)s')
     # google_audio('/Users/frank/pd/finance_report/2021_12_december', hova='0')
-    google_audio(hova='pd')
+    google_audio(hova='19')

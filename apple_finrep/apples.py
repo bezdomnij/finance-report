@@ -73,7 +73,7 @@ def read_apple(hova=HOVA):
         print("EXTENDED PARTNER SHARE", total_df['Extended Partner Share'].sum())
 
         print("UNITS SOLD", int(total_df['Quantity'].sum()))
-        print(f"{DATA_DIR.upper()} | {total_df.shape[0]} records\n")
+        print(f"{DATA_DIR.upper()} | {REPORT_MONTH}, {total_df.shape[0]} records\n")
         # write!!!
         sqw.write_to_db(total_df, 'stg_fin2_1_apple', action='replace', hova=hova, field_lens='vchall')
         return pd.DataFrame(sum_df, index=range(1, 23))

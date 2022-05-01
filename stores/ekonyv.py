@@ -24,10 +24,11 @@ def ekonyv(hova=HOVA):
 
                 df = df[df['ISBN'].notna()]  # drop lines below data
                 df['ISBN'] = df['ISBN'].astype('int64')  # otherwise, a .0 is put to the end
-                print(f"{df.shape[0]} db, Összesen ekönyv: {round(df['Nettó fizetendő'].sum(), 2)}")
+                record_count = df.shape[0]
+                # print(f"Összesen ekönyv: {round(df['Nettó fizetendő'].sum(), 2)}")
                 sqw.write_to_db(df, TABLE, hova=hova, action='replace', field_lens='vchall')
                 szumma = df[SUM_FIELD].sum()
-                print(f"{DATA_DIR.upper()}, {REPORT_MONTH}, total: {szumma:-10,.3f}\n")
+                print(f"{DATA_DIR.upper()} | {REPORT_MONTH}, {record_count} records, total: {szumma:-10,.0f}\n")
     else:
         util.empty(DATA_DIR)
 

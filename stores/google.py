@@ -37,12 +37,12 @@ def google(hova=HOVA):
                 print(f.stem)
                 df['Earnings Amount'] = df['Earnings Amount'].str.replace(',', '.')
                 sqw.write_to_db(df, TABLE, action='replace', hova=hova, field_lens='vchall')
-                print(f"{DATA_DIR.upper()} | {f.name} SUM: {df['Earnings Amount'].astype(float).sum():.2f}, "
-                      f"row count: {df.shape[0]} records\n")
+                print(f"{DATA_DIR.upper()} | {REPORT_MONTH}, {df.shape[0]} records, "
+                      f"SUM: {df['Earnings Amount'].astype(float).sum():.2f}, \n")
     else:
         util.empty(DATA_DIR)
 
 
 if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO, filename='datacamp.log', filemode='w', format='%(asctime)s %(message)s')
-    google(hova='pd')
+    google(hova='0')
