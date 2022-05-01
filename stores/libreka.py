@@ -23,7 +23,8 @@ def get_content(df):
     df['month'] = pd.DatetimeIndex(df['Datum']).month
     df.fillna(value='', inplace=True)
     net_income = df[SUM_FIELD].sum()
-    return df, net_income
+    rec_count = df.shape[0]
+    return df, net_income, rec_count
 
 
 def libreka(hova=HOVA):
@@ -42,21 +43,23 @@ def libreka(hova=HOVA):
             df_collection[s].append(table)
             df_collection[s].append(pd.DataFrame())
             df_collection[s].append(0)
+            df_collection[s].append(0)
 
         for f in files:
             if f.suffix == '.xlsx' and '5288812' in f.stem and f.stem[:2] != '~$':
                 df_dict = pd.read_excel(f, sheet_name=None, header=0)
                 for s in sheet_names:
                     df = df_dict.get(s, pd.DataFrame())
-                    df, szumma = get_content(df)
+                    df, szumma, rc = get_content(df)
                     df_collection[s][1] = df_collection[s][1].append(df, ignore_index=True)
                     df_collection[s][2] += szumma
+                    df_collection[s][3] += rc
                     print(f"{s} min.Date: {df_collection[s][1]['Datum'].min()} | "
                           f"max.Date: {df_collection[s][1]['Datum'].max()}")
 
         for k, v in df_collection.items():
             sqw.write_to_db(v[1], v[0], field_lens='vchall', hova=hova, action='replace')
-            print(f"{DATA_DIR.upper()} | {REPORT_MONTH}, {v[0]}, {v[2]:10,.2f}\n")
+            print(f"{DATA_DIR.upper()} | {REPORT_MONTH}, {v[0]}, {v[3]} records, total: {v[2]:10,.2f}\n")
 
     else:
         util.empty(DATA_DIR)

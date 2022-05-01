@@ -32,13 +32,13 @@ def scribd(hova=HOVA):
                     rc = df.shape[0]
                     szm = df[SUM_FIELD].sum()
                     all_df = all_df.append(df)
-                    print(f'file: {f.stem}, {rc:10d} records, {szm:10,.3f}')
+                    print(f'file: {f.stem}, {rc:10d} records, total: {szm:10,.3f}')
                     record_count += rc
                     szumma += szm
 
         szumma = all_df[SUM_FIELD].sum()
         sqw.write_to_db(all_df, TABLE, db_name='stage', action='replace', field_lens='vchall', hova=hova)
-        print(f"{DATA_DIR.upper()} | {REPORT_MONTH}, total: {szumma:-10,.2f} | {record_count:10d} records\n")
+        print(f"{DATA_DIR.upper()} | {REPORT_MONTH}, {record_count:10d} records, total: {szumma:-10,.2f}\n")
     else:
         util.empty(DATA_DIR)
 

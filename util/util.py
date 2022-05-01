@@ -76,8 +76,7 @@ def get_content_xl_onesheet(file, table, hova, sum_field, na_field, header=0, sh
         record_count = df.shape[0]
         # print(df.columns)
     print(
-        f"{file.parents[0].stem.lower()} | file: {file.stem}, osszege: "
-        f"{round(szumma, 3):-18,.2f}, {record_count} records")
+        f"{file.parents[0].stem.lower()} | file: {file.stem},  {record_count} records, total: {round(szumma, 3):9,.2f}")
     sqw.write_to_db(df, table, db_name='stage', action='replace', field_lens='vchall', hova=hova)
     return record_count, szumma
 

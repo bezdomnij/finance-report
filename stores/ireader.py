@@ -34,13 +34,13 @@ def ireader(hova=HOVA):
                 record_count = df.shape[0]
                 szumma = df[SUM_FIELD].sum()
                 sqw.write_to_db(df, TABLE, action='replace', hova=hova, field_lens='vchall')
-                print(f"{DATA_DIR.upper()} | {REPORT_MONTH}, total: {szumma:-10,.3f}\t{record_count:10,d} records\n")
+                print(f"{DATA_DIR.upper()} | {REPORT_MONTH}, {record_count:10,d} records, total: {szumma:-10,.3f}\n")
     else:
         util.empty(DATA_DIR)
 
 
 def main():
-    ireader(hova='19')
+    ireader(hova='pd')
 
 
 if __name__ == '__main__':

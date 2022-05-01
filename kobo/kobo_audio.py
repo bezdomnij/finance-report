@@ -49,7 +49,7 @@ def kobo_audio(hova=HOVA):
                 record_count = df.shape[0]
                 print(file.stem)
                 sqw.write_to_db(df, TABLE, hova=hova, field_lens='vchall')
-                print(f"{DATA_DIR.upper()} | {REPORT_MONTH}, total: {szumma:-10,.2f}, {record_count:10,d} records\n")
+                print(f"{DATA_DIR.upper()} | {REPORT_MONTH}, {record_count:10,d} records, total: {szumma:-10,.2f}\n")
     else:
         util.empty(DATA_DIR)
 

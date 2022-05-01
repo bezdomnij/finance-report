@@ -38,7 +38,7 @@ def odilo(hova=HOVA):
                 record_count += r
                 szumma += s
 
-        print(f"{DATA_DIR.upper()} | {REPORT_MONTH}, total: {szumma:-10,.2f}, {record_count:10,d} records\n")
+        print(f"{DATA_DIR.upper()} | {REPORT_MONTH}, {record_count:10,d} records, total: {szumma:-10,.2f}\n")
     else:
         util.empty(DATA_DIR)
 

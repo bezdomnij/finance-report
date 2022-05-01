@@ -38,7 +38,7 @@ def google(hova=HOVA):
                 df['Earnings Amount'] = df['Earnings Amount'].str.replace(',', '.')
                 sqw.write_to_db(df, TABLE, action='replace', hova=hova, field_lens='vchall')
                 print(f"{DATA_DIR.upper()} | {REPORT_MONTH}, {df.shape[0]} records, "
-                      f"SUM: {df['Earnings Amount'].astype(float).sum():.2f}, \n")
+                      f"total: {df['Earnings Amount'].astype(float).sum():.2f}, \n")
     else:
         util.empty(DATA_DIR)
 

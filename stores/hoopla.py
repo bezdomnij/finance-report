@@ -27,13 +27,13 @@ def hoopla(hova=HOVA):
                 szumma = df[SUM_FIELD].sum()
                 record_count = df.shape[0]
                 sqw.write_to_db(df, TABLE, db_name='stage', action='replace', field_lens='vchall', hova=hova)
-                print(f"{DATA_DIR.upper()} | {REPORT_MONTH}, total: {szumma:-10,.2f}\t{record_count:10,d} records\n")
+                print(f"{DATA_DIR.upper()} | {REPORT_MONTH}, {record_count:10,d} records, total: {szumma:-10,.2f}\n")
     else:
         util.empty(DATA_DIR)
 
 
 def main():
-    hoopla(hova='19')
+    hoopla(hova='pd')
 
 
 if __name__ == '__main__':

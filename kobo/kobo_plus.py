@@ -32,7 +32,8 @@ def kobo_plus(hova=HOVA):
                 print(f.stem)
                 sqw.write_to_db(df2, TABLE, hova=hova, field_lens='vchall')
                 print(
-                    f"{(DATA_DIR + ' PLUS').upper()} | {REPORT_MONTH}, total: {szumma:-10,.2f}, {record_count:10,d} records\n")
+                    f"{(DATA_DIR + ' PLUS').upper()} | {REPORT_MONTH}, {record_count:10,d} records, "
+                    f"total: {szumma:10,.2f}\n")
     else:
         util.empty(DATA_DIR)
 

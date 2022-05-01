@@ -31,13 +31,13 @@ def mackin(hova=HOVA):
                 df = pd.read_excel(f, header=4)
                 # print(df.columns)
                 df = df.drop(['Unnamed: 1', 'Unnamed: 2', 'Unnamed: 3'], axis=1)
-                print(df.shape[0])
+                # print(df.shape[0])
                 df = df[df['ISBN'].notna()]
                 df = df[df['Title'] != 'Title']
                 record_count = df.shape[0]
                 szumma = df[SUM_FIELD].sum()
                 sqw.write_to_db(df, TABLE, hova=hova, action='replace', field_lens='vchall')
-                print(f"{DATA_DIR.upper()} | {REPORT_MONTH}, total: {szumma:-10,.2f}\t{record_count} records\n")
+                print(f"{DATA_DIR.upper()} | {REPORT_MONTH}, {record_count} records, total: {szumma:-10,.2f}\n")
     else:
         util.empty(DATA_DIR)
 
