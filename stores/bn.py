@@ -17,17 +17,26 @@ def calc_sum(df):
 
 
 def bn(hova=HOVA):
+    """
+    BN is a one-file solution
+    :param hova: write to which server
+    :return:
+    """
     df = pd.DataFrame()
     p = Path(MAIN_DIR).joinpath(REPORT_MONTH).joinpath(DATA_DIR)
     files = util.get_file_list(p)
     if files is None:
         return
     if len(files) > 0:
+        files = util.get_latest_file(files,
+                                     '.csv')  # only where source is a single file, and we think the latest is best
         for f in files:
             if f.is_file() and (FILENAME in f.stem or 'bn' in f.stem) and f.suffix.lower() == '.csv':
                 df = pd.read_csv(f, header=0, sep=',')
+                cols = df.columns
                 print(f"{f.parents[0].stem.lower()} | {df.shape[0]} rows, {df.shape[1]}, columns")
-                df.drop(df.columns[[35]], axis=1, inplace=True)
+                if len(cols) == 36:
+                    df.drop(df.columns[[35]], axis=1, inplace=True)
                 print(f"{f.parents[0].stem.lower()} | {df.shape[0]} rows, {df.shape[1]}, columns")
 
         sqw.write_to_db(df, TABLE, action='replace', field_lens='mas', hova=hova)
@@ -35,8 +44,9 @@ def bn(hova=HOVA):
     else:
         util.empty(DATA_DIR)
 
+
 def main():
-    bn('pd')
+    bn('19')
 
 
 if __name__ == '__main__':

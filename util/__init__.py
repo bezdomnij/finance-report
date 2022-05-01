@@ -4,3 +4,4 @@ from .util import get_file_list
 from .util import check_google_file_name
 from .util import set_date
 from .util import empty
+from .util import get_latest_file

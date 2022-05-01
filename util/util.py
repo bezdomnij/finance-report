@@ -1,9 +1,11 @@
 import logging
 import re
 import warnings
+
 import pandas as pd
+
 from engineer import sql_writer as sqw
-from pathlib import Path
+import pathlib
 
 
 def get_period(fname):
@@ -13,6 +15,13 @@ def get_period(fname):
 
 
 def set_date(report_month, offset):
+    """
+    used first with perlego, where we create the date in the df, because the file does not have it
+    however: dtae needs to be backdated by offset number of months (1, usually)
+    :param report_month:
+    :param offset:
+    :return: a year_month string to be used in the file date (by adding 15 to it in the calling function)
+    """
     parts = report_month.split('_')
     year, month = int(parts[0]), int(parts[1])
     temp_month = month + offset
@@ -45,13 +54,13 @@ def check_google_file_name(fname):
     return result
 
 
-def check_incoming(f):
-    ftype, period = check_google_file_name(f.name)
-    print(ftype, period)
-    return ftype, period
-
-
 def get_proper_df(f, sheet_name='Details'):
+    """
+    to get rid of the spaces around field names
+    :param f: pathlib file object
+    :param sheet_name:
+    :return: return a df where no spaces in field names
+    """
     with warnings.catch_warnings(record=True):
         warnings.simplefilter("always")
         df = pd.read_excel(f, sheet_name=sheet_name, header=0, index_col=None)
@@ -102,8 +111,23 @@ def get_file_list(p):
     return files
 
 
-def get_path(dirpath, directory):
-    return Path(dirpath).joinpath(directory)
+def get_latest_file(files, ftype):
+    """
+    based on mod time pathlib files are sorted
+    :param ftype: file type as udsed in pd
+    :param files: list of pathlib file objects
+    :return: one file as list (easier on the existing code)
+    """
+    time_file = {}
+    result = []
+    for f in [x for x in files if x.suffix.lower() == ftype]:
+        mt = f.stat().st_mtime_ns
+        time_file.update({mt: f})
+    for k, v in time_file.items():
+        print(k, v)
+    sorted_lst = sorted(list(time_file.keys()))
+    result.append(time_file[sorted_lst[-1]])
+    return result
 
 
 def main():

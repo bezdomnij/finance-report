@@ -17,7 +17,8 @@ def ekonyv(hova=HOVA):
     if files is None:
         return
     if len(files) > 0:
-        for f in p.iterdir():
+        files = util.get_latest_file(files, '.xlsx')
+        for f in files:
             if f.is_file() and f.suffix == '.xlsx' and FILENAME in f.stem and f.stem[:2] != '~$':
                 # df = pd.read_excel(f, sheet_name='PublishDrive', header=12)
                 df = pd.read_excel(f, header=12)
