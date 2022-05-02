@@ -4,12 +4,13 @@ import logging
 import urllib
 from sys import argv
 from urllib import request
-
+import pandas as pd
 from smb.SMBHandler import SMBHandler
-
+from dataclasses import asdict
 import kobo
 import stores
 from apple_finrep import apples
+from engineer import sql_writer as sqw
 
 
 def discover(to_find):
@@ -39,33 +40,44 @@ def read_network():
 
 
 # Press the green button in the gutter to run the script.
+def make_df(lst):
+    df = pd.DataFrame(lst)
+    # df.info()
+    return df
+
+
 def report():
-    stores.tfsymbols()
-    stores.amz_read()
-    apples.apple()
-    stores.bibliotheca()  # DELETE table first!!!
-    stores.bn()
-    stores.bookmate()
-    stores.bookmate_audio()
-    stores.cnpiec()
-    stores.dangdang()
-    stores.dibook()
-    stores.dreame_month()
-    stores.ekonyv()
-    stores.findaway()
-    stores.gardners()
-    stores.google()
-    stores.google_audio()
-    stores.hoopla()
-    stores.ireader()
-    kobo.kobo()
-    kobo.kobo_audio()
-    kobo.kobo_plus()
-    stores.libreka()
-    stores.mackin()
-    stores.odilo()
-    stores.perlego()
-    stores.scribd()
+    collect_lst = []
+    collect_lst.extend(stores.tfsymbols())
+    collect_lst.extend(stores.amz_read())
+    collect_lst.extend(stores.bibliotheca())  # DELETE table first!!!
+
+    # apples.apple()
+    # stores.bn()
+    # stores.bookmate()
+    # stores.bookmate_audio()
+    # stores.cnpiec()
+    # stores.dangdang()
+    # stores.dibook()
+    # stores.dreame_month()
+    # stores.ekonyv()
+    # stores.findaway()
+    # stores.gardners()
+    # stores.google()
+    # stores.google_audio()
+    # stores.hoopla()
+    # stores.ireader()
+    # kobo.kobo()
+    # kobo.kobo_audio()
+    # kobo.kobo_plus()
+    # stores.libreka()
+    # stores.mackin()
+    # stores.odilo()
+    # stores.perlego()
+    # stores.scribd()
+    # make_df(collection)
+    df_all = make_df(collect_lst)
+    sqw.write_to_db(df_all, 'fin_results', field_lens='vchall')
 
 
 if __name__ == '__main__':
@@ -76,6 +88,7 @@ if __name__ == '__main__':
         print(argv)
         discover(argv[1:])
     # HOVA IRUNK?
+    DF_FINAL = pd.DataFrame()
     report()
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/

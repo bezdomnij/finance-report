@@ -5,32 +5,13 @@ import pandas as pd
 from config import MAIN_DIR, REPORT_MONTH, HOVA
 from checker import data_checker
 from engineer import sql_writer as sqw
+from result import Result
 
 DATA_DIR = 'amazon'
 
 
-#
-# def write_to_db(df, table_name, hova='19', extras=None):
-#     print('Started to connect to db...')
-#     if extras is None:
-#         extras = {}
-#     engine = sqw.get_engine(hova)
-#     types = sqw.get_types(df, extras)
-#     connection = engine.connect()
-#     try:
-#         df.to_sql(table_name, connection, if_exists='replace', index=False,
-#                   method='multi', chunksize=5000, dtype=types)
-#     except Exception as e:
-#         logging.exception(e)
-#         print(f'BIG RED FLAG, this is, {e.__str__}: check the logfile for details!!!{table_name}')
-#     else:
-#         print(f"Table {table_name} is written to successfully.\n")
-#     finally:
-#         connection.close()
-# engine.dispose()
-
-
 def make_df(files, amazon, hova=HOVA):
+    result = []
     for f in files:
         marker = 'KEP'
         df = pd.read_excel(f, header=0, index_col=None)
@@ -41,13 +22,15 @@ def make_df(files, amazon, hova=HOVA):
             print(f'Look out, "{f.name}" has extra lengths: {too_many_chars}')
 
         szumma = df['Payment Amount'].sum()
+        amounts = {}
 
         if 'KEP_DASH' in f.stem.upper():
             currencies = df['Payment Amount Currency'].unique()
             currencies.sort()
             for c in currencies:
                 df2 = df[df['Payment Amount Currency'] == c]
-                print(f"{c}: {df2['Payment Amount'].sum():-18,.2f}")
+                amounts[c] = df2['Payment Amount'].sum()
+                print(f"{c}: {amounts[c]:-18,.2f}")
 
         if 'PRINT_DASH' in f.stem.upper():
             currencies = df['Royalty Amount Currency'].unique()
@@ -56,13 +39,18 @@ def make_df(files, amazon, hova=HOVA):
             currencies.sort()
             for c in currencies:
                 df2 = df[df['Royalty Amount Currency'] == c]
-                print(f"{c}: {df2['Payment Amount'].sum():-18,.2f}")
-
+                amounts[c] = df2['Payment Amount'].sum()
+                print(f"{c}: {amounts[c]:-18,.2f}")
+        record_count = df.shape[0]
         sqw.write_to_db(df, amazon[f], db_name='stage', action='replace', hova=hova, field_lens='vchall')
-        print(f"{DATA_DIR.upper()}_{marker} | {REPORT_MONTH}, {df.shape[0]} records, total: {szumma:-10,.2f}\n")
+        print(f"{DATA_DIR.upper()}_{marker} | {REPORT_MONTH}, {record_count} records, total: {szumma:-10,.2f}\n")
+        for k, v in amounts.items():
+            result.append(Result(DATA_DIR.upper() + '_' + marker, REPORT_MONTH, record_count, k, v))
+    return result
 
 
 def amz_read(hova=HOVA):
+    res = []
     p = Path(MAIN_DIR).joinpath(REPORT_MONTH).joinpath(DATA_DIR)
     print(p)
     amazon = {}
@@ -83,9 +71,10 @@ def amz_read(hova=HOVA):
         else:
             print(f"Directory content not clean, has {len(files)} items.")
             return
-        make_df(files, amazon, hova)
+        res = make_df(files, amazon, hova)
     else:
         util.empty(DATA_DIR)
+    return res
 
 
 if __name__ == '__main__':
