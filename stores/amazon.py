@@ -29,8 +29,10 @@ def make_df(files, amazon, hova=HOVA):
             currencies.sort()
             for c in currencies:
                 df2 = df[df['Payment Amount Currency'] == c]
-                amounts[c] = df2['Payment Amount'].sum()
-                print(f"{c}: {amounts[c]:-18,.2f}")
+                amounts[c] = []
+                amounts[c].append(df2.shape[0])
+                amounts[c].append(df2['Payment Amount'].sum())
+                print(f"{c}: {amounts[c][1]:-18,.2f}")
 
         if 'PRINT_DASH' in f.stem.upper():
             currencies = df['Royalty Amount Currency'].unique()
@@ -39,13 +41,17 @@ def make_df(files, amazon, hova=HOVA):
             currencies.sort()
             for c in currencies:
                 df2 = df[df['Royalty Amount Currency'] == c]
-                amounts[c] = df2['Payment Amount'].sum()
-                print(f"{c}: {amounts[c]:-18,.2f}")
+                amounts[c] = []
+                amounts[c].append(df2.shape[0])
+                amounts[c].append(df2['Payment Amount'].sum())
+                print(f"{c}: {amounts[c][1]:-18,.2f}")
+                print(df2.shape[0])
         record_count = df.shape[0]
         sqw.write_to_db(df, amazon[f], db_name='stage', action='replace', hova=hova, field_lens='vchall')
         print(f"{DATA_DIR.upper()}_{marker} | {REPORT_MONTH}, {record_count} records, total: {szumma:-10,.2f}\n")
         for k, v in amounts.items():
-            result.append(Result(DATA_DIR.upper() + '_' + marker, REPORT_MONTH, record_count, k, v))
+            # print(k, v)
+            result.append(Result(DATA_DIR.upper() + '_' + marker, REPORT_MONTH, v[0], k, v[1]))
     return result
 
 
