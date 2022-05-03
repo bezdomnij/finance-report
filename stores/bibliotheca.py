@@ -11,14 +11,6 @@ from engineer import sql_writer as sqw
 DATA_DIR = 'bibliotheca'
 TABLE = 'stg_fin2_39_bibliotheca'
 SUM_FIELD = 'Total proceeds due to publisher'
-CURRENCIES = {
-    'GB': 'GBP',
-    'BE': 'EUR',
-    'AU': 'AUD',
-    'CA': 'CAD',
-    'US': 'USD',
-    'RO': 'RON'
-}
 
 
 def read_file_content(f):
@@ -56,7 +48,7 @@ def bibliotheca(hova=HOVA):
                 current_df, rc, currency, total = df_props
                 total_df = pd.concat([total_df, current_df])
                 all_row_count += rc
-                res.append(Result(DATA_DIR.upper(), REPORT_MONTH, rc, currency, total))
+                res.append(Result(DATA_DIR.upper(), REPORT_MONTH, rc, currency, '', total))
         # action append: replace give a row size error - before the change to other types part in get_types
         # !!! row size
         sqw.write_to_db(total_df, TABLE, field_lens='mas', action='replace', hova=hova)

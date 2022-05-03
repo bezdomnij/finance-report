@@ -2,6 +2,7 @@ from pathlib import Path
 import pandas as pd
 from util import util
 from config import MAIN_DIR, REPORT_MONTH, HOVA
+from result import Result
 
 TABLE = 'stg_rts2_35_cnpiec'
 FILENAME = '_CNPeReading Sales Report_PublishDrive'
@@ -10,6 +11,7 @@ SUM_FIELD = 'Net amount to Publisher'
 
 
 def cnpiec(hova=HOVA):
+    res = []
     p = Path(MAIN_DIR).joinpath(REPORT_MONTH).joinpath(DATA_DIR)
     # disable chained assignments
     files = util.get_file_list(p)
@@ -22,8 +24,10 @@ def cnpiec(hova=HOVA):
             if f.suffix == '.xlsx' and FILENAME in f.stem and f.stem[:2] != '~$':
                 record_count, szumma = util.get_content_xl_onesheet(f, TABLE, hova, SUM_FIELD, 'Order date', header=0)
                 print(f"{DATA_DIR}, {REPORT_MONTH}, {record_count} records, total: {szumma:-10,.2f}\n")
+                res.append(Result(DATA_DIR.upper(), REPORT_MONTH, record_count, 'USD', '', szumma))
     else:
         util.empty(DATA_DIR)
+    return res
 
 
 def main():

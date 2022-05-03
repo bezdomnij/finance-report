@@ -3,6 +3,7 @@ import pandas as pd
 from engineer import sql_writer as sqw
 from config import MAIN_DIR, REPORT_MONTH, HOVA
 import util
+from result import Result
 
 TABLE = 'stg_fin2_38_dangdang'
 FILENAME = 'Order_Dangdang_PublishDrive_'
@@ -11,6 +12,7 @@ SUM_FIELD = 'Payment Amount'
 
 
 def dangdang(hova=HOVA):
+    res = []
     p = Path(MAIN_DIR).joinpath(REPORT_MONTH).joinpath(DATA_DIR)
     # disable chained assignments
     pd.options.mode.chained_assignment = None
@@ -34,8 +36,10 @@ def dangdang(hova=HOVA):
                 szumma = df[SUM_FIELD].sum()
                 sqw.write_to_db(df, TABLE, action='replace', hova=hova, field_lens='vchall')
                 print(f"{DATA_DIR.upper()} {REPORT_MONTH}, {record_count} records, total: {szumma:-10,.2f}\n")
+                res.append(Result(DATA_DIR.upper(), REPORT_MONTH, record_count, 'USD', '', szumma))
     else:
         util.empty(DATA_DIR)
+    return res
 
 
 def main():

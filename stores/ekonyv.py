@@ -1,6 +1,6 @@
 from pathlib import Path
 import pandas as pd
-
+from result import Result
 import util
 from engineer import sql_writer as sqw
 from config import MAIN_DIR, REPORT_MONTH, HOVA
@@ -12,6 +12,7 @@ SUM_FIELD = 'Nettó fizetendő'
 
 
 def ekonyv(hova=HOVA):
+    res = []
     p = Path(MAIN_DIR).joinpath(REPORT_MONTH).joinpath(DATA_DIR)
     files = util.get_file_list(p)
     if files is None:
@@ -31,8 +32,10 @@ def ekonyv(hova=HOVA):
                 sqw.write_to_db(df, TABLE, hova=hova, action='replace', field_lens='vchall')
                 szumma = df[SUM_FIELD].sum()
                 print(f"{DATA_DIR.upper()} | {REPORT_MONTH}, {record_count} records, total: {szumma:-10,.0f}\n")
+                res.append(Result(DATA_DIR.upper(), REPORT_MONTH, record_count, 'HUF', '', szumma))
     else:
         util.empty(DATA_DIR)
+    return res
 
 
 def main():

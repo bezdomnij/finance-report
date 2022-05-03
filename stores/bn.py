@@ -1,6 +1,6 @@
 from pathlib import Path
 import pandas as pd
-
+from result import Result
 import util
 from engineer import sql_writer as sqw
 import logging
@@ -22,14 +22,15 @@ def bn(hova=HOVA):
     :param hova: write to which server
     :return:
     """
+    res = []
     df = pd.DataFrame()
     p = Path(MAIN_DIR).joinpath(REPORT_MONTH).joinpath(DATA_DIR)
     files = util.get_file_list(p)
     if files is None:
         return
     if len(files) > 0:
-        files = util.get_latest_file(files,
-                                     '.csv')  # only where source is a single file, and we think the latest is best
+        # only where source is a single file, and we think the latest is best
+        files = util.get_latest_file(files, '.csv')
         for f in files:
             if f.is_file() and (FILENAME in f.stem or 'bn' in f.stem) and f.suffix.lower() == '.csv':
                 df = pd.read_csv(f, header=0, sep=',')
@@ -38,11 +39,14 @@ def bn(hova=HOVA):
                 if len(cols) == 36:
                     df.drop(df.columns[[35]], axis=1, inplace=True)
                 print(f"{f.parents[0].stem.lower()} | {df.shape[0]} rows, {df.shape[1]}, columns")
-
-        sqw.write_to_db(df, TABLE, action='replace', field_lens='mas', hova=hova)
-        print(f"{DATA_DIR.upper()} | {REPORT_MONTH}, {df.shape[0]} records, total {calc_sum(df)}\n")
+                record_count = df.shape[0]
+                total = calc_sum(df)
+                sqw.write_to_db(df, TABLE, action='replace', field_lens='mas', hova=hova)
+                print(f"{DATA_DIR.upper()} | {REPORT_MONTH}, {record_count} records, total {total}\n")
+                res.append(Result(DATA_DIR.upper(), REPORT_MONTH, record_count, 'USD', '', total))
     else:
         util.empty(DATA_DIR)
+    return res
 
 
 def main():

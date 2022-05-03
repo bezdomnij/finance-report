@@ -99,7 +99,7 @@ def get_content_xl_onesheet(file, table, hova, sum_field, na_field, header=0, sh
 
 
 def empty(data_dir):
-    print(f"Looks like the `{data_dir}` directory is empty.\n")
+    print(f"Looks like the `{data_dir}` directory is empty OR does not exist.\n")
 
 
 def get_file_list(p):
@@ -107,7 +107,7 @@ def get_file_list(p):
         files = [f for f in p.iterdir()]
     except FileNotFoundError as e:
         print(f'apparenty the `{p.stem}` directory is not there\n{p.name.upper()} - {e}\n')
-        return None
+        return []
     return files
 
 

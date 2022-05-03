@@ -25,8 +25,7 @@ def tfsymbols(hova=HOVA):
                 dimensions = util.get_content_xl_onesheet(f, TABLE, hova=hova, sum_field=SUM_FIELD,
                                                           na_field='', header=5)
                 print(f"{DATA_DIR.upper()} | {REPORT_MONTH}, {dimensions[0]} records, total: {dimensions[1]:-10,.2f}")
-                res.append(Result(DATA_DIR, REPORT_MONTH, dimensions[0], 'USD', dimensions[1]))
-
+                res.append(Result(DATA_DIR, REPORT_MONTH, dimensions[0], 'USD', '', dimensions[1]))
     else:
         util.empty(DATA_DIR)
     return res

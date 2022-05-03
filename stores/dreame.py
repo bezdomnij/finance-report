@@ -2,6 +2,7 @@ from pathlib import Path
 import pandas as pd
 import util
 from config import MAIN_DIR, HOVA, REPORT_MONTH
+from result import Result
 
 TABLE = 'stg_fin2_42_Dreame_Q'
 FILENAME = 'PublishDrive-Sales Report-Q'
@@ -15,6 +16,7 @@ SUM_FIELD = 'Royalties(US$)'
 
 
 def dreame_month(hova=HOVA):
+    res = []
     p = Path(MAIN_DIR).joinpath(REPORT_MONTH).joinpath(DATA_DIR)
 
     # disable chained assignments
@@ -28,8 +30,10 @@ def dreame_month(hova=HOVA):
                 record_count, szumma = util.get_content_xl_onesheet(f, TABLE, hova, SUM_FIELD, 'CP Book ID', 1)
                 print(f"{DATA_DIR.upper()}, file: {f.stem},\t, report: {REPORT_MONTH}, "
                       f"total: {szumma:-10,.2f}\t, {record_count} records\n")
+                res.append(Result(DATA_DIR.upper(), REPORT_MONTH, record_count, 'USD', '', szumma))
     else:
         util.empty(DATA_DIR)
+    return res
 
 
 def main():

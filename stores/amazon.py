@@ -45,13 +45,12 @@ def make_df(files, amazon, hova=HOVA):
                 amounts[c].append(df2.shape[0])
                 amounts[c].append(df2['Payment Amount'].sum())
                 print(f"{c}: {amounts[c][1]:-18,.2f}")
-                print(df2.shape[0])
         record_count = df.shape[0]
         sqw.write_to_db(df, amazon[f], db_name='stage', action='replace', hova=hova, field_lens='vchall')
         print(f"{DATA_DIR.upper()}_{marker} | {REPORT_MONTH}, {record_count} records, total: {szumma:-10,.2f}\n")
         for k, v in amounts.items():
             # print(k, v)
-            result.append(Result(DATA_DIR.upper() + '_' + marker, REPORT_MONTH, v[0], k, v[1]))
+            result.append(Result(DATA_DIR.upper() + '_' + marker, REPORT_MONTH, v[0], k, '', v[1]))
     return result
 
 

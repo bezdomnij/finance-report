@@ -1,5 +1,4 @@
 from dataclasses import dataclass, field
-from typing import Dict
 
 
 @dataclass
@@ -7,6 +6,10 @@ class Result:
     store: str
     month: str
     records: int
-    # amount: Dict[str, float] = field(default_factory=lambda: ({"USD": 0.00}))
     currency: str
+    category: str
     amount: float
+
+    def __post_init__(self):
+        if self.category is None:
+            self.category = ''

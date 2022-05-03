@@ -2,7 +2,8 @@ from pathlib import Path
 import util
 from engineer import sql_writer as sqw
 import pandas as pd
-from config import MAIN_DIR, REPORT_MONTH, HOVA
+from config import MAIN_DIR, HOVA, REPORT_MONTH
+from result import Result
 
 TABLE = 'stg_fin2_20032_bookmate_audio'
 FILENAME = 'PublishDrive__Content_2_Connect__Audio_'
@@ -13,6 +14,7 @@ SUM_FIELD = 'Converted Revenue'
 
 
 def bookmate_audio(hova=HOVA):
+    res = []
     p = Path(MAIN_DIR).joinpath(REPORT_MONTH).joinpath(DATA_DIR)
     files = util.get_file_list(p)
     if files is None:
@@ -30,10 +32,12 @@ def bookmate_audio(hova=HOVA):
                 szumma = df[SUM_FIELD].sum()
                 record_count = df.shape[0]
                 sqw.write_to_db(df, TABLE, db_name='stage', action='replace', field_lens='vchall', hova=hova)
+                res.append(Result(DATA_DIR.upper(), REPORT_MONTH, record_count, 'USD', '', szumma))
                 print(f"{DATA_DIR.upper()}, file: {f.stem},\t, report: {REPORT_MONTH}, "
                       f", {record_count} records, total: {szumma:-10,.2f}\n")
     else:
         util.empty(DATA_DIR)
+    return res
 
 
 def main():

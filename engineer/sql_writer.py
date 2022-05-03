@@ -8,7 +8,7 @@ from sqlalchemy import create_engine, exc
 
 def write_to_db(df, table_name, db_name='stage', action='replace', hova='19', field_lens=None):
     load_dotenv()
-    if hova == '0':
+    if hova == '0' or df.empty:
         return
     if field_lens is None:
         field_lens = get_types(df, milyen='mindegy')
