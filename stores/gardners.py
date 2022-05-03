@@ -1,7 +1,7 @@
 from pathlib import Path
 
 import pandas as pd
-
+from result import Result
 import util
 from config import MAIN_DIR, REPORT_MONTH, HOVA
 from engineer import sql_writer as sqw
@@ -39,6 +39,7 @@ def forget_comma(one, two, three):
 
 
 def gardners(hova=HOVA):
+    res = []
     p = Path(MAIN_DIR).joinpath(REPORT_MONTH).joinpath(DATA_DIR)
     files = util.get_file_list(p)
     if files is None:
@@ -64,8 +65,10 @@ def gardners(hova=HOVA):
                 record_count = df.shape[0]
                 sqw.write_to_db(df, TABLE, action='replace', hova=hova, field_lens='vchall')
                 print(f"{DATA_DIR.upper()} | {REPORT_MONTH}, {record_count} records, total: {szumma:-10,.2f}\n")
+                res.append(Result(DATA_DIR.upper(), REPORT_MONTH, record_count, 'GBP', '', szumma))
     else:
         util.empty(DATA_DIR)
+    return res
 
 
 def main():

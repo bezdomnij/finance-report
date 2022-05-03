@@ -29,7 +29,7 @@ def dreame_month(hova=HOVA):
             if f.suffix in ('.xls', '.XLS', '.xlsx') and FILENAME in f.stem and f.stem[:2] != '~$':
                 record_count, szumma = util.get_content_xl_onesheet(f, TABLE, hova, SUM_FIELD, 'CP Book ID', 1)
                 print(f"{DATA_DIR.upper()}, file: {f.stem},\t, report: {REPORT_MONTH}, "
-                      f"total: {szumma:-10,.2f}\t, {record_count} records\n")
+                      f", {record_count} records, total: {szumma:-10,.2f}\n")
                 res.append(Result(DATA_DIR.upper(), REPORT_MONTH, record_count, 'USD', '', szumma))
     else:
         util.empty(DATA_DIR)

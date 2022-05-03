@@ -5,13 +5,13 @@ import util
 from engineer import sql_writer as sqw
 from config import MAIN_DIR, REPORT_MONTH, HOVA
 
-TABLE = 'stg_fin2_46_ireader'
-FILENAME = 'PublishDrive_Monthly Sales Detail Data@'
-DATA_DIR = 'ireader'
-SUM_FIELD = 'Sharing Amount'
+TABLE = 'stg_fin2_49_voxa'
+FILENAME = 'Raport 202'
+DATA_DIR = 'voxa'
+SUM_FIELD = 'Pret net cu TVA (RON)'
 
 
-def ireader(hova=HOVA):
+def voxa(hova=HOVA):
     """
     ireader sales needs catalog info, sales file has no isbn, just ireader id
     get the isbn from the catalog that has both
@@ -28,22 +28,27 @@ def ireader(hova=HOVA):
     pd.options.mode.chained_assignment = None
     if len(files) > 0:
         print(p)
+        df_all = pd.DataFrame()
+        record_count, szumma = 0, 0
         for f in files:
             if f.suffix == '.csv' and FILENAME in f.stem:  # .csv!!!
                 df = pd.read_csv(f, encoding='utf-8', header=0)
-                print(f.name)
-                record_count = df.shape[0]
-                szumma = df[SUM_FIELD].sum()
-                sqw.write_to_db(df, TABLE, action='replace', hova=hova, field_lens='vchall')
-                print(f"{DATA_DIR.upper()} | {REPORT_MONTH}, {record_count:10,d} records, total: {szumma:-10,.3f}\n")
-                res.append((Result(DATA_DIR.upper(), REPORT_MONTH, record_count, 'USD', '', szumma)))
+                rc = df.shape[0]
+                szm = df[SUM_FIELD].sum()
+                record_count += rc
+                szumma += szm
+                df_all = df_all.append(df)
+                print(f.name, rc, szm)
+        sqw.write_to_db(df_all, TABLE, action='replace', hova=hova, field_lens='vchall')
+        print(f"{DATA_DIR.upper()} | {REPORT_MONTH}, {record_count:10,d} records, total: {szumma:-10,.3f}\n")
+        res.append(Result(DATA_DIR.upper(), REPORT_MONTH, record_count, 'RON', '', szumma))
     else:
         util.empty(DATA_DIR)
     return res
 
 
 def main():
-    ireader(hova='pd')
+    voxa(hova='0')
 
 
 if __name__ == '__main__':

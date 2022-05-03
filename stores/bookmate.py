@@ -42,8 +42,8 @@ def bookmate(hova=HOVA):
                 record2_count += r2
                 szumma1 += s1
                 szumma2 += s2
-        res.append(Result(DATA_DIR.upper() + '1', REPORT_MONTH, record1_count, 'USD', '', szumma1))
-        res.append(Result(DATA_DIR.upper() + '2', REPORT_MONTH, record2_count, 'USD', '', szumma2))
+        res.append(Result(DATA_DIR.upper() + '1', REPORT_MONTH, record1_count, 'USD', 'revshare', szumma1))
+        res.append(Result(DATA_DIR.upper() + '2', REPORT_MONTH, record2_count, 'USD', 'subscr', szumma2))
         print(f"{DATA_DIR.upper()}, {REPORT_MONTH}, {record1_count} records, total: {szumma1:-10,.3f}\n")
         print(f"{DATA_DIR.upper()}, {REPORT_MONTH}, {record2_count} recordstotal: {szumma2:-10,.3f}\n")
     else:

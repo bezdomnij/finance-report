@@ -4,6 +4,7 @@ from engineer import sql_writer as sqw
 from util import util
 import logging
 from config import MAIN_DIR, REPORT_MONTH, HOVA
+from result import Result
 
 DATA_DIR = 'google_audio'
 TABLE = 'stg_fin2_20012_google_audio'
@@ -21,6 +22,7 @@ def get_df(f):
 
 
 def google_audio(hova=HOVA):
+    res = []
     src = Path(MAIN_DIR).joinpath(REPORT_MONTH).joinpath(DATA_DIR)
     files = util.get_file_list(src)
     if files is None:
@@ -31,11 +33,15 @@ def google_audio(hova=HOVA):
             df = get_df(f)
             if df.shape[0] > 0:
                 sqw.write_to_db(df, TABLE, action='replace', hova=hova)
+                record_count = df.shape[0]
+                szumma = df['Earnings Amount'].astype(float).sum()
                 print(
-                    f"{DATA_DIR.upper()} | {REPORT_MONTH}, {df.shape[0]} records, total: "
-                    f"{df['Earnings Amount'].astype(float).sum():.2f}\n")
+                    f"{DATA_DIR.upper()} | {REPORT_MONTH}, {record_count} records, total: "
+                    f"{szumma:.2f}\n")
+                res.append(Result(DATA_DIR.upper(), REPORT_MONTH, record_count, 'USD', '', szumma))
     else:
         util.empty(DATA_DIR)
+    return res
 
 
 if __name__ == '__main__':
