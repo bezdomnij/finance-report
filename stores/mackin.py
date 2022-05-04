@@ -4,6 +4,7 @@ import pandas as pd
 import util
 from engineer import sql_writer as sqw
 from config import MAIN_DIR, REPORT_MONTH, HOVA
+from result import Result
 
 TABLE = 'stg_fin2_36_mackin_data'
 FILENAME = 'PUBLISHDRIVE_EBOOKS_2022_'
@@ -19,6 +20,7 @@ def mackin(hova=HOVA):
     :param hova: sever where to write
     :return: nothing
     """
+    res = []
     p = Path(MAIN_DIR).joinpath(REPORT_MONTH).joinpath(DATA_DIR)
     files = util.get_file_list(p)
     # disable chained assignments
@@ -38,8 +40,10 @@ def mackin(hova=HOVA):
                 szumma = df[SUM_FIELD].sum()
                 sqw.write_to_db(df, TABLE, hova=hova, action='replace', field_lens='vchall')
                 print(f"{DATA_DIR.upper()} | {REPORT_MONTH}, {record_count} records, total: {szumma:-10,.2f}\n")
+                res.append(Result(DATA_DIR.upper(), REPORT_MONTH, record_count, 'USD', '', szumma))
     else:
         util.empty(DATA_DIR)
+    return res
 
 
 def main():

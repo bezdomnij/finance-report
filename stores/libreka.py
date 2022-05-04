@@ -7,7 +7,7 @@ list of properties of the type (ebook, sub)
 from pathlib import Path
 
 import pandas as pd
-
+from result import Result
 import util
 from config import MAIN_DIR, REPORT_MONTH, HOVA
 from engineer import sql_writer as sqw
@@ -28,6 +28,7 @@ def get_content(df):
 
 
 def libreka(hova=HOVA):
+    res = []
     p = Path(MAIN_DIR).joinpath(REPORT_MONTH).joinpath(DATA_DIR)
     files = util.get_file_list(p)
     if files is None:
@@ -60,9 +61,10 @@ def libreka(hova=HOVA):
         for k, v in df_collection.items():
             sqw.write_to_db(v[1], v[0], field_lens='vchall', hova=hova, action='replace')
             print(f"{DATA_DIR.upper()} | {REPORT_MONTH}, {v[0]}, {v[3]} records, total: {v[2]:10,.2f}\n")
-
+            res.append(Result(DATA_DIR.upper(), REPORT_MONTH, v[3], 'EUR', '', v[2]))
     else:
         util.empty(DATA_DIR)
+    return res
 
 
 def main():

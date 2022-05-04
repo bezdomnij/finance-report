@@ -3,6 +3,7 @@ import pandas as pd
 from engineer import sql_writer as sqw
 from config import MAIN_DIR, REPORT_MONTH, HOVA
 import util
+from result import Result
 
 TABLE = 'stg_fin2_37_perlego'
 FILENAME = 'Sales_Report'
@@ -18,7 +19,8 @@ def perlego(hova=HOVA):
     :return: nothing, just action
     get the date from the filename - name files properly!
     """
-    print(REPORT_MONTH)
+    res = []
+    # print(REPORT_MONTH)
     p = Path(MAIN_DIR).joinpath(REPORT_MONTH).joinpath(DATA_DIR)
     # disable chained assignments
     pd.options.mode.chained_assignment = None
@@ -38,22 +40,25 @@ def perlego(hova=HOVA):
                 df['Date'] = base_date[:4] + '-' + base_date[5:7] + '-15'
                 df[SUM_FIELD] = df[SUM_FIELD].str.strip().str.slice(start=1)
                 rc = df.shape[0]
-                print(f"{f.stem} |\t{rc} records, {round(df[SUM_FIELD].astype('float64').sum(), 2)}")
+                szm = df[SUM_FIELD].astype('float64').sum()
+                print(f"{f.stem} |\t{rc} records, {round(szm, 2)}")
                 df_all = df_all.append(df)
                 record_count += rc
 
         szumma = df_all[SUM_FIELD].astype('float64').sum()
         sqw.write_to_db(df_all, TABLE, hova=hova, action='replace', field_lens='vchall')
         print(f"{DATA_DIR.upper()} | {REPORT_MONTH}, {record_count} records, total: {szumma:-10,.2f}\n")
+        res.append(Result(DATA_DIR.upper(), REPORT_MONTH, record_count, 'USD', '', szumma))
         print(df_all.tail())
         print()
         # df_all = df_all.sort_values(by='Date')
     else:
         util.empty(DATA_DIR)
+    return res
 
 
 def main():
-    perlego(hova='19')
+    perlego(hova='0')
 
 
 if __name__ == '__main__':

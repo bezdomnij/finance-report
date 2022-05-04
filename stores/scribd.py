@@ -5,6 +5,7 @@ import pandas as pd
 import util
 from engineer import sql_writer as sqw
 from config import MAIN_DIR, REPORT_MONTH, HOVA
+from result import Result
 
 FILENAME_1 = 'PublishDrive_scribd_subscriptions_payouts_'
 FILENAME_2 = 'PublishDrive2_scribd_subscriptions_payouts_'
@@ -14,6 +15,7 @@ SUM_FIELD = 'Amount owed for this interaction'
 
 
 def scribd(hova=HOVA):
+    res = []
     all_df = pd.DataFrame()
     p = Path(MAIN_DIR).joinpath(REPORT_MONTH).joinpath(DATA_DIR)
     files = util.get_file_list(p)
@@ -33,6 +35,7 @@ def scribd(hova=HOVA):
                     szm = df[SUM_FIELD].sum()
                     all_df = all_df.append(df)
                     print(f'file: {f.stem}, {rc:10d} records, total: {szm:10,.3f}')
+                    res.append(Result(DATA_DIR.upper(), REPORT_MONTH, rc, 'USD', '', szm))
                     record_count += rc
                     szumma += szm
 
@@ -41,6 +44,7 @@ def scribd(hova=HOVA):
         print(f"{DATA_DIR.upper()} | {REPORT_MONTH}, {record_count:10d} records, total: {szumma:-10,.2f}\n")
     else:
         util.empty(DATA_DIR)
+    return res
 
 
 def main():
