@@ -10,7 +10,6 @@ from pathlib import Path
 import util
 from config import MAIN_DIR, REPORT_MONTH, HOVA
 from result import Result
-from engineer import sql_writer as sqw
 
 TABLE_1 = 'stg_fin2_43_storytel'
 TABLE_2 = 'stg_fin2_20043_storytel_audio'
@@ -30,8 +29,8 @@ def storytel(hova=HOVA):
         return
     if len(files) > 0:
         for f in files:
-            if f.is_file() and (f.suffix == '.xlsx' or f.suffix == '.xls') and f.stem[
-                                                                               :2] != '~$' and FILENAME in f.stem:
+            if f.is_file() and (f.suffix == '.xlsx' or f.suffix == '.xls') \
+                    and f.stem[:2] != '~$' and FILENAME in f.stem:
                 rc, szm = 0, 0
                 for sheet in ['A-books', 'E-books']:
                     if sheet == 'A-books':
@@ -53,4 +52,4 @@ def storytel(hova=HOVA):
 
 
 if __name__ == '__main__':
-    storytel(hova='0')
+    storytel(hova='19')
