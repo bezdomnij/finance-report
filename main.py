@@ -76,6 +76,7 @@ def report():
     collect_lst.extend(stores.overdrive())
     collect_lst.extend(stores.perlego())
     collect_lst.extend(stores.scribd())
+    collect_lst.extend(stores.storytel())
     collect_lst.extend(stores.voxa())
     # make_df(collection)
     df_all = pd.DataFrame(collect_lst)
