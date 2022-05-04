@@ -72,6 +72,7 @@ def report():
     collect_lst.extend(kobo.kobo_plus())
     collect_lst.extend(stores.libreka())
     collect_lst.extend(stores.mackin())
+    collect_lst.extend(stores.multimediaplaza())
     collect_lst.extend(stores.odilo())
     collect_lst.extend(stores.overdrive())
     collect_lst.extend(stores.perlego())
