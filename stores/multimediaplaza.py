@@ -46,9 +46,9 @@ def multimediaplaza(hova='0'):  # undecided: TOGETHER OR SEPARATELY, BECAUSE SOU
                 szm = df['jogdij'].sum()
                 szumma += szm
                 collect_df = collect_df.append(df)
-                print(df)
+                # print(df)
                 print(f"{DATA_DIR.upper()}, file: {f.stem},\t, report: {REPORT_MONTH}, "
-                      f"total: {szumma:-10,.2f}\t, {record_count} records")
+                      f"total: {szumma:-10,.2f}\t, {record_count} records\n")
                 res.append(Result(DATA_DIR.upper(), REPORT_MONTH, record_count, 'HUF', '', szumma))
     else:
         util.empty(DATA_DIR)

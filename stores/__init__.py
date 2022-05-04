@@ -25,3 +25,4 @@ from .voxa import voxa
 from .overdrive import overdrive
 from .storytel import storytel
 from .multimediaplaza import multimediaplaza
+from .eletoltes import eletoltes
