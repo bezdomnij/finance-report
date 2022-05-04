@@ -4,12 +4,12 @@ import logging
 import urllib
 from sys import argv
 from urllib import request
+
 import pandas as pd
 from smb.SMBHandler import SMBHandler
-from dataclasses import asdict
+
 import kobo
 import stores
-from apple_finrep import apples
 from engineer import sql_writer as sqw
 
 
