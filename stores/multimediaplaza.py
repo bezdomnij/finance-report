@@ -1,6 +1,6 @@
 from pathlib import Path
 import pandas as pd
-from config import MAIN_DIR, REPORT_MONTH
+from config import MAIN_DIR, REPORT_MONTH, HOVA
 import util
 from engineer import sql_writer as sqw
 from result import Result
@@ -12,7 +12,13 @@ DATA_DIR = 'Multimediaplaza'
 SUM_FIELD = 'jogdij'
 
 
-def multimediaplaza(hova='0'):  # undecided: TOGETHER OR SEPARATELY, BECAUSE SOURCE FILE CONTAINS BOTH
+def multimediaplaza(hova=HOVA):  # undecided: TOGETHER OR SEPARATELY, BECAUSE SOURCE FILE CONTAINS BOTH
+    """
+    able to handle and lump together multiple source files
+    March is made from Excel, normally it's .csv
+    :param hova: lokalisan is indithato masik cellal
+    :return: Result object
+    """
     collect_df = pd.DataFrame()
     res = []
     p = Path(MAIN_DIR).joinpath(SOURCE_DIR).joinpath(DATA_DIR)
@@ -22,31 +28,18 @@ def multimediaplaza(hova='0'):  # undecided: TOGETHER OR SEPARATELY, BECAUSE SOU
         return
     if len(files) > 0:
         for f in files:
-            # if f.is_file() and f.suffix == '.csv' and FILENAME in f.stem:
-            #     df = pd.read_csv(f, header=0, sep=',', index_col=None)
-            #     df.dropna(how='all', axis=1, inplace=True)
-            #     df.drop(df.tail(1).index, inplace=True)
-            #     df['jogdij'] = df['jogdij'].replace(',', '.')
-            #     rc = df.shape[0]
-            #     record_count += rc
-            #     szm = df['jogdij'].sum()
-            #     szumma += szm
-            #     collect_df = collect_df.append(df)
-            #     print(f"{DATA_DIR.upper()}, file: {f.stem},\t, report: {REPORT_MONTH}, "
-            #           f"total: {szumma:-10,.2f}\t, {record_count} records")
-            #     sqw.write_to_db(collect_df, TABLE, db_name='stage', field_lens='mas', action='replace',
-            #                     hova=hova)
             if f.is_file() and f.suffix == '.xlsx' and f.stem[:2] != '~$':
                 df = pd.read_excel(f, header=0, index_col=None)
-                df.dropna(how='all', axis=1, inplace=True)
+                df = df.drop(df[df['dátum'] == 'Összesen:'].index)
                 df['jogdij'] = df['jogdij'].replace(',', '.')
-                df.drop(df.tail(1).index, inplace=True)
                 rc = df.shape[0]
-                record_count += rc
                 szm = df['jogdij'].sum()
+                record_count += rc
                 szumma += szm
                 collect_df = collect_df.append(df)
-                # print(df)
+                print(df)
+            if not collect_df.empty:
+                sqw.write_to_db(collect_df, TABLE, hova=hova, field_lens='vchall')
                 print(f"{DATA_DIR.upper()}, file: {f.stem},\t, report: {REPORT_MONTH}, "
                       f"total: {szumma:-10,.2f}\t, {record_count} records\n")
                 res.append(Result(DATA_DIR.upper(), REPORT_MONTH, record_count, 'HUF', '', szumma))
@@ -56,7 +49,7 @@ def multimediaplaza(hova='0'):  # undecided: TOGETHER OR SEPARATELY, BECAUSE SOU
 
 
 def main():
-    multimediaplaza(hova='0')
+    multimediaplaza(hova='19')
 
 
 if __name__ == '__main__':
