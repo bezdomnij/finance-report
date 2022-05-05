@@ -1,15 +1,13 @@
 """
 multiple sources - two Excels, each file with one sheet only
-multiple destinations - two tables
-- header line location identical
-- sum field identical: FIELD
-- need to drop rows below data
+have to drop the total line
 """
 
 from pathlib import Path
 
+import numpy as np
 import pandas as pd
-
+from engineer import sql_writer as sqw
 import util
 from config import MAIN_DIR, REPORT_MONTH, HOVA
 from result import Result
@@ -20,10 +18,13 @@ DATA_DIR = 'eletoltes'
 SUM_FIELD = 'Content 2  Connect részesedés (nettó)'
 
 
-# SUM_FIELD = 'Totals'  # valamelyik
-
-
 def eletoltes(hova=HOVA):
+    """
+    collects data from multiple files and lumps them to db
+    dropping emty: (1) convert '' to np.nan, (2) drop rows where nan
+    :param hova: locally can be different from global
+    :return: Result object
+    """
     res = []
     p = Path(MAIN_DIR).joinpath(REPORT_MONTH).joinpath(DATA_DIR)
     szumma = 0
@@ -34,20 +35,21 @@ def eletoltes(hova=HOVA):
     if files is None:
         return
     if len(files) > 0:
+
         for f in files:
-            print(f)
-            rc, szm = 0, 0
             if f.is_file() and (f.suffix == '.xlsx' or f.suffix == '.xls') and f.stem[:2] != '~$':
                 df = pd.read_excel(f, header=0, index_col=None)
                 df.drop(df[df['ISBN szám'] == ''].index, inplace=True)
-                df.drop(df.tail(1).index, inplace=True)
+                df['ISBN szám'].replace('', np.nan, inplace=True)  # convert '' to nan
+                # df['ISBN szám'].astype(bool)  # other method: falsy, ez is jo
+                df.dropna(subset=['ISBN szám'], inplace=True)  # drop rows where any col is nan
                 rc = df.shape[0]
                 szm = df[SUM_FIELD].sum()
-                print(f.stem, rc, szm)
+                print(f"file: {f.stem}, {rc:10,d} records,\ttotal in file: {szm:-10,.2f}")
                 record_count += rc
                 szumma += szm
                 df_all = df_all.append(df)
-
+        sqw.write_to_db(df_all, TABLE, hova=hova, field_lens='vchall')
         print(f"{DATA_DIR.upper()} | {REPORT_MONTH}, {record_count:10,d} records, total: {szumma:-10,.2f}\n")
         res.append(Result(DATA_DIR.upper(), REPORT_MONTH, record_count, 'HUF', '', szumma))
     else:
@@ -56,7 +58,7 @@ def eletoltes(hova=HOVA):
 
 
 def main():
-    eletoltes(hova='0')
+    eletoltes(hova='pd')
 
 
 if __name__ == '__main__':

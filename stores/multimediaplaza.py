@@ -7,12 +7,11 @@ from result import Result
 
 TABLE = 'stg_rts2_09_multimediaplaza'
 FILENAME = 'Kossuth'
-SOURCE_DIR = REPORT_MONTH
 DATA_DIR = 'Multimediaplaza'
 SUM_FIELD = 'jogdij'
 
 
-def multimediaplaza(hova=HOVA):  # undecided: TOGETHER OR SEPARATELY, BECAUSE SOURCE FILE CONTAINS BOTH
+def multimediaplaza(hova=HOVA):
     """
     able to handle and lump together multiple source files
     March is made from Excel, normally it's .csv
@@ -21,7 +20,7 @@ def multimediaplaza(hova=HOVA):  # undecided: TOGETHER OR SEPARATELY, BECAUSE SO
     """
     collect_df = pd.DataFrame()
     res = []
-    p = Path(MAIN_DIR).joinpath(SOURCE_DIR).joinpath(DATA_DIR)
+    p = Path(MAIN_DIR).joinpath(REPORT_MONTH).joinpath(DATA_DIR)
     files = util.get_file_list(p)
     record_count, szumma = 0, 0
     if files is None:
