@@ -52,4 +52,4 @@ def storytel(hova=HOVA):
 
 
 if __name__ == '__main__':
-    storytel(hova='19')
+    storytel(hova='0')
