@@ -8,7 +8,7 @@ from result import Result
 
 TABLE_1 = 'stg_fin2_25_overdrive'
 TABLE_2 = 'stg_fin2_20025_overdrive_audio'
-FILENAME = 'havi elszámolás_'
+FILENAME = 'havi elszámolás_20220428_041158717_Q1'
 DATA_DIR = 'overdrive'
 SUM_FIELD = 'Amt owed USD'
 
@@ -51,7 +51,7 @@ def get_params(df):
 
 
 def main():
-    overdrive(hova='19')
+    overdrive(hova='pd')
 
 
 if __name__ == '__main__':
