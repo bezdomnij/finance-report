@@ -21,7 +21,7 @@ SUM_FIELD = 'Content 2  Connect részesedés (nettó)'
 def eletoltes(hova=HOVA):
     """
     collects data from multiple files and lumps them to db
-    dropping emty: (1) convert '' to np.nan, (2) drop rows where nan
+    dropping empty: (1) convert '' to np.nan, (2) drop rows where nan
     :param hova: locally can be different from global
     :return: Result object
     """
@@ -39,9 +39,8 @@ def eletoltes(hova=HOVA):
         for f in files:
             if f.is_file() and (f.suffix == '.xlsx' or f.suffix == '.xls') and f.stem[:2] != '~$':
                 df = pd.read_excel(f, header=0, index_col=None)
-                df.drop(df[df['ISBN szám'] == ''].index, inplace=True)
-                df['ISBN szám'].replace('', np.nan, inplace=True)  # convert '' to nan
-                # df['ISBN szám'].astype(bool)  # other method: falsy, ez is jo
+                # df['ISBN szám'].replace('', np.nan, inplace=True)  # convert '' to nan
+                df['ISBN szám'].astype(bool)  # this is the other method: falsy, ez is jo to drop
                 df.dropna(subset=['ISBN szám'], inplace=True)  # drop rows where any col is nan
                 rc = df.shape[0]
                 szm = df[SUM_FIELD].sum()
@@ -58,7 +57,7 @@ def eletoltes(hova=HOVA):
 
 
 def main():
-    eletoltes(hova='pd')
+    eletoltes(hova='0')
 
 
 if __name__ == '__main__':
