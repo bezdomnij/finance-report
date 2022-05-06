@@ -53,4 +53,4 @@ def bookmate(hova=HOVA):
 
 
 if __name__ == '__main__':
-    bookmate(hova='pd')
+    bookmate(hova='0')
