@@ -11,8 +11,8 @@ import util
 from config import MAIN_DIR, REPORT_MONTH, HOVA
 from result import Result
 
-TABLE_1 = 'stg_fin2_32_bookmate_revshare'
-TABLE_2 = 'stg_fin2_32_bookmate_subscr'
+TABLE_1 = 'stg_fin2_32_bookmate_revsh'
+TABLE_2 = 'stg_fin2_32_bookmate_subs'
 FILENAME_1 = 'REVSHARE (Content 2 Connect)'
 FILENAME_2 = 'PublishDrive (Content 2 Connect)'
 SOURCE_DIR = '2022_08_aug'
@@ -35,6 +35,7 @@ def bookmate(hova=HOVA):
             r1, s1, r2, s2 = 0, 0, 0, 0
             if f.is_file() and f.suffix == '.xlsx':
                 if FILENAME_1 in f.stem:
+                    print(hova)
                     r1, s1 = util.get_content_xl_onesheet(f, TABLE_1, hova, SUM_FIELD, 'User ID', 8)
                 if FILENAME_2 in f.stem:
                     r2, s2 = util.get_content_xl_onesheet(f, TABLE_2, hova, SUM_FIELD, 'User ID', 10)
@@ -52,4 +53,4 @@ def bookmate(hova=HOVA):
 
 
 if __name__ == '__main__':
-    bookmate(hova='19')
+    bookmate(hova='pd')

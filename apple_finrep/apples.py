@@ -106,7 +106,7 @@ def apple(hova=HOVA):
 
 
 def main():
-    apple('19')
+    apple('0')
 
 
 if __name__ == '__main__':
