@@ -8,9 +8,10 @@ from result import Result
 
 TABLE_1 = 'stg_fin2_25_overdrive'
 TABLE_2 = 'stg_fin2_20025_overdrive_audio'
-FILENAME = 'havi elszámolás_20220428_041158717_Q1'
+FILENAME = 'havi elsz'
 DATA_DIR = 'overdrive'
 SUM_FIELD = 'Amt owed USD'
+DATE_FIELD = 'Date'
 
 
 def overdrive(hova=HOVA):
@@ -29,9 +30,13 @@ def overdrive(hova=HOVA):
                 print(f"{DATA_DIR.upper() + '_AUDIO'} | {REPORT_MONTH}, {rc_a} records, total {szm_a:10,.2f}\n")
                 sqw.write_to_db(df_audio, TABLE_2, hova=hova, action='replace', field_lens='vchall')
                 res.append(Result(DATA_DIR.upper() + '_AUDIO', REPORT_MONTH, rc_a, 'USD', '', szm_a))
+                date_borders = util.get_df_dates(DATE_FIELD, 1, df_audio)
+                print(date_borders)
 
                 df_ebook = df.loc[df['Format'].isin(['OverDrive Read', 'Adobe EPUB eBook'])]
                 rc_e, szm_e = get_params(df_ebook)
+                date_borders = util.get_df_dates(DATE_FIELD, 1, df_ebook)
+                print(date_borders)
                 print(f"{DATA_DIR.upper()} | {REPORT_MONTH}, {rc_e} records, total {szm_e:10,.2f}\n")
                 sqw.write_to_db(df_ebook, TABLE_1, hova=hova, action='replace', field_lens='vchall')
                 res.append(Result(DATA_DIR.upper(), REPORT_MONTH, rc_e, 'USD', '', szm_e))
@@ -51,7 +56,7 @@ def get_params(df):
 
 
 def main():
-    overdrive(hova='pd')
+    overdrive(hova='0')
 
 
 if __name__ == '__main__':

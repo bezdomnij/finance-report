@@ -9,6 +9,7 @@ from config import MAIN_DIR, REPORT_MONTH, HOVA
 TABLE = 'stg_fin2_5_bn'
 FILENAME = 'export'
 DATA_DIR = 'bn'
+DATE_FIELD = 'Invoice Date'
 
 
 def calc_sum(df):
@@ -41,6 +42,8 @@ def bn(hova=HOVA):
                 print(f"{f.parents[0].stem.lower()} | {df.shape[0]} rows, {df.shape[1]}, columns")
                 record_count = df.shape[0]
                 total = calc_sum(df)
+                date_borders = util.get_df_dates(DATE_FIELD, 1, df)
+                print(date_borders)
                 sqw.write_to_db(df, TABLE, action='replace', field_lens='mas', hova=hova)
                 print(f"{DATA_DIR.upper()} | {REPORT_MONTH}, {record_count} records, total {total}\n")
                 res.append(Result(DATA_DIR.upper(), REPORT_MONTH, record_count, 'USD', '', total))

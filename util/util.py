@@ -1,11 +1,15 @@
 import logging
 import re
 import warnings
-
+from datetime import datetime
 import pandas as pd
 
 from engineer import sql_writer as sqw
 import pathlib
+
+DATE_FORMAT = {
+    1: '%m/%d/%Y',
+}
 
 
 def get_period(fname):
@@ -68,6 +72,14 @@ def get_proper_df(f, sheet_name='Details'):
     renamed_cols = dict(zip(df.columns, col2))
     df2 = df.rename(columns=renamed_cols)
     return df2
+
+
+def get_df_dates(date_field, date_format, df):
+    df_temp = pd.DataFrame()
+    df_temp['Datum'] = pd.to_datetime(df[date_field], format=DATE_FORMAT[date_format])
+    min_date = df_temp['Datum'].min().date()
+    max_date = df_temp['Datum'].max().date()
+    return min_date.strftime('%Y-%m-%d'), max_date.strftime('%Y-%m-%d')
 
 
 def get_content_xl_onesheet(file, table, hova, sum_field, na_field, header=0, sheet_name=''):

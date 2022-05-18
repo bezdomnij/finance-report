@@ -12,6 +12,7 @@ FILENAME_2 = 'PublishDrive2_scribd_subscriptions_payouts_'
 TABLE = 'stg_fin2_19_scribd'
 DATA_DIR = 'scribd'
 SUM_FIELD = 'Amount owed for this interaction'
+DATE_FIELD = 'Threshold Date'
 
 
 def scribd(hova=HOVA):
@@ -39,6 +40,8 @@ def scribd(hova=HOVA):
                     record_count += rc
                     szumma += szm
 
+        date_borders = util.get_df_dates(DATE_FIELD, 1, all_df)
+        print(date_borders)
         szumma = all_df[SUM_FIELD].sum()
         sqw.write_to_db(all_df, TABLE, db_name='stage', action='replace', field_lens='vchall', hova=hova)
         print(f"{DATA_DIR.upper()} | {REPORT_MONTH}, {record_count:10d} records, total: {szumma:-10,.2f}\n")
