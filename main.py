@@ -82,7 +82,7 @@ def report():
     collect_lst.extend(stores.voxa())
     # make_df(collection)
     df_all = pd.DataFrame(collect_lst)
-    sqw.write_to_db(df_all, 'fin_results', field_lens='vchall', hova='pd')
+    sqw.write_to_db(df_all, 'fin_results', field_lens='vchall', hova='19')
 
 
 if __name__ == '__main__':
