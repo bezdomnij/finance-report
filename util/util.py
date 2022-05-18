@@ -84,7 +84,7 @@ def get_df_dates(date_field, date_format, df):
 
 def get_content_xl_onesheet(file, table, hova, sum_field, na_field, header=0, sheet_name=''):
     record_count, szumma = 0, 0
-    print(hova)
+    # print(hova)
     if sheet_name == '':
         with warnings.catch_warnings(record=True):
             warnings.simplefilter("always")
