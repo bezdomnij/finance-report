@@ -8,8 +8,9 @@ from engineer import sql_writer as sqw
 import pathlib
 
 DATE_FORMAT = {
+    0: '%Y-%m-%d',
     1: '%m/%d/%Y',
-    2: '%d/%m/%Y'
+    2: '%d/%m/%Y',
 }
 
 

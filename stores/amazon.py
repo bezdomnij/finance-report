@@ -8,6 +8,8 @@ from engineer import sql_writer as sqw
 from result import Result
 
 DATA_DIR = 'amazon'
+DATE_FIELD = 'Date'
+DATE_PRINT_FIELD = 'Sale Date'
 
 
 def make_df(files, amazon, hova=HOVA):
@@ -33,6 +35,8 @@ def make_df(files, amazon, hova=HOVA):
                 amounts[c].append(df2.shape[0])
                 amounts[c].append(df2['Payment Amount'].sum())
                 print(f"{c}: {amounts[c][1]:-18,.2f}")
+            date_borders = util.get_df_dates(DATE_FIELD, 0, df)
+            print(date_borders)
 
         if 'PRINT_DASH' in f.stem.upper():
             currencies = df['Royalty Amount Currency'].unique()
@@ -45,6 +49,9 @@ def make_df(files, amazon, hova=HOVA):
                 amounts[c].append(df2.shape[0])
                 amounts[c].append(df2['Payment Amount'].sum())
                 print(f"{c}: {amounts[c][1]:-18,.2f}")
+            date_borders = util.get_df_dates(DATE_PRINT_FIELD, 0, df)
+            print(date_borders)
+
         record_count = df.shape[0]
         sqw.write_to_db(df, amazon[f], db_name='stage', action='replace', hova=hova, field_lens='vchall')
         print(f"{DATA_DIR.upper()}_{marker} | {REPORT_MONTH}, {record_count} records, total: {szumma:-10,.2f}\n")
