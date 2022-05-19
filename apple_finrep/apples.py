@@ -8,6 +8,8 @@ import util
 from config import MAIN_DIR, REPORT_MONTH, HOVA
 from engineer import sql_writer as sqw
 
+DATE_FIELD = 'Start Date'
+DATE2_FIELD = 'End Date'
 DATA_DIR = 'apple'
 CURRENCIES = {
     'US': 'USD',
@@ -34,7 +36,7 @@ CURRENCIES = {
     'MX': 'MXN'
 }
 
-sum_df = {'file': [], 'r_count': [], 'currency': [], 'sum': [], 'built_in_total': []}
+sum_df = {'file': [], 'r_count': [], 'currency': [], 'sum': [], 'built_in_total': [], 'date_min': [], 'date_max': []}
 
 
 def read_file_content(c):
@@ -54,7 +56,12 @@ def read_file_content(c):
         sum_df['sum'].append(round(df["Extended Partner Share"].sum(), 3))
         sum_df['built_in_total'].append(df[df['Start Date'] == 'Total_Amount']['End Date'].iloc[-1])
         df.drop(df.tail(3).index, inplace=True)
-        # print(df.info)
+        date_borders = util.get_df_dates(DATE_FIELD, 1, df)
+        date2_borders = util.get_df_dates(DATE2_FIELD, 1, df)
+        min_date = min(date_borders[0], date2_borders[0])
+        max_date = max(date_borders[1], date2_borders[1])
+        sum_df['date_min'] = min_date
+        sum_df['date_max'] = max_date
         aggregated_df = pd.concat([total, df])
 
     return aggregated_df
@@ -71,10 +78,8 @@ def read_apple(hova=HOVA):
             if f.suffix == '.txt':
                 total_df = pd.concat([total_df, read_file_content(f)])
         print("EXTENDED PARTNER SHARE", total_df['Extended Partner Share'].sum())
-
         print("UNITS SOLD", int(total_df['Quantity'].sum()))
         print(f"{DATA_DIR.upper()} | {REPORT_MONTH}, {total_df.shape[0]} records\n")
-        # write!!!
         sqw.write_to_db(total_df, 'stg_fin2_1_apple', action='replace', hova=hova, field_lens='vchall')
         return pd.DataFrame(sum_df, index=range(1, 23))
         # return pd.DataFrame(sum_df, index=None)
@@ -84,7 +89,6 @@ def read_apple(hova=HOVA):
 
 def apple(hova=HOVA):
     resultset_df = read_apple(hova=hova)
-    # print(resultset_df)
     # all txt files result - writing to Excel
     writer = pd.ExcelWriter('output.xlsx', engine='xlsxwriter')
     resultset_df.to_excel(writer, sheet_name='Sheet1', index=False, na_rep='NaN')
@@ -106,7 +110,7 @@ def apple(hova=HOVA):
 
 
 def main():
-    apple('0')
+    apple('19')
 
 
 if __name__ == '__main__':

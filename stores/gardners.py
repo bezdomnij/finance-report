@@ -10,6 +10,7 @@ DATA_DIR = 'gardners'
 SUM_FIELD = 'TOTAL-NET-LINE-VALUE'
 TABLE = 'stg_fin2_20_gardners'
 FILENAME = 'EMCONT0E'
+DATE_FIELD = 'SALE-DATE'
 
 
 def find_bad_comma(line, positions):
@@ -61,8 +62,10 @@ def gardners(hova=HOVA):
                         df = df.append(item, ignore_index=True)
                 df = df[df[SUM_FIELD] != '']
                 df[SUM_FIELD] = df[SUM_FIELD].astype(float)
+                date_borders = util.get_df_dates(DATE_FIELD, 2, df)
                 szumma = df[SUM_FIELD].sum()
                 record_count = df.shape[0]
+                print(date_borders)
                 sqw.write_to_db(df, TABLE, action='replace', hova=hova, field_lens='vchall')
                 print(f"{DATA_DIR.upper()} | {REPORT_MONTH}, {record_count} records, total: {szumma:-10,.2f}\n")
                 res.append(Result(DATA_DIR.upper(), REPORT_MONTH, record_count, 'GBP', '', szumma))

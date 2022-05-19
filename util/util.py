@@ -9,6 +9,7 @@ import pathlib
 
 DATE_FORMAT = {
     1: '%m/%d/%Y',
+    2: '%d/%m/%Y'
 }
 
 
@@ -76,10 +77,15 @@ def get_proper_df(f, sheet_name='Details'):
 
 def get_df_dates(date_field, date_format, df):
     df_temp = pd.DataFrame()
-    df_temp['Datum'] = pd.to_datetime(df[date_field], format=DATE_FORMAT[date_format])
-    min_date = df_temp['Datum'].min().date()
-    max_date = df_temp['Datum'].max().date()
-    return min_date.strftime('%Y-%m-%d'), max_date.strftime('%Y-%m-%d')
+    try:
+        df_temp['Datum'] = pd.to_datetime(df[date_field], format=DATE_FORMAT[date_format])
+    except ValueError as e:
+        print(f"whatever {e}")
+        return '', ''
+    else:
+        min_date = df_temp['Datum'].min().date()
+        max_date = df_temp['Datum'].max().date()
+        return min_date.strftime('%Y-%m-%d'), max_date.strftime('%Y-%m-%d')
 
 
 def get_content_xl_onesheet(file, table, hova, sum_field, na_field, header=0, sheet_name=''):
