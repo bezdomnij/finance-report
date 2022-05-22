@@ -29,8 +29,9 @@ def overdrive(hova=HOVA):
                 rc_a, szm_a = get_params(df_audio)
                 print(f"{DATA_DIR.upper() + '_AUDIO'} | {REPORT_MONTH}, {rc_a} records, total {szm_a:10,.2f}\n")
                 sqw.write_to_db(df_audio, TABLE_2, hova=hova, action='replace', field_lens='vchall')
-                res.append(Result(DATA_DIR.upper() + '_AUDIO', REPORT_MONTH, rc_a, 'USD', '', szm_a))
                 date_borders = util.get_df_dates(DATE_FIELD, 1, df_audio)
+                res.append(Result(DATA_DIR.upper() + '_AUDIO', REPORT_MONTH, rc_a,
+                                  'USD', '', szm_a, date_borders[0], date_borders[1]))
                 print(date_borders)
 
                 df_ebook = df.loc[df['Format'].isin(['OverDrive Read', 'Adobe EPUB eBook'])]
@@ -39,7 +40,8 @@ def overdrive(hova=HOVA):
                 print(date_borders)
                 print(f"{DATA_DIR.upper()} | {REPORT_MONTH}, {rc_e} records, total {szm_e:10,.2f}\n")
                 sqw.write_to_db(df_ebook, TABLE_1, hova=hova, action='replace', field_lens='vchall')
-                res.append(Result(DATA_DIR.upper(), REPORT_MONTH, rc_e, 'USD', '', szm_e))
+                res.append(Result(DATA_DIR.upper(), REPORT_MONTH, rc_e,
+                                  'USD', '', szm_e, date_borders[0], date_borders[1]))
 
                 record_count, szumma = get_params(df)
                 print(f"{DATA_DIR.upper() + '_ALL'} | {REPORT_MONTH}, {record_count} records, total {szumma:10,.2f}\n")
