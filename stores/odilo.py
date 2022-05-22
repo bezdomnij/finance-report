@@ -5,7 +5,7 @@ multiple destinations - two tables
 - sum field identical: FIELD
 - need to drop rows below data
 """
-
+from datetime import datetime, date
 from pathlib import Path
 import util
 from config import MAIN_DIR, REPORT_MONTH, HOVA
@@ -19,7 +19,18 @@ FILENAME_2 = '_PublishDrive_Sales_Report'
 DATA_DIR = 'odilo'
 SUM_FIELD = 'Totals (USD)'
 DATE_FIELD = 'Date'
+
+
 # SUM_FIELD = 'Totals'  # valamelyik
+
+
+def get_dates_from_filename(stem):
+    parts = stem.split('_')
+    print(parts)
+    year = int(parts[2])
+    month = datetime.strptime(parts[1], '%B').month
+    last_day = util.MAX_DAYS[month]
+    return date(year, month, 1), date(year, month, last_day)
 
 
 def odilo(hova=HOVA):
@@ -38,7 +49,10 @@ def odilo(hova=HOVA):
             if f.is_file() and (f.suffix == '.xlsx' or f.suffix == '.xls') and f.stem[:2] != '~$':
                 if FILENAME_1 in f.stem:
                     r, s = util.get_content_xl_onesheet(f, TABLE_1, hova, SUM_FIELD, 'Title', 1)
-                    res.append(Result(DATA_DIR.upper(), REPORT_MONTH, r, 'USD', 'PPU', s))
+                    dates = get_dates_from_filename(f.stem)
+                    print(dates)
+                    res.append(Result(DATA_DIR.upper(), REPORT_MONTH, r,
+                                      'USD', 'PPU', s, dates[0], dates[1]))
                 if FILENAME_2 in f.stem:
                     r, s = util.get_content_xl_onesheet(f, TABLE_2, hova, SUM_FIELD, 'Title', 1)
                     df = pd.read_excel(f, header=1, index_col=None)

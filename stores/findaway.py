@@ -1,10 +1,12 @@
-from datetime import datetime, date
-from pathlib import Path
 import re
-import util
-from engineer import sql_writer as sqw
+from datetime import date
+from pathlib import Path
+
 import pandas as pd
+
+import util
 from config import MAIN_DIR, REPORT_MONTH, HOVA
+from engineer import sql_writer as sqw
 from result import Result
 
 TABLE = 'stg_fin2_20101_findaway_'
@@ -28,7 +30,7 @@ def get_dates_from_filename(stem):
         month = int(m)
     except Exception as e:
         print(f"{e}: no conversion to int")
-    last_day = util.MAX_DAYS[m]
+    last_day = util.MAX_DAYS[month]
     # print(y, m, last_day)
     return date(year, month, 1), date(year, month, last_day)
 

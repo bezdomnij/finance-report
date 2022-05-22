@@ -100,7 +100,7 @@ def read_apple(hova=HOVA):
     files = util.get_file_list(p)
     grand_total = read_sum_file(sum_file)
     gt = grand_total if grand_total != 0 else "dunno. summary file is not there."
-    print(f"Total USD: {gt}")
+    print(f"Total USD: {gt:12,.2f}")
     # sum_df = pd.read_csv(sum_file, header=2, encoding='utf-8')
     # sum_df.info()
     # template_df = pd.read_csv(files[0], sep='\t', index_col=None)
