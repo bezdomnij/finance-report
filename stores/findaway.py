@@ -1,5 +1,6 @@
+from datetime import datetime, date
 from pathlib import Path
-
+import re
 import util
 from engineer import sql_writer as sqw
 import pandas as pd
@@ -10,6 +11,26 @@ TABLE = 'stg_fin2_20101_findaway_'
 FILENAME = 'Digital Royalty)'
 DATA_DIR = 'findaway'
 SUM_FIELD = 'Royalty Payable'
+
+
+def get_dates_from_filename(stem):
+    year, month = 0, 0
+    pattern = r'\(202[0-9]-([0][0-9]|[1][0-2]) Digital Royalty\)'
+    p = re.compile(pattern)
+    result = re.search(p, stem)
+    result = result.group(0)
+    pattern2 = r'202[0-9]-([0][1-9]|[1][0-2])'
+    p2 = re.compile(pattern2)
+    ym = re.search(p2, result)
+    y, m = ym.group(0).split('-')
+    try:
+        year = int(y)
+        month = int(m)
+    except Exception as e:
+        print(f"{e}: no conversion to int")
+    last_day = util.MAX_DAYS[m]
+    # print(y, m, last_day)
+    return date(year, month, 1), date(year, month, last_day)
 
 
 def findaway(hova=HOVA):
@@ -24,6 +45,8 @@ def findaway(hova=HOVA):
         for f in files:
             szumma = 0
             if f.is_file() and f.suffix == '.xlsx' and f.stem[:2] != '~$' and FILENAME in f.stem:
+                dates = get_dates_from_filename(f.stem)
+                print(dates)
                 sheet_names = ['Library', 'Retail', 'Subscription', 'Pool']
                 for s in sheet_names:
                     try:
@@ -34,7 +57,8 @@ def findaway(hova=HOVA):
                     szm = df[SUM_FIELD].sum()
                     print(f"{szm:-10.2f} {s}, records: {df.shape[0]}")
                     rc = df.shape[0]
-                    res.append(Result(DATA_DIR.upper(), REPORT_MONTH, rc, 'USD', s, szm))
+                    res.append(Result(DATA_DIR.upper(), REPORT_MONTH, rc,
+                                      'USD', s, szm, dates[0], dates[1]))
                     szumma += szm
                     record_count += rc
                     table = TABLE + s.lower()

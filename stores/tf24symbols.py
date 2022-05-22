@@ -39,7 +39,7 @@ def tfsymbols(hova=HOVA):
                 print(f"{DATA_DIR.upper()} | {REPORT_MONTH}, {dimensions[0]} records, total: {dimensions[1]:-10,.2f}"
                       f" from filename: {min_date}, {max_date}")
                 res.append(Result(DATA_DIR, REPORT_MONTH, dimensions[0], 'USD', '',
-                                  dimensions[1], min_date, dates[1]))
+                                  dimensions[1], dates[0], dates[1]))
     else:
         util.empty(DATA_DIR)
     return res

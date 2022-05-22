@@ -6,3 +6,4 @@ from .util import set_date
 from .util import empty
 from .util import get_latest_file
 from .util import get_df_dates
+from .util import MAX_DAYS

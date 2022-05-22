@@ -1,5 +1,5 @@
 from dataclasses import dataclass, field
-from datetime import MINYEAR, MAXYEAR, datetime
+from datetime import MINYEAR, MAXYEAR, datetime, date
 
 
 @dataclass
@@ -10,8 +10,8 @@ class Result:
     currency: str
     category: str
     amount: float
-    min_date: datetime = datetime.now().date()
-    max_date: datetime = datetime.now().date()
+    min_date: date = datetime.today().date()
+    max_date: date = datetime.today().date()
 
     def __post_init__(self):
         if self.category is None:
