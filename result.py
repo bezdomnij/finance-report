@@ -10,8 +10,8 @@ class Result:
     currency: str
     category: str
     amount: float
-    min_date: datetime = MINYEAR
-    max_date: datetime = MAXYEAR
+    min_date: datetime = datetime.now().date()
+    max_date: datetime = datetime.now().date()
 
     def __post_init__(self):
         if self.category is None:

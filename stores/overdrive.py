@@ -51,7 +51,7 @@ def overdrive(hova=HOVA):
 
 
 def get_params(df):
-    szm = df[SUM_FIELD].sum()
+    szm = round(df[SUM_FIELD].sum(), 3)
     rc = df.shape[0]
     # print(rc, szm)
     return rc, szm

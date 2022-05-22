@@ -110,7 +110,7 @@ def get_content_xl_onesheet(file, table, hova, sum_field, na_field, header=0, sh
             return 0, 0.00
     if not df.empty:
         try:
-            szumma = df[sum_field].sum()
+            szumma = round(df[sum_field].sum(), 3)
         except KeyError as e:
             print(f"!!!ERROR ---{file.name}--- ERROR!!! Fields changed")
             return 0, 0.00
