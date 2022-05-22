@@ -68,7 +68,8 @@ def gardners(hova=HOVA):
                 print(date_borders)
                 sqw.write_to_db(df, TABLE, action='replace', hova=hova, field_lens='vchall')
                 print(f"{DATA_DIR.upper()} | {REPORT_MONTH}, {record_count} records, total: {szumma:-10,.2f}\n")
-                res.append(Result(DATA_DIR.upper(), REPORT_MONTH, record_count, 'GBP', '', szumma))
+                res.append(Result(DATA_DIR.upper(), REPORT_MONTH, record_count, 'GBP',
+                                  '', szumma, date_borders[0], date_borders[1]))
     else:
         util.empty(DATA_DIR)
     return res

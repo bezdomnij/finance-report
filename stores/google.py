@@ -8,6 +8,7 @@ from result import Result
 
 DATA_DIR = 'google'
 TABLE = 'stg_fin2_12_googleplay'
+DATE_FIELD = 'Invoice Date'
 
 
 def google(hova=HOVA):
@@ -34,9 +35,12 @@ def google(hova=HOVA):
                 sqw.write_to_db(df, TABLE, action='replace', hova=hova, field_lens='vchall')
                 record_count = df.shape[0]
                 szumma = df['Earnings Amount'].astype(float).sum()
+                date_borders = util.get_df_dates(DATE_FIELD, 4, df)
+                print(date_borders)
                 print(f"{DATA_DIR.upper()} | {REPORT_MONTH}, {record_count} records, "
                       f"total: {szumma:.2f}, \n")
-                res.append(Result(DATA_DIR.upper(), REPORT_MONTH, record_count, 'USD', '', szumma))
+                res.append(Result(DATA_DIR.upper(), REPORT_MONTH, record_count,
+                                  'USD', '', szumma, date_borders[0], date_borders[1]))
     else:
         util.empty(DATA_DIR)
     return res

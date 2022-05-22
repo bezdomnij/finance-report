@@ -27,7 +27,8 @@ def dibook(hova=HOVA):
                 date_borders = util.get_df_dates(DATE_FIELD, 1, df)
                 print(date_borders)
                 print(f"{DATA_DIR.upper()} | {REPORT_MONTH}, {dimensions[0]} records, total: {dimensions[1]:-16,.2f}\n")
-                res.append(Result(DATA_DIR.upper(), REPORT_MONTH, dimensions[0], 'HUF', '', dimensions[1]))
+                res.append(Result(DATA_DIR.upper(), REPORT_MONTH, dimensions[0], 'HUF', '',
+                                  dimensions[1], date_borders[0], date_borders[1]))
     else:
         util.empty(DATA_DIR)
     return res

@@ -11,7 +11,9 @@ DATE_FORMAT = {
     0: '%Y-%m-%d',
     1: '%m/%d/%Y',
     2: '%d/%m/%Y',
-    3: '%m/%d/%y'
+    3: '%m/%d/%y',
+    4: '%Y. %m. %d.',
+    5: '%Y.%m.%d'
 }
 
 
@@ -82,7 +84,7 @@ def get_df_dates(date_field, date_format, df):
     try:
         df_temp['Datum'] = pd.to_datetime(df[date_field], format=DATE_FORMAT[date_format])
     except ValueError as e:
-        print(f"whatever {e}")
+        print(f"!!! ERROR !!! {e}")
         return '', ''
     else:
         min_date = df_temp['Datum'].min().date()

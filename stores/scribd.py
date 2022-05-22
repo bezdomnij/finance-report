@@ -36,7 +36,9 @@ def scribd(hova=HOVA):
                     szm = df[SUM_FIELD].sum()
                     all_df = all_df.append(df)
                     print(f'file: {f.stem}, {rc:10d} records, total: {szm:10,.3f}')
-                    res.append(Result(DATA_DIR.upper(), REPORT_MONTH, rc, 'USD', '', szm))
+                    date_borders = util.get_df_dates(DATE_FIELD, 1, df)
+                    res.append(Result(DATA_DIR.upper(), REPORT_MONTH, rc, 'USD', '',
+                                      szm, date_borders[0], date_borders[1]))
                     record_count += rc
                     szumma += szm
 

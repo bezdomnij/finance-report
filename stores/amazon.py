@@ -37,7 +37,7 @@ def make_df(files, amazon, hova=HOVA):
                 amounts[c].append(round(df2['Payment Amount'].sum(), 3))
                 print(f"{c}: {amounts[c][1]:-18,.2f}")
             date_b = util.get_df_dates(DATE_FIELD, 0, df)
-            print(date_b)
+            # print(date_b)
 
         if 'PRINT_DASH' in f.stem.upper():
             currencies = df['Royalty Amount Currency'].unique()

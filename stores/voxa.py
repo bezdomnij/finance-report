@@ -9,6 +9,7 @@ TABLE = 'stg_fin2_49_voxa'
 FILENAME = 'Raport 202'
 DATA_DIR = 'voxa'
 SUM_FIELD = 'Pret net cu TVA (RON)'
+DATE_FIELD = 'Data vanzarii'
 
 
 def voxa(hova=HOVA):
@@ -34,14 +35,16 @@ def voxa(hova=HOVA):
             if f.suffix == '.csv' and FILENAME in f.stem:  # .csv!!!
                 df = pd.read_csv(f, encoding='utf-8', header=0)
                 rc = df.shape[0]
-                szm = df[SUM_FIELD].sum()
+                szm = round(df[SUM_FIELD].sum(), 3)
                 record_count += rc
                 szumma += szm
                 df_all = df_all.append(df)
                 print(f.name, rc, szm)
+        date_borders = util.get_df_dates(DATE_FIELD, 5, df_all)
         sqw.write_to_db(df_all, TABLE, action='replace', hova=hova, field_lens='vchall')
         print(f"{DATA_DIR.upper()} | {REPORT_MONTH}, {record_count:10,d} records, total: {szumma:-10,.3f}\n")
-        res.append(Result(DATA_DIR.upper(), REPORT_MONTH, record_count, 'RON', '', szumma))
+        res.append(Result(DATA_DIR.upper(), REPORT_MONTH, record_count,
+                          'RON', '', szumma, date_borders[0], date_borders[1]))
     else:
         util.empty(DATA_DIR)
     return res
