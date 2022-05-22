@@ -26,7 +26,6 @@ DATE_FIELD = 'Date'
 
 def get_dates_from_filename(stem):
     parts = stem.split('_')
-    print(parts)
     year = int(parts[2])
     month = datetime.strptime(parts[1], '%B').month
     last_day = util.MAX_DAYS[month]

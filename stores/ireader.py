@@ -1,15 +1,33 @@
+import datetime
 from pathlib import Path
 import pandas as pd
 from result import Result
 import util
 from engineer import sql_writer as sqw
 from config import MAIN_DIR, REPORT_MONTH, HOVA
+from datetime import date, MINYEAR, MAXYEAR
 
 TABLE = 'stg_fin2_46_ireader'
 FILENAME = 'PublishDrive_Monthly Sales Detail Data@'
 DATA_DIR = 'ireader'
 SUM_FIELD = 'Sharing Amount'
 DATE_FIELD = 'Date'
+
+
+def make_dates(date_field_content):
+    print('EEEZ', date_field_content)
+    ym = date_field_content.tolist()
+    if len(ym) == 1:
+        year_month = ym[0].split('-')
+        try:
+            year = int(year_month[0])
+            month = int(year_month[1])
+        except Exception as e:
+            print(f"failed conversion: {e}")
+            return MINYEAR, MAXYEAR
+        else:
+            last_day = util.MAX_DAYS[month]
+            return date(year, month, 1), date(year, month, last_day)
 
 
 def ireader(hova=HOVA):
@@ -37,8 +55,11 @@ def ireader(hova=HOVA):
                 szumma = df[SUM_FIELD].sum()
                 sqw.write_to_db(df, TABLE, action='replace', hova=hova, field_lens='vchall')
                 print(f"{DATA_DIR.upper()} | {REPORT_MONTH}, {record_count:10,d} records, total: {szumma:-10,.3f}\n")
-                df['Date'] = df['Date'] + '-15'
-                min_date = max_date = df['Date'].min()
+                # df['Date'] = df['Date'] + '-15'
+                # df['month'] = df['Date'].dt.month
+                # df['month'] = pd.DatetimeIndex(df['Date']).month
+                # report_month = df['month'].unique()
+                min_date, max_date = make_dates(df['Date'].unique())
                 res.append((Result(DATA_DIR.upper(), REPORT_MONTH, record_count,
                                    'USD', '', szumma, min_date, max_date)))
     else:
@@ -47,7 +68,7 @@ def ireader(hova=HOVA):
 
 
 def main():
-    ireader(hova='pd')
+    ireader(hova='19')
 
 
 if __name__ == '__main__':

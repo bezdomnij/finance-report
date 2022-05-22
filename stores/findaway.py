@@ -56,7 +56,7 @@ def findaway(hova=HOVA):
                     except ValueError as e:
                         print(f"{s} sheet is not there!")
                         continue
-                    szm = df[SUM_FIELD].sum()
+                    szm = round(df[SUM_FIELD].sum(), 3)
                     print(f"{szm:-10.2f} {s}, records: {df.shape[0]}")
                     rc = df.shape[0]
                     res.append(Result(DATA_DIR.upper(), REPORT_MONTH, rc,

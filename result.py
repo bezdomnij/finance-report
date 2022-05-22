@@ -18,6 +18,3 @@ class Result:
             self.category = ''
         # if self.min_date is None:
         #     self.min_date = ''
-
-    def get_min(self):
-        return '' if self.min_date is None else self.min_date
