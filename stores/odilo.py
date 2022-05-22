@@ -10,6 +10,7 @@ from pathlib import Path
 import util
 from config import MAIN_DIR, REPORT_MONTH, HOVA
 from result import Result
+import pandas as pd
 
 TABLE_1 = 'stg_fin2_33_odilo_ppu'
 TABLE_2 = 'stg_fin2_33_odilo_agency'
@@ -17,6 +18,7 @@ FILENAME_1 = '_PublishDrive_PPU_Sales_Report'
 FILENAME_2 = '_PublishDrive_Sales_Report'
 DATA_DIR = 'odilo'
 SUM_FIELD = 'Totals (USD)'
+DATE_FIELD = 'Date'
 # SUM_FIELD = 'Totals'  # valamelyik
 
 
@@ -39,7 +41,12 @@ def odilo(hova=HOVA):
                     res.append(Result(DATA_DIR.upper(), REPORT_MONTH, r, 'USD', 'PPU', s))
                 if FILENAME_2 in f.stem:
                     r, s = util.get_content_xl_onesheet(f, TABLE_2, hova, SUM_FIELD, 'Title', 1)
-                    res.append(Result(DATA_DIR.upper(), REPORT_MONTH, r, 'USD', 'Retail', s))
+                    df = pd.read_excel(f, header=1, index_col=None)
+                    df = df[df['Title'].notna()]
+                    date_borders = util.get_df_dates(DATE_FIELD, 6, df)
+                    print(date_borders)
+                    res.append(Result(DATA_DIR.upper(), REPORT_MONTH, r,
+                                      'USD', 'Retail', s, date_borders[0], date_borders[1]))
                 record_count += r
                 szumma += s
 

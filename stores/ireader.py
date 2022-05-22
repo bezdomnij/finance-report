@@ -9,6 +9,7 @@ TABLE = 'stg_fin2_46_ireader'
 FILENAME = 'PublishDrive_Monthly Sales Detail Data@'
 DATA_DIR = 'ireader'
 SUM_FIELD = 'Sharing Amount'
+DATE_FIELD = 'Date'
 
 
 def ireader(hova=HOVA):
@@ -36,7 +37,10 @@ def ireader(hova=HOVA):
                 szumma = df[SUM_FIELD].sum()
                 sqw.write_to_db(df, TABLE, action='replace', hova=hova, field_lens='vchall')
                 print(f"{DATA_DIR.upper()} | {REPORT_MONTH}, {record_count:10,d} records, total: {szumma:-10,.3f}\n")
-                res.append((Result(DATA_DIR.upper(), REPORT_MONTH, record_count, 'USD', '', szumma)))
+                df['Date'] = df['Date'] + '-15'
+                min_date = max_date = df['Date'].min()
+                res.append((Result(DATA_DIR.upper(), REPORT_MONTH, record_count,
+                                   'USD', '', szumma, min_date, max_date)))
     else:
         util.empty(DATA_DIR)
     return res
