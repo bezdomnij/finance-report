@@ -11,6 +11,7 @@ from engineer import sql_writer as sqw
 DATA_DIR = 'bibliotheca'
 TABLE = 'stg_fin2_39_bibliotheca'
 SUM_FIELD = 'Total proceeds due to publisher'
+DATE_FIELD = 'Transaction date or date and time'
 
 
 def read_file_content(f):
@@ -25,11 +26,10 @@ def read_file_content(f):
     if df.shape[0] != 0:  # only if there is any content
         record_count = df.shape[0]
         currencies = df['Price currency'].unique()
-        total = df[SUM_FIELD].sum()
-        # print(currencies, record_count)
-        print(f"{f.parents[0].stem.lower()} itt: '{f.name}', "
-              f"{record_count} db record, osszeg: {total:10,.2f}")
-        return df, record_count, currencies[0], total
+        total = round(df[SUM_FIELD].sum(), 3)
+        date_borders = util.get_df_dates(DATE_FIELD, 3, df)
+        print(f"'{f.name}', {record_count} db record, osszeg: {total:10,.2f}, {currencies}, {date_borders}")
+        return df, record_count, currencies[0], total, date_borders
 
 
 def bibliotheca(hova=HOVA):
@@ -41,14 +41,14 @@ def bibliotheca(hova=HOVA):
     if files is None:
         return
     if len(files) > 0:
-        print()
+        print('BIBLIOTHECA')
         for f in files:
             df_props = read_file_content(f)
             if df_props:
-                current_df, rc, currency, total = df_props
+                current_df, rc, currency, total, dates = df_props
                 total_df = pd.concat([total_df, current_df])
                 all_row_count += rc
-                res.append(Result(DATA_DIR.upper(), REPORT_MONTH, rc, currency, '', total))
+                res.append(Result(DATA_DIR.upper(), REPORT_MONTH, rc, currency, '', total, dates[0], dates[1]))
         # action append: replace give a row size error - before the change to other types part in get_types
         # !!! row size
         sqw.write_to_db(total_df, TABLE, field_lens='mas', action='replace', hova=hova)
