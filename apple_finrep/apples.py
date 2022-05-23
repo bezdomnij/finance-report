@@ -100,7 +100,10 @@ def read_apple(hova=HOVA):
     files = util.get_file_list(p)
     grand_total = read_sum_file(sum_file)
     gt = grand_total if grand_total != 0 else "dunno. summary file is not there."
-    print(f"Total USD: {gt:12,.2f}")
+    try:
+        print(f"Total USD: {gt:12,.2f}")
+    except ValueError:
+        print("Summary file is not there.")
     # sum_df = pd.read_csv(sum_file, header=2, encoding='utf-8')
     # sum_df.info()
     # template_df = pd.read_csv(files[0], sep='\t', index_col=None)
@@ -124,8 +127,11 @@ def read_apple(hova=HOVA):
 
 
 def apple(hova=HOVA):
-    res = []
-    resultset_df, res = read_apple(hova=hova)
+    try:
+        resultset_df, res = read_apple(hova=hova)
+    except TypeError as e:
+        print(f"{e} no Excel can be made")
+        return []
     # all txt files result - writing to Excel
     writer = pd.ExcelWriter('output.xlsx', engine='xlsxwriter')
     resultset_df.to_excel(writer, sheet_name='Sheet1', index=False, na_rep='NaN')

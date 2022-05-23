@@ -1,3 +1,5 @@
+import datetime
+import re
 from pathlib import Path
 import pandas as pd
 
@@ -10,6 +12,21 @@ TABLE = 'stg_fin2_36_mackin_data'
 FILENAME = 'PUBLISHDRIVE_EBOOKS_2022_'
 DATA_DIR = 'mackin'
 SUM_FIELD = 'Ext Cost'
+
+
+def get_filename_dates(stem):
+    raw = \
+        r'(PUBLISHDRIVE_EBOOKS_)(202[0-9]_([0][0-9]|[1][0-2])_[0-3][0-9])_to_(202[0-9]_([0][0-9]|[1][0-2])_[0-3][0-9])'
+    pattern = re.compile(raw)
+    m = re.match(pattern, stem)
+    print(m.group(2))
+    begin = str(m.group(2)).replace('_', '-')
+    print(m.group(4))
+    end = str(m.group(4)).replace('_', '-')
+    print(begin, end)
+    begin_date = datetime.datetime.strptime(begin, '%Y-%m-%d').date()
+    end_date = datetime.datetime.strptime(end, '%Y-%m-%d').date()
+    return begin_date, end_date
 
 
 def mackin(hova=HOVA):
@@ -30,6 +47,7 @@ def mackin(hova=HOVA):
     if len(files) > 0:
         for f in files:
             if f.suffix in ['.xlsx', '.xls', '.XLS'] and FILENAME in f.stem:
+                dates = get_filename_dates(f.stem)
                 df = pd.read_excel(f, header=4)
                 # print(df.columns)
                 df = df.drop(['Unnamed: 1', 'Unnamed: 2', 'Unnamed: 3'], axis=1)
@@ -40,7 +58,8 @@ def mackin(hova=HOVA):
                 szumma = df[SUM_FIELD].sum()
                 sqw.write_to_db(df, TABLE, hova=hova, action='replace', field_lens='vchall')
                 print(f"{DATA_DIR.upper()} | {REPORT_MONTH}, {record_count} records, total: {szumma:-10,.2f}\n")
-                res.append(Result(DATA_DIR.upper(), REPORT_MONTH, record_count, 'USD', '', szumma))
+                res.append(Result(DATA_DIR.upper(), REPORT_MONTH, record_count,
+                                  'USD', '', szumma, dates[0], dates[1]))
     else:
         util.empty(DATA_DIR)
     return res
