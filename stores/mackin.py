@@ -14,9 +14,7 @@ DATA_DIR = 'mackin'
 SUM_FIELD = 'Ext Cost'
 
 
-def get_filename_dates(stem):
-    raw = \
-        r'(PUBLISHDRIVE_EBOOKS_)(202[0-9]_([0][0-9]|[1][0-2])_[0-3][0-9])_to_(202[0-9]_([0][0-9]|[1][0-2])_[0-3][0-9])'
+def get_filename_dates(stem, raw):
     pattern = re.compile(raw)
     m = re.match(pattern, stem)
     print(m.group(2))
@@ -47,7 +45,9 @@ def mackin(hova=HOVA):
     if len(files) > 0:
         for f in files:
             if f.suffix in ['.xlsx', '.xls', '.XLS'] and FILENAME in f.stem:
-                dates = get_filename_dates(f.stem)
+                raw = \
+                    r'(PUBLISHDRIVE_EBOOKS_)(202[0-9]_([0][0-9]|[1][0-2])_[0-3][0-9])_to_(202[0-9]_([0][0-9]|[1][0-2])_[0-3][0-9])'
+                dates = get_filename_dates(f.stem, raw)
                 df = pd.read_excel(f, header=4)
                 # print(df.columns)
                 df = df.drop(['Unnamed: 1', 'Unnamed: 2', 'Unnamed: 3'], axis=1)
