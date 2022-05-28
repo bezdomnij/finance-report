@@ -46,7 +46,6 @@ def bookmate(hova=HOVA):
             r1, s1, r2, s2 = 0, 0, 0, 0
             if f.is_file() and f.suffix == '.xlsx':
                 if FILENAME_1 in f.stem:
-                    print(hova)
                     min1_date, max1_date = get_dates_from_filename(f.stem)
                     r1, s1 = util.get_content_xl_onesheet(f, TABLE_1, hova, SUM_FIELD, 'User ID', 8)
                 if FILENAME_2 in f.stem:
@@ -60,7 +59,7 @@ def bookmate(hova=HOVA):
                           'USD', 'revshare', szumma1, min1_date, max1_date))
         res.append(Result(DATA_DIR.upper() + '2', REPORT_MONTH, record2_count,
                           'USD', 'subscr', szumma2, min2_date, max2_date))
-        print(f"{DATA_DIR.upper()}, {REPORT_MONTH}, {record1_count} records, total: {szumma1:-10,.3f}\n")
+        print(f"{DATA_DIR.upper()}, {REPORT_MONTH}, {record1_count} records, total: {szumma1:-10,.3f}")
         print(f"{DATA_DIR.upper()}, {REPORT_MONTH}, {record2_count} recordstotal: {szumma2:-10,.3f}\n")
     else:
         util.empty(DATA_DIR)

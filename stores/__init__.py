@@ -1,5 +1,6 @@
 from .tf24symbols import tfsymbols
 from .amazon import amz_read
+from .audible import audible
 from .bibliotheca import bibliotheca
 from .bn import bn
 from .bookmate import bookmate
