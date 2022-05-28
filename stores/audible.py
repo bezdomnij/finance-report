@@ -61,7 +61,7 @@ def audible(hova=HOVA):
                         rc = df.shape[0]
                         sqw.write_to_db(df, TABLE2, hova=hova, field_lens='vchall')
 
-                    print(f"file: {DATA_DIR}, {s} | {REPORT_MONTH}, {rc:10,d} records, total: {szm:-10,.2f}")
+                    print(f"{DATA_DIR} sheet: {s} | {REPORT_MONTH}, {rc:10,d} records, total: {szm:-10,.2f}")
                     record_count += rc
                     szumma += szm
                 print(f"{DATA_DIR.upper()} | {REPORT_MONTH}, {record_count:10,d} records, total: {szumma:-10,.2f}\n")
