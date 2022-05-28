@@ -35,6 +35,7 @@ TABLE = 'stg_rts2_20002_kobo_audio'
 FILENAME = 'Content 2 Connect Audio_CONTENT2CONNECT_AUDIO_'
 DATA_DIR = 'kobo audio'
 SUM_FIELD = 'Net Due (Payable Currency)'
+DATE_FIELD = 'Date'
 
 
 def kobo_audio(hova=HOVA):
@@ -50,9 +51,12 @@ def kobo_audio(hova=HOVA):
                 szumma = df[SUM_FIELD].sum()
                 record_count = df.shape[0]
                 print(file.stem)
+                date_borders = util.get_df_dates(DATE_FIELD, 3, df)
+                print(date_borders)
                 sqw.write_to_db(df, TABLE, hova=hova, field_lens='vchall')
                 print(f"{DATA_DIR.upper()} | {REPORT_MONTH}, {record_count:10,d} records, total: {szumma:-10,.2f}\n")
-                res.append(Result(DATA_DIR.upper(), REPORT_MONTH, record_count, 'USD', '', szumma))
+                res.append(Result(DATA_DIR.upper(), REPORT_MONTH, record_count,
+                                  'USD', '', szumma, date_borders[0], date_borders[1]))
     else:
         util.empty(DATA_DIR)
     return res

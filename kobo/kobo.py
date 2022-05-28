@@ -9,6 +9,7 @@ TABLE_2 = 'stg_fin2_2_kobo_nodrm'
 FILENAME = 'PublishDrive Kft_CONTENT2CONNECT'
 DATA_DIR = 'kobo'
 SUM_FIELD = 'Net Due (Payable Currency)'
+DATE_FIELD = 'Date'
 
 
 def kobo(hova=HOVA):
@@ -29,15 +30,18 @@ def kobo(hova=HOVA):
                 record_count = df2.shape[0]
                 print('!!! A frame merete', df2.shape[0])
                 print(f.stem)
+                date_borders = util.get_df_dates(DATE_FIELD, 3, df2)
                 if '_DRM' in f.stem.upper():
                     marker = '_DRM'
                     sqw.write_to_db(df2, TABLE_1, hova=hova, field_lens='vchall')
-                    res.append(Result(DATA_DIR.upper(), REPORT_MONTH, record_count, 'USD', 'drm', szumma))
+                    res.append(Result(DATA_DIR.upper(), REPORT_MONTH, record_count,
+                                      'USD', 'drm', szumma, date_borders[0], date_borders[1]))
                 else:
                     sqw.write_to_db(df2, TABLE_2, hova=hova, field_lens='vchall')
-                    res.append((Result(DATA_DIR.upper(), REPORT_MONTH, record_count, 'USD', 'nodrm', szumma)))
-                print(
-                    f"{(DATA_DIR + marker).upper()}, {REPORT_MONTH}, {record_count} records, total: {szumma:-12,.3f}\n")
+                    res.append((Result(DATA_DIR.upper(), REPORT_MONTH, record_count,
+                                       'USD', 'nodrm', szumma, date_borders[0], date_borders[1])))
+                print(f"{(DATA_DIR + marker).upper()}, "
+                      f"{REPORT_MONTH}, {record_count} records, total: {szumma:-12,.3f}\n")
     else:
         util.empty(DATA_DIR)
     return res

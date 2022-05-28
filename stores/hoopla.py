@@ -10,6 +10,7 @@ TABLE = 'stg_fin2_41_hoopla'
 FILENAME = '-Publish Drive Reporting'
 DATA_DIR = 'hoopla'
 SUM_FIELD = 'Royalty Due'
+DATE_FIELD = 'Borrowed Date'
 
 
 def hoopla(hova=HOVA):
@@ -30,18 +31,21 @@ def hoopla(hova=HOVA):
                 except KeyError as e:
                     print(f"No drop field")
                     df.drop(df[df['ISBN'] == ''].index, inplace=True)
-                szumma = df[SUM_FIELD].sum()
+                date_borders = util.get_df_dates(DATE_FIELD, 3, df)
+                print(date_borders)
+                szumma = round(df[SUM_FIELD].sum(), 3)
                 record_count = df.shape[0]
                 sqw.write_to_db(df, TABLE, db_name='stage', action='replace', field_lens='vchall', hova=hova)
                 print(f"{DATA_DIR.upper()} | {REPORT_MONTH}, {record_count:10,d} records, total: {szumma:-10,.2f}\n")
-                res.append(Result(DATA_DIR.upper(), REPORT_MONTH, record_count, 'USD', '', szumma))
+                res.append(Result(DATA_DIR.upper(), REPORT_MONTH, record_count,
+                                  'USD', '', szumma, date_borders[0], date_borders[1]))
     else:
         util.empty(DATA_DIR)
     return res
 
 
 def main():
-    hoopla(hova='pd')
+    hoopla(hova='19')
 
 
 if __name__ == '__main__':
