@@ -1,5 +1,6 @@
 from pathlib import Path
 
+import numpy as np
 import pandas as pd
 from result import Result
 import util
@@ -64,6 +65,9 @@ def gardners(hova=HOVA):
                 df[SUM_FIELD] = df[SUM_FIELD].astype(float)
                 date_borders = util.get_df_dates(DATE_FIELD, 2, df)
                 szumma = df[SUM_FIELD].sum()
+                df.info()
+                df = df.iloc[:-5]
+                df.info()
                 record_count = df.shape[0]
                 print(date_borders)
                 sqw.write_to_db(df, TABLE, action='replace', hova=hova, field_lens='vchall')
@@ -76,7 +80,7 @@ def gardners(hova=HOVA):
 
 
 def main():
-    gardners(hova='0')
+    gardners(hova='pd')
 
 
 if __name__ == '__main__':

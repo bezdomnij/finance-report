@@ -7,7 +7,7 @@ import util
 from engineer import sql_writer as sqw
 from config import MAIN_DIR, REPORT_MONTH, HOVA
 
-TABLE = 'stg_fin2_06_ekonyv'
+TABLE = 'stg_fin2_6_ekonyvhu'
 FILENAME = '-ekonyv-fogyas'
 DATA_DIR = 'ekönyv'
 SUM_FIELD = 'Nettó fizetendő'
@@ -61,7 +61,7 @@ def ekonyv(hova=HOVA):
 
 
 def main():
-    ekonyv('0')
+    ekonyv('pd')
 
 
 if __name__ == '__main__':

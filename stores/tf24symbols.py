@@ -6,7 +6,7 @@ from config import MAIN_DIR, REPORT_MONTH, HOVA
 import util
 from result import Result
 
-TABLE = 'stg_fin2_28_24symbols_data'
+TABLE = 'stg_fin2_28_24symbols'
 FILENAME = 'D343_'
 DATA_DIR = '24symbols'
 SUM_FIELD = 'Income to invoice'
@@ -46,7 +46,7 @@ def tfsymbols(hova=HOVA):
 
 
 def main():
-    tfsymbols(hova='0')
+    tfsymbols(hova='pd')
 
 
 if __name__ == '__main__':

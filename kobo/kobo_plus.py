@@ -6,7 +6,7 @@ from engineer import sql_writer as sqw
 from config import MAIN_DIR, REPORT_MONTH, HOVA
 from result import Result
 
-TABLE = 'stg_rts2_40_koboplus'
+TABLE = 'stg_fin2_40_koboplus'
 FILENAME = 'Sub_PublishDrive Kft_CONTENT2CONNECT_DRM_'
 DATA_DIR = 'kobo'
 SUM_FIELD = 'Total publisher revenue share in payable currency ($)'
@@ -48,7 +48,7 @@ def kobo_plus(hova=HOVA):
 
 
 def main():
-    kobo_plus(hova='19')
+    kobo_plus(hova='pd')
 
 
 if __name__ == '__main__':

@@ -31,7 +31,7 @@ from engineer import sql_writer as sqw
 from config import MAIN_DIR, REPORT_MONTH, HOVA
 from result import Result
 
-TABLE = 'stg_rts2_20002_kobo_audio'
+TABLE = 'stg_fin2_20002_kobo_audio'
 FILENAME = 'Content 2 Connect Audio_CONTENT2CONNECT_AUDIO_'
 DATA_DIR = 'kobo audio'
 SUM_FIELD = 'Net Due (Payable Currency)'
@@ -63,7 +63,7 @@ def kobo_audio(hova=HOVA):
 
 
 def main():
-    kobo_audio(hova='19')
+    kobo_audio(hova='pd')
 
 
 if __name__ == '__main__':
