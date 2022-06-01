@@ -103,7 +103,7 @@ def bookmate(hova=HOVA):
         sqw.write_to_db(df1_all, TABLE_1, db_name='stage', action='replace', field_lens='vchall', hova=hova)
         sqw.write_to_db(df2_all, TABLE_2, db_name='stage', action='replace', field_lens='vchall', hova=hova)
         print(f"{DATA_DIR.upper()}, {REPORT_MONTH}, {record1_count} records, total: {szumma1:-10,.3f}")
-        print(f"{DATA_DIR.upper()}, {REPORT_MONTH}, {record2_count} recordstotal: {szumma2:-10,.3f}\n")
+        print(f"{DATA_DIR.upper()}, {REPORT_MONTH}, {record2_count} records, total: {szumma2:-10,.3f}\n")
     else:
         util.empty(DATA_DIR)
     return res
