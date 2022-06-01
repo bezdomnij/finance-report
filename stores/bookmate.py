@@ -35,9 +35,8 @@ def get_dates_from_filename(stem):
     return mnd, mxd
 
 
-def get_content_xl_onesheet(file, table, hova, sum_field, na_field, header=0, sheet_name=''):
+def get_content_xl_onesheet(file, sum_field, na_field, header=0, sheet_name=''):
     record_count, szumma = 0, 0
-    # print(hova)
     if sheet_name == '':
         with warnings.catch_warnings(record=True):
             warnings.simplefilter("always")
@@ -67,7 +66,8 @@ def get_content_xl_onesheet(file, table, hova, sum_field, na_field, header=0, sh
 def bookmate(hova=HOVA):
     df1_all = pd.DataFrame()
     df2_all = pd.DataFrame()
-    global min1_date, max1_date, min2_date, max2_date
+    dates1 = dates2 = []
+    # global min1_date, max1_date, min2_date, max2_date
     res = []
     p = Path(MAIN_DIR).joinpath(REPORT_MONTH).joinpath(DATA_DIR)
     szumma1, szumma2 = 0, 0
@@ -76,14 +76,13 @@ def bookmate(hova=HOVA):
     if files is None:
         return
     if len(files) > 0:
-        dates1 = dates2 = []
         for f in files:
             if f.is_file() and f.suffix == '.xlsx':
                 if FILENAME_1 in f.stem:
                     min1_date, max1_date = get_dates_from_filename(f.stem)
                     dates1.append(min1_date)
                     dates1.append(max1_date)
-                    r1, s1, df1 = get_content_xl_onesheet(f, TABLE_1, hova, SUM_FIELD, 'User ID', 8)
+                    r1, s1, df1 = get_content_xl_onesheet(f, SUM_FIELD, 'User ID', 8)
                     record1_count += r1
                     szumma1 += s1
                     df1_all = df1_all.append(df1)
@@ -92,11 +91,11 @@ def bookmate(hova=HOVA):
                     min2_date, max2_date = get_dates_from_filename(f.stem)
                     dates2.append(min2_date)
                     dates2.append(max2_date)
-                    r2, s2, df2 = get_content_xl_onesheet(f, TABLE_2, hova, SUM_FIELD, 'User ID', 10)
+                    r2, s2, df2 = get_content_xl_onesheet(f, SUM_FIELD, 'User ID', 10)
                     record2_count += r2
                     szumma2 += s2
-                    print(df2.shape[0], min2_date, max2_date)
                     df2_all = df2_all.append(df2)
+                    print(df2.shape[0], min2_date, max2_date)
         res.append(Result(DATA_DIR.upper() + '1', REPORT_MONTH, record1_count,
                           'USD', 'revshare', szumma1, min(dates1), max(dates1)))
         res.append(Result(DATA_DIR.upper() + '2', REPORT_MONTH, record2_count,
