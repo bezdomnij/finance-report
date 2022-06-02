@@ -7,7 +7,7 @@ from config import MAIN_DIR, REPORT_MONTH, HOVA
 
 TABLE = 'stg_fin2_49_voxa'
 FILENAME = 'Raport 202'
-DATA_DIR = '49_voxa'
+DATA_DIR = 'voxa'
 SUM_FIELD = 'Pret net cu TVA (RON)'
 DATE_FIELD = 'Data vanzarii'
 
@@ -21,7 +21,6 @@ def voxa(hova=HOVA):
     :return: nothing
     """
     res = []
-    main_dir = ''
     p = Path(MAIN_DIR).joinpath(REPORT_MONTH).joinpath(DATA_DIR)
     files = util.get_file_list(p)
     if files is None:

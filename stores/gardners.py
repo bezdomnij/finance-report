@@ -65,9 +65,9 @@ def gardners(hova=HOVA):
                 df[SUM_FIELD] = df[SUM_FIELD].astype(float)
                 date_borders = util.get_df_dates(DATE_FIELD, 2, df)
                 szumma = df[SUM_FIELD].sum()
-                df.info()
+                # df.info()
                 df = df.iloc[:-5]
-                df.info()
+                # df.info()
                 record_count = df.shape[0]
                 print(date_borders)
                 sqw.write_to_db(df, TABLE, action='replace', hova=hova, field_lens='vchall')

@@ -17,9 +17,9 @@ SUM_FIELD = 'Ext Cost'
 def get_filename_dates(stem, raw):
     pattern = re.compile(raw)
     m = re.match(pattern, stem)
-    print(m.group(2))
+    # print(m.group(2))
     begin = str(m.group(2)).replace('_', '-')
-    print(m.group(4))
+    # print(m.group(4))
     end = str(m.group(4)).replace('_', '-')
     print(begin, end)
     begin_date = datetime.datetime.strptime(begin, '%Y-%m-%d').date()
