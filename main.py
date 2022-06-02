@@ -69,6 +69,7 @@ def report():
     collect_lst.extend(stores.google_audio())
     collect_lst.extend(stores.hoopla())
     collect_lst.extend(stores.ireader())
+    collect_lst.extend(stores.jd())
     collect_lst.extend(kobo.kobo())
     collect_lst.extend(kobo.kobo_audio())
     collect_lst.extend(kobo.kobo_plus())

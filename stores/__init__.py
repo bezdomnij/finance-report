@@ -17,6 +17,7 @@ from .google import google
 from .google_audio import google_audio
 from .hoopla import hoopla
 from .ireader import ireader
+from .jd import jd
 from .libreka import libreka
 from .mackin import mackin
 from .odilo import odilo
