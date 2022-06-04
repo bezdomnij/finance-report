@@ -4,7 +4,7 @@ import logging
 import urllib
 from sys import argv
 from urllib import request
-from config import HOVA
+# from config import HOVA
 import pandas as pd
 from smb.SMBHandler import SMBHandler
 import apple_finrep

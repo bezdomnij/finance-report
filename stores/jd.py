@@ -49,7 +49,7 @@ def jd(hova='0'):
 
 
 def main():
-    jd('19')
+    jd('pd')
 
 
 if __name__ == '__main__':
