@@ -34,7 +34,7 @@ def jd(hova='0'):
                 df = get_proper_df(df0)
                 df = df.iloc[:-2]
                 df.info()
-                szumma = df[SUM_FIELD].sum()
+                szumma = round(df[SUM_FIELD].sum(), 3)
                 df['Sales Date'] = pd.to_datetime(df['Sales Date']).dt.date
                 begin = df['Sales Date'].min()
                 end = df['Sales Date'].max()

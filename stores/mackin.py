@@ -14,7 +14,7 @@ DATA_DIR = 'mackin'
 SUM_FIELD = 'Ext Cost'
 
 
-def get_filename_dates(stem, raw):
+def get_filename_dates(stem, raw, hova):
     pattern = re.compile(raw)
     m = re.match(pattern, stem)
     # print(m.group(2))
@@ -22,6 +22,10 @@ def get_filename_dates(stem, raw):
     # print(m.group(4))
     end = str(m.group(4)).replace('_', '-')
     print(begin, end)
+    dict_to_sql = {'date_from': [begin], 'date_to': [end]}
+    print(dict_to_sql)
+    df_date = pd.DataFrame.from_dict(dict_to_sql)
+    sqw.write_to_db(df_date, 'stg_fin2_36_mackin_date', field_lens='vchall', hova=hova)
     begin_date = datetime.datetime.strptime(begin, '%Y-%m-%d').date()
     end_date = datetime.datetime.strptime(end, '%Y-%m-%d').date()
     return begin_date, end_date
@@ -47,7 +51,7 @@ def mackin(hova=HOVA):
             if f.suffix in ['.xlsx', '.xls', '.XLS'] and FILENAME in f.stem:
                 raw = \
                     r'(PUBLISHDRIVE_EBOOKS_)(202[0-9]_([0][0-9]|[1][0-2])_[0-3][0-9])_to_(202[0-9]_([0][0-9]|[1][0-2])_[0-3][0-9])'
-                dates = get_filename_dates(f.stem, raw)
+                dates = get_filename_dates(f.stem, raw, hova)
                 df = pd.read_excel(f, header=4)
                 # print(df.columns)
                 df = df.drop(['Unnamed: 1', 'Unnamed: 2', 'Unnamed: 3'], axis=1)
@@ -66,7 +70,7 @@ def mackin(hova=HOVA):
 
 
 def main():
-    mackin('19')
+    mackin('pd')
 
 
 if __name__ == '__main__':
