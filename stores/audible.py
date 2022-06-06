@@ -75,7 +75,7 @@ def audible(hova=HOVA):
 
 
 def main():
-    audible(hova='0')
+    audible(hova='pd')
 
 
 if __name__ == '__main__':
