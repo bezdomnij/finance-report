@@ -20,8 +20,8 @@ DATE_FIELD = 'Datum'
 
 
 def get_content(df):
-    df['Datum'] = pd.to_datetime(df['Datum'], format="%d.%m.%Y").dt.date
-    df['month'] = pd.DatetimeIndex(df['Datum']).month
+    df['Date'] = pd.to_datetime(df['Datum'], format="%d.%m.%Y").dt.date
+    df['month'] = pd.DatetimeIndex(df['Date']).month
     df.fillna(value='', inplace=True)
     net_income = df[SUM_FIELD].sum()
     rec_count = df.shape[0]
@@ -56,14 +56,14 @@ def libreka(hova=HOVA):
                     df_collection[s][1] = df_collection[s][1].append(df, ignore_index=True)
                     df_collection[s][2] += szumma
                     df_collection[s][3] += rc
-                    min_date = df_collection[s][1]['Datum'].min()
+                    min_date = df_collection[s][1]['Date'].min()
                     print(s, 'min', min_date)
-                    max_date = df_collection[s][1]['Datum'].max()
+                    max_date = df_collection[s][1]['Date'].max()
                     print(s, 'max', max_date)
                     df_collection[s].append(min_date)
                     df_collection[s].append(max_date)
-                    print(f"{s} min.Date: {df_collection[s][1]['Datum'].min()} EEEES {df_collection[s][4]}| "
-                          f"max.Date: {df_collection[s][1]['Datum'].max()} EEEES {df_collection[s][5]}")
+                    print(f"{s} min.Date: {df_collection[s][1]['Date'].min()} EEEES {df_collection[s][4]}| "
+                          f"max.Date: {df_collection[s][1]['Date'].max()} EEEES {df_collection[s][5]}")
 
         for k, v in df_collection.items():
             sqw.write_to_db(v[1], v[0], field_lens='vchall', hova=hova, action='replace')

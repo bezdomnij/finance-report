@@ -22,10 +22,14 @@ def get_filename_dates(stem, raw, hova):
     # print(m.group(4))
     end = str(m.group(4)).replace('_', '-')
     print(begin, end)
-    dict_to_sql = {'date_from': [begin], 'date_to': [end]}
-    print(dict_to_sql)
-    df_date = pd.DataFrame.from_dict(dict_to_sql)
-    sqw.write_to_db(df_date, 'stg_fin2_36_mackin_date', field_lens='vchall', hova=hova)
+    # dict_to_sql = {'date_from': [begin], 'date_to': [end]}
+    dates_to_df = {'date_from': begin, 'date_to': end}
+    print(dates_to_df)
+    # date_df = pd.DataFrame.from_dict([dates_to_df])  # muxik, de alahuzza
+    # date_df = pd.DataFrame.from_dict(dates_to_df, orient='index', columns=['date_from', 'date_to'])  # nope
+    date_df = pd.DataFrame()
+    date_df = date_df.append(dates_to_df, ignore_index=True)
+    sqw.write_to_db(date_df, 'stg_fin2_36_mackin_date', field_lens='vchall', hova=hova)
     begin_date = datetime.datetime.strptime(begin, '%Y-%m-%d').date()
     end_date = datetime.datetime.strptime(end, '%Y-%m-%d').date()
     return begin_date, end_date
@@ -50,7 +54,8 @@ def mackin(hova=HOVA):
         for f in files:
             if f.suffix in ['.xlsx', '.xls', '.XLS'] and FILENAME in f.stem:
                 raw = \
-                    r'(PUBLISHDRIVE_EBOOKS_)(202[0-9]_([0][0-9]|[1][0-2])_[0-3][0-9])_to_(202[0-9]_([0][0-9]|[1][0-2])_[0-3][0-9])'
+                    r'(PUBLISHDRIVE_EBOOKS_)(202[0-9]_([0][0-9]|[1][0-2])_[0-3][0-9])' \
+                    r'_to_(202[0-9]_([0][0-9]|[1][0-2])_[0-3][0-9])'
                 dates = get_filename_dates(f.stem, raw, hova)
                 df = pd.read_excel(f, header=4)
                 # print(df.columns)
@@ -70,7 +75,7 @@ def mackin(hova=HOVA):
 
 
 def main():
-    mackin('pd')
+    mackin('19')
 
 
 if __name__ == '__main__':
