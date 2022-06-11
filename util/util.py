@@ -143,7 +143,7 @@ def empty(data_dir):
 
 def get_file_list(p):
     try:
-        files = [f for f in p.iterdir()]
+        files = [f for f in p.iterdir() if f.stem[:2] != '~$' and f.stem != '._']
     except FileNotFoundError as e:
         print(f'apparenty the `{p.stem}` directory is not there\n{p.name.upper()} - {e}\n')
         return []

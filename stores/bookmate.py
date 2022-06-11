@@ -11,7 +11,7 @@ import util
 import pandas as pd
 from config import MAIN_DIR, REPORT_MONTH, HOVA
 from result import Result
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
 import warnings
 from engineer import sql_writer as sqw
 
@@ -83,15 +83,20 @@ def bookmate(hova=HOVA):
                     dates1.append(min1_date)
                     dates1.append(max1_date)
                     r1, s1, df1 = get_content_xl_onesheet(f, SUM_FIELD, 'User ID', 8)
+                    print(df1.columns)
+                    df1['Date'] = min1_date + timedelta(days=14)
+                    df1['Purchase'] = df1['Purchase'].astype(int)
                     record1_count += r1
                     szumma1 += s1
                     df1_all = df1_all.append(df1)
                     print(df1.shape[0], min1_date, max1_date)
+                    # print(df1.tail())
                 if FILENAME_2 in f.stem:
                     min2_date, max2_date = get_dates_from_filename(f.stem)
                     dates2.append(min2_date)
                     dates2.append(max2_date)
                     r2, s2, df2 = get_content_xl_onesheet(f, SUM_FIELD, 'User ID', 10)
+                    df2['Date'] = min2_date + timedelta(days=14)
                     record2_count += r2
                     szumma2 += s2
                     df2_all = df2_all.append(df2)
@@ -104,10 +109,12 @@ def bookmate(hova=HOVA):
         sqw.write_to_db(df2_all, TABLE_2, db_name='stage', action='replace', field_lens='vchall', hova=hova)
         print(f"{DATA_DIR.upper()}, {REPORT_MONTH}, {record1_count} records, total: {szumma1:-10,.3f}")
         print(f"{DATA_DIR.upper()}, {REPORT_MONTH}, {record2_count} records, total: {szumma2:-10,.3f}\n")
+        print(df1_all.tail())
+        print(df2_all.tail())
     else:
         util.empty(DATA_DIR)
     return res
 
 
 if __name__ == '__main__':
-    bookmate(hova='19')
+    bookmate(hova='pd')
