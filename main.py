@@ -63,6 +63,7 @@ def report():
     collect_lst.extend(stores.dreame_month())
     collect_lst.extend(stores.ekonyv())
     collect_lst.extend(stores.eletoltes())
+    collect_lst.extend(stores.empik())
     collect_lst.extend(stores.findaway())
     collect_lst.extend(stores.gardners())
     collect_lst.extend(stores.google())

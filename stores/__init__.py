@@ -11,6 +11,7 @@ from .dangdang import dangdang
 from .dibook import dibook
 from .dreame import dreame_month
 from .ekonyv import ekonyv
+from .empik import empik
 from .findaway import findaway
 from .gardners import gardners
 from .google import google

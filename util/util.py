@@ -5,7 +5,7 @@ from datetime import datetime
 import pandas as pd
 
 from engineer import sql_writer as sqw
-import pathlib
+from pathlib import Path
 
 DATE_FORMAT = {
     0: '%Y-%m-%d',
@@ -93,6 +93,27 @@ def get_proper_df(f, sheet_name='Details'):
     renamed_cols = dict(zip(df.columns, col2))
     df2 = df.rename(columns=renamed_cols)
     return df2
+
+
+def get_latest_files(files, count):
+    result = []
+    files_modded_when = {}
+    files_to_use = [f for f in files if f.stem[:2] != '~$' and f.stem[:2] != '._'
+                    and f.is_file() and f.stem[:3] != '.DS']
+    if files_to_use:
+        try:
+            for f in files_to_use:
+                modify_time = int(f.stat().st_mtime)
+                files_modded_when[modify_time] = f
+            if bool(files_modded_when):
+                keys = sorted(list(files_modded_when.keys()))
+                fs_to_use = keys[-count:]
+                for k in fs_to_use:
+                    # result = files_modded_when.get(keys[:-count], Path())
+                    result.append(files_modded_when.get(k, Path()))
+        except IndexError as e:
+            print(f"No keys? {e}")
+    return result
 
 
 def get_df_dates(date_field, date_format, df):
