@@ -11,6 +11,7 @@ from .dangdang import dangdang
 from .dibook import dibook
 from .dreame import dreame_month
 from .ekonyv import ekonyv
+from .eletoltes import eletoltes
 from .empik import empik
 from .findaway import findaway
 from .gardners import gardners
@@ -28,4 +29,3 @@ from .voxa import voxa
 from .overdrive import overdrive
 from .storytel import storytel
 from .multimediaplaza import multimediaplaza
-from .eletoltes import eletoltes
