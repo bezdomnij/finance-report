@@ -52,6 +52,7 @@ def report():
     collect_lst.extend(stores.amz_read())
     collect_lst.extend(apple_finrep.apples.apple())
     collect_lst.extend(stores.audible())
+    collect_lst.extend(stores.baker())
     collect_lst.extend(stores.bibliotheca())  # DELETE table first!!!
     collect_lst.extend(stores.bn())
     collect_lst.extend(stores.bookmate())

@@ -22,7 +22,7 @@ def kobo(hova=HOVA):
     if len(files) > 0:
         for f in files:
             marker = '_NODRM'
-            if f.is_file() and f.stem[:2] != '~$' and 'Sub' not in f.stem and 'plus' not in f.stem:
+            if f.is_file() and f.stem[:2] not in ['~$', '.D'] and 'Sub' not in f.stem and 'plus' not in f.stem:
                 print(f)
                 df2 = util.get_proper_df(f)  # remove spaces from field names
                 # print(df2.columns)

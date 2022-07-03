@@ -37,6 +37,7 @@ def bibliotheca(hova=HOVA):
     p = Path(MAIN_DIR).joinpath(REPORT_MONTH).joinpath(DATA_DIR)
     total_df = pd.DataFrame()
     all_row_count = 0
+    all_sums = 0
     files = util.get_file_list(p)
     if files is None:
         return
@@ -48,11 +49,12 @@ def bibliotheca(hova=HOVA):
                 current_df, rc, currency, total, dates = df_props
                 total_df = pd.concat([total_df, current_df])
                 all_row_count += rc
+                all_sums += total
                 res.append(Result(DATA_DIR.upper(), REPORT_MONTH, rc, currency, '', total, dates[0], dates[1]))
         # action append: replace give a row size error - before the change to other types part in get_types
         # !!! row size
         sqw.write_to_db(total_df, TABLE, field_lens='mas', action='replace', hova=hova)
-        print(f"{DATA_DIR.upper()} | {REPORT_MONTH}, {all_row_count} records\n")
+        print(f"{DATA_DIR.upper()} | {REPORT_MONTH}, all_sum: {all_sums}, {all_row_count} records\n")
     else:
         util.empty(DATA_DIR)
     return res
