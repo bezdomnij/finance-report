@@ -12,7 +12,7 @@ import pandas as pd
 
 DATA_DIR = 'baker'
 SUM_FIELD = 'Proceeds of sale due to publisher'
-TABLE = 'stg_rts2_47_baker'
+TABLE = 'stg_fin2_47_baker'
 
 
 def baker(hova=HOVA):
@@ -55,7 +55,7 @@ def baker(hova=HOVA):
 
 
 def main():
-    baker(hova='19')
+    baker(hova='pd')
 
 
 if __name__ == '__main__':

@@ -15,7 +15,7 @@ from result import Result
 
 import util
 from engineer import sql_writer as sqw
-from config import MAIN_DIR, REPORT_MONTH
+from config import MAIN_DIR, REPORT_MONTH, HOVA
 
 TABLE = 'stg_fin2_48_empik'
 FILENAME = 'Sprzedaz---Raport-zaawansowany_'
@@ -64,7 +64,7 @@ def empik(hova='0'):
                 szumma += szm
                 df_all = df_all.append(df)
         date_borders = util.get_df_dates(DATE_FIELD, 0, df_all)
-        sqw.write_to_db(df_all, TABLE, action='replace', hova=hova, field_lens='vchall')
+        sqw.write_to_db(df_all, TABLE, action='replace', hova=HOVA, field_lens='vchall')
         print(f"{DATA_DIR.upper()}, report: {REPORT_MONTH}, total: {round(szumma, 3)}, {record_count} records")
         try:
             res.append(Result(DATA_DIR.upper(), REPORT_MONTH, record_count,
@@ -77,7 +77,7 @@ def empik(hova='0'):
 
 
 def main():
-    empik(hova='19')
+    empik(hova='pd')
 
 
 if __name__ == '__main__':

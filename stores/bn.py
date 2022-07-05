@@ -45,7 +45,7 @@ def bn(hova=HOVA):
                 date_borders = util.get_df_dates(DATE_FIELD, 1, df)
                 print(date_borders)
                 sqw.write_to_db(df, TABLE, action='replace', field_lens='mas', hova=hova)
-                print(f"{DATA_DIR.upper()} | {REPORT_MONTH}, {record_count} records, total {total}\n")
+                print(f"{DATA_DIR.upper()} | {REPORT_MONTH}, {record_count} records, total {total:,.2f}\n")
                 res.append(Result(DATA_DIR.upper(), REPORT_MONTH,
                                   record_count, 'USD', '', total, date_borders[0], date_borders[1]))
     else:
