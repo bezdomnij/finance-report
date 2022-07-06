@@ -91,7 +91,8 @@ def report():
 
 
 if __name__ == '__main__':
-    logging.basicConfig(level=logging.INFO, filename='datacamp.log', filemode='w', format='%(asctime)s %(message)s')
+    logging.basicConfig(level=logging.INFO, filename='logs/datacamp.log', filemode='a',
+                        format='%(asctime)s %(message)s')
     if len(argv) == 1:
         print("Nincs mire nézni!!!\n")
     else:

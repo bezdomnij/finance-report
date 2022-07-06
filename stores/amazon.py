@@ -92,5 +92,4 @@ def amz_read(hova=HOVA):
 
 
 if __name__ == '__main__':
-    logging.basicConfig(level=logging.INFO, filename='../datacamp.log', filemode='a')
     amz_read(hova='0')

@@ -158,5 +158,5 @@ def main():
 
 
 if __name__ == '__main__':
-    logging.basicConfig(level=logging.INFO, filename='../datacamp.log', filemode='w')
+    logging.basicConfig(level=logging.INFO, filename='../logs/datacamp.log', filemode='w')
     main()
