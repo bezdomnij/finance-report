@@ -159,7 +159,7 @@ def get_content_xl_onesheet(file, table, hova, sum_field, na_field, header=0, sh
 
 
 def empty(data_dir):
-    print(f"Looks like the `{data_dir}` directory is empty OR does not exist.\n")
+    print(f"\t\tLooks like the `{data_dir}` directory is empty OR does not exist.\n")
 
 
 def get_file_list(p):
@@ -171,22 +171,27 @@ def get_file_list(p):
     return files
 
 
-def get_latest_file(files, ftype):
+def get_latest_file(files, ftype, count=1):
     """
     based on mod time pathlib files are sorted
+    :param count: number of files to return
     :param ftype: file type as udsed in pd
     :param files: list of pathlib file objects
     :return: one file as list (easier on the existing code)
     """
     time_file = {}
     result = []
-    for f in [x for x in files if x.suffix.lower() == ftype]:
+    files_of_type = [x for x in files if x.suffix.lower() == ftype]
+    for f in files_of_type:
         mt = f.stat().st_mtime_ns
         time_file.update({mt: f})
     for k, v in time_file.items():
         print(k, v)
     sorted_lst = sorted(list(time_file.keys()))
-    result.append(time_file[sorted_lst[-1]])
+    try:
+        result.append(time_file[sorted_lst[-count]])
+    except IndexError:
+        print(f"number of files to return, {count} > {len(files_of_type)}")
     return result
 
 

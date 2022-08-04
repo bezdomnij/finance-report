@@ -17,11 +17,12 @@ def bookmate_audio(hova=HOVA):
     res = []
     p = Path(MAIN_DIR).joinpath(REPORT_MONTH).joinpath(DATA_DIR)
     files = util.get_file_list(p)
+    files = util.get_latest_file(files, '.xlsx')
     if files is None:
         return
     if len(files):
         for f in files:
-            if f.is_file() and f.suffix in ('.xls', '.xlsx', '.XLS') and FILENAME in f.stem and f.stem[:2] != '~$':
+            if f.is_file() and FILENAME in f.stem and f.stem[:2] != '~$':
                 df = pd.read_excel(f, header=0, index_col=None)
                 new_cols = [col.strip() for col in df.columns]
                 cols_map = dict(zip(df.columns, new_cols))
