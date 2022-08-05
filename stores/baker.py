@@ -30,7 +30,7 @@ def baker(hova=HOVA):
                 renamed_cols = dict(zip(df.columns, col2))
                 df2 = df.rename(columns=renamed_cols)
                 # df2.info()
-                print(df2['Transaction date or date and time'])
+                # print(df2['Transaction date or date and time'])
                 df2 = df2.iloc[:-1]
                 # df2.drop(df2.index[-1], inplace=True)  # that also works
                 # df2 = df2.dropna(how='all')
@@ -46,16 +46,16 @@ def baker(hova=HOVA):
             print(f"min. date: {min_date}, \tmax. date: {max_date}")
 
             sqw.write_to_db(df_all, TABLE, hova=hova, field_lens='vchall')
+            print(f"{DATA_DIR.upper()}\treport: {REPORT_MONTH},\ttotal: {szumma:8,.2f},\t{record_count} records\n")
             res.append((Result(DATA_DIR.upper(), REPORT_MONTH, record_count,
                                'USD', '', szumma, min_date, max_date)))
-            print(f"\n{DATA_DIR.upper()}\treport: {REPORT_MONTH},\ttotal: {szumma:8,.2f},\t{record_count} records\n")
     else:
         util.empty(DATA_DIR)
     return res
 
 
 def main():
-    baker(hova='pd')
+    baker(hova='19')
 
 
 if __name__ == '__main__':

@@ -28,11 +28,11 @@ def google_audio(hova=HOVA):
     files = util.get_file_list(src)
     if files is None:
         return
-
     if len(files) > 0:
         for f in files:
             df = get_df(f)
             if df.shape[0] > 0:
+                logging.debug(f"message is shape: {df.shape[0]}")
                 sqw.write_to_db(df, TABLE, action='replace', hova=hova)
                 record_count = df.shape[0]
                 szumma = df['Earnings Amount'].astype(float).sum()
@@ -48,6 +48,4 @@ def google_audio(hova=HOVA):
 
 
 if __name__ == '__main__':
-    logging.basicConfig(level=logging.INFO, filename='datacamp.log', filemode='w', format='%(asctime)s %(message)s')
-    # google_audio('/Users/frank/pd/finance_report/2021_12_december', hova='0')
     google_audio(hova='0')

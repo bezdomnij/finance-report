@@ -30,7 +30,7 @@ def google(hova=HOVA):
                 # print(f"az ebooks file nem utf-16..., error: {e}")
                 df = pd.read_csv(f, encoding='utf-16', sep='\t', header=0, index_col=None)
             finally:
-                print(f.stem)
+                logging.info(f.stem)
                 df['Earnings Amount'] = df['Earnings Amount'].str.replace(',', '.')
                 sqw.write_to_db(df, TABLE, action='replace', hova=hova, field_lens='vchall')
                 record_count = df.shape[0]
@@ -47,5 +47,4 @@ def google(hova=HOVA):
 
 
 if __name__ == '__main__':
-    logging.basicConfig(level=logging.INFO, filename='datacamp.log', filemode='w', format='%(asctime)s %(message)s')
     google(hova='0')

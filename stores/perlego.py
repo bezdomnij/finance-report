@@ -49,8 +49,8 @@ def perlego(hova=HOVA):
         sqw.write_to_db(df_all, TABLE, hova=hova, action='replace', field_lens='vchall')
         print(f"{DATA_DIR.upper()} | {REPORT_MONTH}, {record_count} records, total: {szumma:-10,.2f}\n")
         res.append(Result(DATA_DIR.upper(), REPORT_MONTH, record_count, 'USD', '', szumma))
-        print(df_all.tail())
-        print()
+        # print(df_all.tail())
+        # print()
         # df_all = df_all.sort_values(by='Date')
     else:
         util.empty(DATA_DIR)

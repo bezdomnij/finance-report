@@ -83,7 +83,7 @@ def bookmate(hova=HOVA):
                     dates1.append(min1_date)
                     dates1.append(max1_date)
                     r1, s1, df1 = get_content_xl_onesheet(f, SUM_FIELD, 'User ID', 8)
-                    print(df1.columns)
+                    # print(df1.columns)
                     df1['Date'] = min1_date + timedelta(days=14)
                     df1['Purchase'] = df1['Purchase'].astype(int)
                     record1_count += r1
@@ -109,8 +109,7 @@ def bookmate(hova=HOVA):
         sqw.write_to_db(df2_all, TABLE_2, db_name='stage', action='replace', field_lens='vchall', hova=hova)
         print(f"{DATA_DIR.upper()}, {REPORT_MONTH}, {record1_count} records, total: {szumma1:-10,.3f}")
         print(f"{DATA_DIR.upper()}, {REPORT_MONTH}, {record2_count} records, total: {szumma2:-10,.3f}\n")
-        print(df1_all.tail())
-        print(df2_all.tail())
+
     else:
         util.empty(DATA_DIR)
     return res

@@ -29,7 +29,8 @@ DATE_FIELD = 'Datum'
 def get_date(filename):
     parts = filename.split('_')
     str_datum = parts[-1] + '-15'
-    real_datum = datetime.strptime(str_datum, '%Y-%m-%d')
+    # real_datum = datetime.strptime(str_datum, '%Y-%m-%d')  # month is numeric
+    real_datum = datetime.strptime(str_datum, '%Y-%b-%d')  # month is short name, e.g. Jun
     print(real_datum.date())
     return real_datum.date()
 
@@ -77,7 +78,7 @@ def empik(hova='0'):
 
 
 def main():
-    empik(hova='pd')
+    empik(hova='19')
 
 
 if __name__ == '__main__':

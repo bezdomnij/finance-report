@@ -29,6 +29,11 @@ def get_content(df):
 
 
 def libreka(hova=HOVA):
+    """
+    make a new field: `Date`, it exists beside the old `Datum`!!!
+    :param hova:
+    :return:
+    """
     res = []
     p = Path(MAIN_DIR).joinpath(REPORT_MONTH).joinpath(DATA_DIR)
     files = util.get_file_list(p)

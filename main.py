@@ -62,6 +62,7 @@ def report():
     collect_lst.extend(stores.dreame_month())
     collect_lst.extend(stores.ekonyv())
     collect_lst.extend(stores.eletoltes())
+    collect_lst.extend(stores.esentral())
     collect_lst.extend(stores.findaway())
     collect_lst.extend(stores.gardners())
     collect_lst.extend(stores.google())
@@ -91,7 +92,8 @@ def report():
 
 
 if __name__ == '__main__':
-    logging.basicConfig(level=logging.INFO, filename='datacamp.log', filemode='w', format='%(asctime)s %(message)s')
+    logging.basicConfig(level=logging.INFO, filename='logs/datacamp.log', filemode='a',
+                        format='%(asctime)s %(message)s')
     if len(argv) == 1:
         print("Nincs mire nézni!!!\n")
     else:

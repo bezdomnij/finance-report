@@ -11,6 +11,7 @@ from engineer import sql_writer as sqw
 from config import MAIN_DIR, REPORT_MONTH
 import util
 import re
+from result import Result
 
 TABLE = 'stg_fin2_21_esentral'
 # FILENAME = '_MYR'
@@ -63,6 +64,7 @@ def esentral(hova='0'):
     df_all = pd.DataFrame()
     szumma = 0.00
     record_count = 0
+    res = []
     # disable chained assignments
     pd.options.mode.chained_assignment = None
 
@@ -91,13 +93,18 @@ def esentral(hova='0'):
             record_count += rc
             szumma += szm
             df_all = df_all.append(df, ignore_index=True)
-
+        min_date = df_all['Date'].min()
+        max_date = df_all['Date'].max()
         if not df_all.empty:
             # print(df_all)
             print(f"check count szamolt: {df_all.shape[0]} vs. gyujtott: {record_count}")
             print(f"check sum, szamolt: {df_all[SUM_FIELD].astype('float64').sum()} vs. gyujtott: {szumma}")
-            print(f"{DATA_DIR.upper()}\treport: {REPORT_MONTH}, total: {szumma:-10,.2f}\t, {record_count} records")
             sqw.write_to_db(df_all, TABLE, hova=hova, db_name='stage', action='replace', field_lens='vchall')
+            print(f"{DATA_DIR.upper()}\treport: {REPORT_MONTH}, total: {szumma:-10,.2f}\t, {record_count} records\n")
+            res.append((Result(DATA_DIR.upper(), REPORT_MONTH, record_count,
+                               'USD', '', szumma, min_date, max_date)))
+
+    return res
 
 
 def use_cover(cover, df_all, files, record_count, szumma):

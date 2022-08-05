@@ -1,3 +1,5 @@
+import logging
+
 from .tf24symbols import tfsymbols
 from .amazon import amz_read
 from .audible import audible
@@ -14,6 +16,7 @@ from .dreame import dreame_month
 from .ekonyv import ekonyv
 from .eletoltes import eletoltes
 from .empik import empik
+from .esentral import esentral
 from .findaway import findaway
 from .gardners import gardners
 from .google import google
@@ -30,3 +33,5 @@ from .voxa import voxa
 from .overdrive import overdrive
 from .storytel import storytel
 from .multimediaplaza import multimediaplaza
+
+logging.basicConfig(level=logging.INFO, filename='logs/datacamp.log', filemode='a', format='%(asctime)s %(message)s')

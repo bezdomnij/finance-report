@@ -114,10 +114,10 @@ def read_apple(hova=HOVA):
                 ret_value = read_file_content(f)
                 date_borders = ret_value[1]
                 total_df = pd.concat([total_df, ret_value[0]])
+        sqw.write_to_db(total_df, 'stg_fin2_1_apple', action='replace', hova=hova, field_lens='vchall')
         print("EXTENDED PARTNER SHARE", total_df['Extended Partner Share'].sum())
         print("UNITS SOLD", int(total_df['Quantity'].sum()))
         print(f"{DATA_DIR.upper()} | {REPORT_MONTH}, {total_df.shape[0]} records\n")
-        sqw.write_to_db(total_df, 'stg_fin2_1_apple', action='replace', hova=hova, field_lens='vchall')
         res.append(Result(DATA_DIR.upper(), REPORT_MONTH,
                           total_df.shape[0], 'USD', '', grand_total, date_borders[0], date_borders[1]))
         return pd.DataFrame(sum_df, index=range(1, 23)), res
@@ -158,5 +158,5 @@ def main():
 
 
 if __name__ == '__main__':
-    logging.basicConfig(level=logging.INFO, filename='../datacamp.log', filemode='w')
+    logging.basicConfig(level=logging.INFO, filename='../logs/datacamp.log', filemode='w')
     main()
