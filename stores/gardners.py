@@ -66,7 +66,7 @@ def gardners(hova=HOVA):
                 date_borders = util.get_df_dates(DATE_FIELD, 2, df)
                 szumma = df[SUM_FIELD].sum()
                 # df.info()
-                df = df.iloc[:-5]
+                # df = df.iloc[:-5]
                 # df.info()
                 record_count = df.shape[0]
                 print(date_borders)

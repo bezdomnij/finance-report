@@ -9,7 +9,7 @@ from config import MAIN_DIR, REPORT_MONTH, HOVA
 TABLE = 'stg_fin2_5_bn'
 FILENAME = 'export'
 DATA_DIR = 'bn'
-DATE_FIELD = 'Invoice Date'
+DATE_FIELD = 'Po Date'
 
 
 def calc_sum(df):
@@ -54,7 +54,7 @@ def bn(hova=HOVA):
 
 
 def main():
-    bn('0')
+    bn('pd')
 
 
 if __name__ == '__main__':
