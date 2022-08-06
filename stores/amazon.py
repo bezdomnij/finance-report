@@ -14,7 +14,7 @@ DATE_PRINT_FIELD = 'Sale Date'
 
 def make_df(files, amazon, hova=HOVA):
     result = []
-    date_b = []
+    dates = []
     for f in files:
         marker = 'KEP'
         df = pd.read_excel(f, header=0, index_col=None)
@@ -36,7 +36,7 @@ def make_df(files, amazon, hova=HOVA):
                 amounts[c].append(df2.shape[0])
                 amounts[c].append(round(df2['Payment Amount'].sum(), 3))
                 print(f"{c}: {amounts[c][1]:-18,.2f}")
-            date_b = util.get_df_dates(DATE_FIELD, 0, df)
+            dates = util.get_df_dates(DATE_FIELD, 0, df)
             # print(date_b)
 
         if 'PRINT_DASH' in f.stem.upper():
@@ -50,9 +50,10 @@ def make_df(files, amazon, hova=HOVA):
                 amounts[c].append(df2.shape[0])
                 amounts[c].append(round(df2['Payment Amount'].sum(), 3))
                 print(f"{c}: {amounts[c][1]:-18,.2f}")
-            date_b = util.get_df_dates(DATE_PRINT_FIELD, 0, df)
-            print(date_b)
-        date_borders = date_b
+            dates = util.get_df_dates(DATE_PRINT_FIELD, 0, df)
+            print(dates)
+
+        date_borders = dates
         record_count = df.shape[0]
         sqw.write_to_db(df, amazon[f], db_name='stage', action='replace', hova=hova, field_lens='vchall')
         print(f"{DATA_DIR.upper()}_{marker} | {REPORT_MONTH}, {record_count} records, total: {szumma:-10,.2f}\n")
