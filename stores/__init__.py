@@ -2,12 +2,10 @@ import logging
 
 from .tf24symbols import tfsymbols
 from .amazon import amz_read
-from .audible import audible
 from .bibliotheca import bibliotheca
 from .bn import bn
 from .baker import baker
 from .bookmate import bookmate
-from .bookmate_audio import bookmate_audio
 from .ciando import ciando
 from .cnpiec import cnpiec
 from .dangdang import dangdang
@@ -21,6 +19,8 @@ from .findaway import findaway
 from .gardners import gardners
 from .google import google
 from .google_audio import google_audio
+from .audible import audible
+from .bookmate_audio import bookmate_audio
 from .hoopla import hoopla
 from .ireader import ireader
 from .jd import jd
