@@ -73,7 +73,7 @@ def libreka(hova=HOVA):
         for k, v in df_collection.items():
             sqw.write_to_db(v[1], v[0], field_lens='vchall', hova=hova, action='replace')
             print(f"{DATA_DIR.upper()} | {REPORT_MONTH}, {v[0]}, {v[3]} records, total: {v[2]:10,.2f}\n")
-            res.append(Result(DATA_DIR.upper(), REPORT_MONTH, v[3],
+            res.append(Result('Tolino and German network', REPORT_MONTH, v[3],
                               'EUR', '', v[2], v[4], v[5]))
     else:
         util.empty(DATA_DIR)
