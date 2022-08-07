@@ -23,6 +23,8 @@ def get_main_dir():
     if 'Yondu' in where_we_are:
         # return 'e:/pd/sales_report'
         return 'h:/NextCloud/Finance/szamitas'
+    elif 'Attila' in where_we_are:
+        return 'd:/NextCloud/Finance/szamitas'
     elif 'frank' in where_we_are:
         return '/Users/frank/pd/Nextcloud/szamitas'
     else:
