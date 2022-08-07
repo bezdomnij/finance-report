@@ -11,6 +11,7 @@ import apple_finrep
 import kobo
 import stores
 from engineer import sql_writer as sqw
+from config import HOVA
 
 
 def discover(to_find):
@@ -85,10 +86,10 @@ def report():
     collect_lst.extend(stores.baker())
     collect_lst.extend(stores.voxa())
     collect_lst.extend(stores.empik())
-    # make_df(collection)
+    # # make_df(collection)
 
     df_all = pd.DataFrame(collect_lst)
-    sqw.write_to_db(df_all, 'fin_results', field_lens='vchall', hova='19')
+    sqw.write_to_db(df_all, 'fin_results', field_lens='vchall', hova=HOVA)
 
 
 if __name__ == '__main__':
