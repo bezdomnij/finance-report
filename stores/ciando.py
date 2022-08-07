@@ -53,8 +53,10 @@ def get_part_df(df, key, dates):
     result_df['darab'] = round(result_df[key] / result_df['eladasi_egysegar'])
     if 'ciando' in str(key):
         result_df['Total'] = result_df['eladasi_egysegar'] * result_df['darab'] * 0.7
+        result_df['netto_egysegar'] = result_df['eladasi_egysegar'] * 0.7
     else:
         result_df['Total'] = result_df['eladasi_egysegar'] * result_df['darab'] * 0.6
+        result_df['netto_egysegar'] = result_df['eladasi_egysegar'] * 0.6
     return result_df
 
 
