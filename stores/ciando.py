@@ -134,13 +134,18 @@ def ciando(hova=HOVA):
                     part_df = get_part_df(df_orig, key, dates)
                     reformed_df = pd.concat([reformed_df, part_df], axis=0, ignore_index=True)
                 record_count = df_orig.shape[0]
-                print(reformed_df['darab'].sum())  # dropped lines with 0 amounts, may not agree with reports' sum
+
+                # dropped lines with 0 amounts, may not agree with reports' book count
+                print(reformed_df['darab'].sum())
                 print(f"{f.parents[0].stem.lower()} | file: {f.stem},  {record_count} records, total: "
                       f"{round(szumma, 3):9,.2f}")
+
                 sqw.write_to_db(reformed_df, 'stg_fin2_22_ciando_alternative', db_name='stage', action='replace',
                                 field_lens='vchall', hova=hova)
+
                 # old way below
                 # record_count, szumma = util.get_content_xl_onesheet(f, TABLE, hova, SUM_FIELD, 'Data convers', header=0)
+
                 print(f"{DATA_DIR.upper()}, {REPORT_MONTH}, {record_count} records, total: {szumma:-10,.2f}\n")
                 res.append(Result(DATA_DIR.upper(), REPORT_MONTH, record_count, 'EUR', '', szumma))
     else:
