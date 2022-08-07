@@ -19,7 +19,7 @@ KEYS = ['Title', 'eISBN_13',
 
 def get_dates(fname):
     """
-    filename must start with Q[1-4]-YYYY...
+    filename must start with Q[1-4]-YYYY-0...
     :param fname:
     :return: a dict, key is month, value is the 15th of that month, ISO format
     """
@@ -133,12 +133,14 @@ def ciando(hova=HOVA):
                     print(key)
                     part_df = get_part_df(df_orig, key, dates)
                     reformed_df = pd.concat([reformed_df, part_df], axis=0, ignore_index=True)
-                record_count = df_orig.shape[0]
+                # record_count = df_orig.shape[0]
+                record_count = reformed_df.shape[0]
+                szumma_reformed = reformed_df['Total'].sum()
 
                 # dropped lines with 0 amounts, may not agree with reports' book count
-                print(reformed_df['darab'].sum())
-                print(f"{f.parents[0].stem.lower()} | file: {f.stem},  {record_count} records, total: "
-                      f"{round(szumma, 3):9,.2f}")
+                print(f"Book count (0 price pieces not included): {reformed_df['darab'].sum():>7,.0f}")
+                print(f"{f.parents[0].stem.lower()} | file: {f.stem},  {record_count} lines, total value: "
+                      f"{round(szumma, 3):9,.2f}, from reformed, value: {round(szumma_reformed, 3):9,.2f}")
 
                 sqw.write_to_db(reformed_df, 'stg_fin2_22_ciando_alternative', db_name='stage', action='replace',
                                 field_lens='vchall', hova=hova)
@@ -154,7 +156,7 @@ def ciando(hova=HOVA):
 
 
 def main():
-    ciando(hova='pd')
+    ciando(hova='19')
 
 
 if __name__ == '__main__':
