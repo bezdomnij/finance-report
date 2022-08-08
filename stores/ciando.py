@@ -59,7 +59,7 @@ def get_part_df(df, key, dates):
     # col_key is from the column name
     the_date = dates[col_keys[1]] if col_keys[0] != 'Libraries' else dates_lst[-2]
 
-    print(KEYS)
+    # print(KEYS)
     new_columns = KEYS.copy()
     new_columns.extend([key])
     result_df = df[new_columns]
@@ -128,6 +128,7 @@ def ciando(hova=HOVA):
                     szumma = round(df_orig[SUM_FIELD].sum(), 3)
                 except KeyError as e:
                     print(f"!!!ERROR ---{f.name}--- ERROR!!! Fields changed")
+
                 key_elements = get_key_elements(df_orig.columns)
                 for key in key_elements:
                     print(key)
