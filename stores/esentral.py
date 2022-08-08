@@ -8,7 +8,7 @@ from datetime import datetime
 from pathlib import Path
 import pandas as pd
 from engineer import sql_writer as sqw
-from config import MAIN_DIR, REPORT_MONTH
+from config import MAIN_DIR, REPORT_MONTH, HOVA
 import util
 import re
 from result import Result
@@ -47,7 +47,7 @@ def get_date_currency(filename):
     return datum, parts[1]
 
 
-def esentral(hova='0'):
+def esentral(hova=HOVA):
     """
     "Date","ISBN","Imprint","Title","Sale Price","Earning"
     "ISBN","Imprint","Title","Price","Unit","Total Sale","Earning"
@@ -173,7 +173,7 @@ def use_merge(files, pattern):  # not used in live, just an experiment
 
 def main():
     # perlego('/Users/frank/pd/Nextcloud', hova='0')
-    esentral(hova='19')
+    esentral(hova='pd')
 
 
 if __name__ == '__main__':
