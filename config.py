@@ -7,7 +7,13 @@ from pathlib import Path
 # REPORT_MONTH = '2022_03_march'
 # REPORT_MONTH = '2022_04_april'
 # REPORT_MONTH = '2022_05_may'
-REPORT_MONTH = '2022_06_june'
+# REPORT_MONTH = '2022_06_june'
+REPORT_MONTH = '2022_07_july'
+
+
+# REPORT_MONTH = '2022_08_aug'
+
+
 # REPORT_MONTH = '2022_07_july'
 
 

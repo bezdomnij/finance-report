@@ -1,5 +1,7 @@
 from pathlib import Path
 import pandas as pd
+import pandas.errors
+
 from engineer import sql_writer as sqw
 from config import MAIN_DIR, REPORT_MONTH, HOVA
 import util
@@ -33,7 +35,11 @@ def perlego(hova=HOVA):
         record_count = 0
         for f in files:
             if f.suffix == '.csv':  # and FILENAME in f.stem:
-                df = pd.read_csv(f, encoding='utf-8', header=1)
+                try:
+                    df = pd.read_csv(f, encoding='utf-8', header=1)
+                except pandas.errors.ParserError as e:
+                    print(f"empty file? {e}")
+                    continue
                 base_date = REPORT_MONTH
                 if OFFSET != 0:
                     base_date = util.set_date(REPORT_MONTH, OFFSET)
@@ -58,7 +64,7 @@ def perlego(hova=HOVA):
 
 
 def main():
-    perlego(hova='pd')
+    perlego(hova='0')
 
 
 if __name__ == '__main__':
