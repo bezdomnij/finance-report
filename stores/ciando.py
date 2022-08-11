@@ -38,7 +38,7 @@ def get_dates(fname):
             break
     dates = OrderedDict()
     if quarter:
-        months_pool = months[quarter]
+        months_pool = months.get(quarter)
         for m in months_pool:
             # goes back to previous year in Q1
             yr = int(fname_parts[1]) - 1 if quarter == 'Q1' and m in ('10', '11', '12') else int(fname_parts[1])
@@ -59,7 +59,7 @@ def get_part_df(df, key, dates):
     # col_key is from the column name
     the_date = dates[col_keys[1]] if col_keys[0] != 'Libraries' else dates_lst[-2]
 
-    print(KEYS)
+    # print(KEYS)
     new_columns = KEYS.copy()
     new_columns.extend([key])
     result_df = df[new_columns]
@@ -95,7 +95,7 @@ def ciando(hova=HOVA):
     uses an already modified Excel file; filename must start with Q[1-4]
     gets a date based on column header
     writes to db, to ciando alternative table. Sp is modified to take this input
-    :param hova:
+    :param hova: sql srv
     :return: result object to record in log
     """
     res = []
@@ -127,7 +127,8 @@ def ciando(hova=HOVA):
                 try:
                     szumma = round(df_orig[SUM_FIELD].sum(), 3)
                 except KeyError as e:
-                    print(f"!!!ERROR ---{f.name}--- ERROR!!! Fields changed")
+                    print(f"!!!ERROR ---{f.name}--- ERROR!!! {e} Fields changed?")
+
                 key_elements = get_key_elements(df_orig.columns)
                 for key in key_elements:
                     print(key)
@@ -146,7 +147,8 @@ def ciando(hova=HOVA):
                                 field_lens='vchall', hova=hova)
 
                 # old way below
-                # record_count, szumma = util.get_content_xl_onesheet(f, TABLE, hova, SUM_FIELD, 'Data convers', header=0)
+                # record_count, szumma =
+                #   util.get_content_xl_onesheet(f, TABLE, hova, SUM_FIELD, 'Data convers', header=0)
 
                 print(f"{DATA_DIR.upper()}, {REPORT_MONTH}, {record_count} records, total: {szumma:-10,.2f}\n")
                 res.append(Result(DATA_DIR.upper(), REPORT_MONTH, record_count, 'EUR', '', szumma))
