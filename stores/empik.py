@@ -35,7 +35,7 @@ def get_date(filename):
     return real_datum.date()
 
 
-def empik(hova='0'):
+def empik(hova=HOVA):
     res = []
     p = Path(MAIN_DIR).joinpath(SOURCE_DIR).joinpath(DATA_DIR)
     # main_dir = '/Volumes/raiddisk/PD/Nextcloud/Operative/Admin dev/live_sales_v2'

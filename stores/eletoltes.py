@@ -30,7 +30,7 @@ def get_files(stem):
     year, month = None, None
     parts = stem.split('_')
     print(parts[-1])
-    pattern = r"(202[0-9])(\w{3})$"
+    pattern = r"(202[0-9])(\w{3}|\w{4})$"
     p = re.compile(pattern)
     m = re.match(p, parts[-1])
     if m:
