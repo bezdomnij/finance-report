@@ -158,6 +158,29 @@ def get_content_xl_onesheet(file, table, hova, sum_field, na_field, header=0, sh
     return record_count, szumma
 
 
+#
+# def get_content_xl_onesheet(file, table, hova, sum_field, na_field, header=0, sheet_name=''):
+#     record_count, szumma = 0, 0
+#     if sheet_name == '':
+#         with warnings.catch_warnings(record=True):
+#             warnings.simplefilter("always")
+#             df = pd.read_excel(file, header=header, index_col=None)  # , engine='openpyxl')  # ???
+#     else:
+#         df = get_proper_df(file, sheet_name=sheet_name)
+#     print(df.columns)
+#     if na_field != '':
+#         df = df[df[na_field].notna()]
+#     if not df.empty:
+#         szumma = df[sum_field].sum()
+#         record_count = df.shape[0]
+#         # print(df.columns)
+#     print(
+#         f"{file.parents[0].stem.lower()} | file: {file.stem}, osszege: "
+#         f"{round(szumma, 3):-18,.2f}, {record_count} records")
+#     sqw.write_to_db(df, table, db_name='stage', action='replace', field_lens='vchall', hova=hova)
+#     return record_count, szumma
+
+
 def empty(data_dir):
     print(f"\t\tLooks like the `{data_dir}` directory is empty OR does not exist.\n")
 

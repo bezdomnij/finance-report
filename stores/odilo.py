@@ -17,8 +17,9 @@ TABLE_2 = 'stg_fin2_33_odilo_agency'
 FILENAME_1 = '_PublishDrive_PPU_Sales_Report'
 FILENAME_2 = '_PublishDrive_Sales_Report'
 DATA_DIR = 'odilo'
-SUM_FIELD = 'Totals (USD)'
-DATE_FIELD = 'Date'
+SUM_FIELD = 'Total price'
+# DATE_FIELD = 'Date'
+DATE_FIELD = 'Purchase date'
 
 
 # SUM_FIELD = 'Totals'  # valamelyik
@@ -55,9 +56,9 @@ def odilo(hova=HOVA):
                     res.append(Result(DATA_DIR.upper(), REPORT_MONTH, r,
                                       'USD', 'PPU', s, dates[0], dates[1]))
                 if FILENAME_2 in f.stem:
-                    r, s = util.get_content_xl_onesheet(f, TABLE_1, hova=hova, sum_field=SUM_FIELD
+                    r, s = util.get_content_xl_onesheet(f, TABLE_2, hova=hova, sum_field=SUM_FIELD
                                                         , na_field='Title', header=0, sheet_name='')
-                    df = pd.read_excel(f, header=1, index_col=None)
+                    df = pd.read_excel(f, header=0, index_col=None)
                     print(df.columns)
                     df = df[df['Title'].notna()]
                     date_borders = util.get_df_dates(DATE_FIELD, 6, df)
