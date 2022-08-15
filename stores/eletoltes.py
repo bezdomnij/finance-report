@@ -13,7 +13,7 @@ from engineer import sql_writer as sqw
 from result import Result
 
 TABLE = 'stg_fin2_18_eletoltes'
-FILENAME = 'letoltheto_riport_C2C_2022febr'
+FILENAME = 'letoltheto_riport_C2C_2022'
 DATA_DIR = 'eletoltes'
 SUM_FIELD = 'Content 2  Connect részesedés (nettó)'
 FILE_MONTH = {
@@ -30,7 +30,7 @@ def get_files(stem):
     year, month = None, None
     parts = stem.split('_')
     print(parts[-1])
-    pattern = r"(202[0-9])(\w{3})$"
+    pattern = r"(202[0-9])(\w{3}|\w{4}|\w{6})$"
     p = re.compile(pattern)
     m = re.match(p, parts[-1])
     if m:
