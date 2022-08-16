@@ -48,18 +48,14 @@ def odilo(hova=HOVA):
             r, s = 0, 0
             if f.is_file() and (f.suffix == '.xlsx' or f.suffix == '.xls') and f.stem[:2] != '~$':
                 if FILENAME_1 in f.stem:
-                    r, s = util.get_content_xl_onesheet(f, TABLE_1, hova=hova, sum_field=SUM_FIELD
-                                                        , na_field='Title', header=0, sheet_name='')
-                    # (file, table, hova, sum_field, na_field, header=0, sheet_name='')
+                    r, s = util.get_content_xl_onesheet(f, TABLE_1, hova, SUM_FIELD, 'Title', 0)
                     dates = get_dates_from_filename(f.stem)
                     print(dates)
                     res.append(Result(DATA_DIR.upper(), REPORT_MONTH, r,
                                       'USD', 'PPU', s, dates[0], dates[1]))
                 if FILENAME_2 in f.stem:
-                    r, s = util.get_content_xl_onesheet(f, TABLE_2, hova=hova, sum_field=SUM_FIELD
-                                                        , na_field='Title', header=0, sheet_name='')
+                    r, s = util.get_content_xl_onesheet(f, TABLE_2, hova, SUM_FIELD, 'Title', 0)
                     df = pd.read_excel(f, header=0, index_col=None)
-                    print(df.columns)
                     df = df[df['Title'].notna()]
                     date_borders = util.get_df_dates(DATE_FIELD, 6, df)
                     print(date_borders)

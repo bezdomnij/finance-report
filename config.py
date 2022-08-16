@@ -30,7 +30,7 @@ def get_main_dir():
 
 
 MAIN_DIR = get_main_dir()
-HOVA = '19'
+HOVA = '0'
 
 if __name__ == '__main__':
     get_main_dir()
