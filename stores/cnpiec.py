@@ -5,7 +5,7 @@ from config import MAIN_DIR, REPORT_MONTH, HOVA
 from result import Result
 
 TABLE = 'stg_fin2_35_cnpiec'
-FILENAME = '_CNPeReading Sales Report_PublishDrive'
+FILENAME = 'CNPeReading Sales Report_PublishDrive'
 DATA_DIR = 'cnpiec'
 SUM_FIELD = 'Net amount to Publisher'
 
