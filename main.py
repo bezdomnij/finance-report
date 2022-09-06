@@ -96,7 +96,7 @@ if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO, filename='logs/datacamp.log', filemode='a',
                         format='%(asctime)s %(message)s')
     if len(argv) == 1:
-        print("Nincs mire nézni!!!\n")
+        print("No cli params.\n")
     else:
         print(argv)
         discover(argv[1:])

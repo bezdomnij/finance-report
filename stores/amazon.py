@@ -32,6 +32,8 @@ def make_df(files, amazon, hova=HOVA):
             currencies.sort()
             for c in currencies:
                 df2 = df[df['Payment Amount Currency'] == c]
+                if c == 'BRL':
+                    df2[df2['Payment Amount']] = df2[df2['Payment Amount'] * 0.85]
                 amounts[c] = []
                 amounts[c].append(df2.shape[0])
                 amounts[c].append(round(df2['Payment Amount'].sum(), 3))
@@ -93,4 +95,4 @@ def amz_read(hova=HOVA):
 
 
 if __name__ == '__main__':
-    amz_read(hova='0')
+    amz_read(hova='pd')

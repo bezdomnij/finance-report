@@ -5,10 +5,10 @@ import util
 from engineer import sql_writer as sqw
 from result import Result
 
-TABLE = 'stg_rts2_09_multimediaplaza'
+TABLE = 'stg_fin2_9_multimediaplaza'
 FILENAME = 'Kossuth'
 DATA_DIR = 'Multimediaplaza'
-SUM_FIELD = 'jogdij'
+SUM_FIELD = 'jutalek'
 
 
 def multimediaplaza(hova=HOVA):
@@ -30,9 +30,9 @@ def multimediaplaza(hova=HOVA):
             if f.is_file() and f.suffix == '.xlsx' and f.stem[:2] != '~$':
                 df = pd.read_excel(f, header=0, index_col=None)
                 df = df.drop(df[df['dátum'] == 'Összesen:'].index)
-                df['jogdij'] = df['jogdij'].replace(',', '.')
+                df[SUM_FIELD] = df[SUM_FIELD].replace(',', '.')
                 rc = df.shape[0]
-                szm = df['jogdij'].sum()
+                szm = df[SUM_FIELD].sum()
                 record_count += rc
                 szumma += szm
                 collect_df = collect_df.append(df)
@@ -48,7 +48,7 @@ def multimediaplaza(hova=HOVA):
 
 
 def main():
-    multimediaplaza(hova='19')
+    multimediaplaza(hova='pd')
 
 
 if __name__ == '__main__':
