@@ -84,7 +84,7 @@ def get_proper_df(f, sheet_name='Details'):
     to get rid of the spaces around field names
     :param f: pathlib file object
     :param sheet_name:
-    :return: return a df where no spaces in field names
+    :return: return a df where no spaces in field name
     """
     with warnings.catch_warnings(record=True):
         warnings.simplefilter("always")

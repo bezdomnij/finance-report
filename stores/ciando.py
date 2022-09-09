@@ -1,3 +1,9 @@
+"""
+the idea is to
+do with df what the sql query does: separate data in lines of the original
+according to data type and period (column info) and copy them - each type - one below another
+and write this new format into the db - that way we can check the amounts
+"""
 from pathlib import Path
 import pandas as pd
 import warnings
@@ -40,7 +46,7 @@ def get_dates(fname):
     if quarter:
         months_pool = months.get(quarter)
         for m in months_pool:
-            # goes back to previous year in Q1
+            # goes back to previous year when in Q1
             yr = int(fname_parts[1]) - 1 if quarter == 'Q1' and m in ('10', '11', '12') else int(fname_parts[1])
             dates[m] = str(yr) + '-' + m + '-' + '15'
     return dates
@@ -48,10 +54,10 @@ def get_dates(fname):
 
 def get_part_df(df, key, dates):
     """
-    create a df for each column (colum contains sale type and month information)
+    create a df for each column (colum contains sale type and period information lumped together)
     :param df: full reformed df
     :param key: column of data
-    :param dates: dates dict created based on column labels (type and month included in there)
+    :param dates: dates dict created based on column labels (again, data type and month included in there)
     :return: a df to be added to the collection
     """
     col_keys = str(key).split('_')  # a column name contains type and month info separated by '_'
@@ -66,7 +72,7 @@ def get_part_df(df, key, dates):
     result_df = result_df.drop(result_df[result_df[key] == 0].index)
     result_df['datum'] = the_date
     result_df['darab'] = round(result_df[key] / result_df['eladasi_egysegar'])
-
+    # we get a different percent depending on the sale type: ciando or retail partner or library
     if 'ciando' in str(key):
         result_df['Total'] = result_df['eladasi_egysegar'] * result_df['darab'] * 0.7
         result_df['netto_egysegar'] = result_df['eladasi_egysegar'] * 0.7

@@ -28,10 +28,16 @@ def make_df(files, amazon, hova=HOVA):
         amounts = {}
 
         if 'KEP_DASH' in f.stem.upper():
+            # for BRL currency there is a 15% tax, we do not want to give it to the user, as we don't get it either
+            df.loc[df['Payment Amount Currency'] == 'BRL', 'Payment Amount'] *= 0.85
             currencies = df['Payment Amount Currency'].unique()
             currencies.sort()
             for c in currencies:
                 df2 = df[df['Payment Amount Currency'] == c]
+                # if c == 'BRL':
+                #     print("fukk")
+                #     df.loc[df['Payment Amount Currency'] == 'BRL', 'Payment Amount'] *= 0.85  -- ez jo
+                #     df.loc[df['Payment Amount Currency'] == c, 'Payment Amount'] *= 0.85
                 amounts[c] = []
                 amounts[c].append(df2.shape[0])
                 amounts[c].append(round(df2['Payment Amount'].sum(), 3))
@@ -93,4 +99,4 @@ def amz_read(hova=HOVA):
 
 
 if __name__ == '__main__':
-    amz_read(hova='0')
+    amz_read(hova='19')

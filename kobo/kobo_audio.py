@@ -33,7 +33,7 @@ from result import Result
 
 TABLE = 'stg_fin2_20002_kobo_audio'
 FILENAME = 'Content 2 Connect Audio_CONTENT2CONNECT_AUDIO_'
-DATA_DIR = 'kobo audio'
+DATA_DIR = 'kobo_audio'
 SUM_FIELD = 'Net Due (Payable Currency)'
 DATE_FIELD = 'Date'
 
@@ -63,7 +63,7 @@ def kobo_audio(hova=HOVA):
 
 
 def main():
-    kobo_audio(hova='pd')
+    kobo_audio(hova='0')
 
 
 if __name__ == '__main__':
