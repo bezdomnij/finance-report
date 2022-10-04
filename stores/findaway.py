@@ -29,7 +29,7 @@ def get_dates_from_filename(stem):
         year = int(y)
         month = int(m)
     except Exception as e:
-        print(f"{e}: no conversion to int")
+        print(f"{e}: no conversion to int from filename date")
     last_day = util.MAX_DAYS[month]
     # print(y, m, last_day)
     return date(year, month, 1), date(year, month, last_day)

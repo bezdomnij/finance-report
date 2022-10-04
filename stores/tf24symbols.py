@@ -46,7 +46,7 @@ def tfsymbols(hova=HOVA):
 
 
 def main():
-    tfsymbols(hova='pd')
+    tfsymbols(hova='19')
 
 
 if __name__ == '__main__':
