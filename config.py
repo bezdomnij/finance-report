@@ -8,13 +8,8 @@ from pathlib import Path
 # REPORT_MONTH = '2022_04_april'
 # REPORT_MONTH = '2022_05_may'
 # REPORT_MONTH = '2022_06_june'
-REPORT_MONTH = '2022_07_july'
-
-
-# REPORT_MONTH = '2022_08_aug'
-
-
 # REPORT_MONTH = '2022_07_july'
+REPORT_MONTH = '2022_08_aug'
 
 
 def get_main_dir():
@@ -30,7 +25,7 @@ def get_main_dir():
 
 
 MAIN_DIR = get_main_dir()
-HOVA = 'pd'
+HOVA = '0'
 
 if __name__ == '__main__':
     get_main_dir()
