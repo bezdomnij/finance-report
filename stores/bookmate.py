@@ -11,7 +11,7 @@ import util
 import pandas as pd
 from config import MAIN_DIR, REPORT_MONTH, HOVA
 from result import Result
-from datetime import date, datetime, timedelta
+from datetime import datetime, timedelta
 import warnings
 from engineer import sql_writer as sqw
 
@@ -53,7 +53,7 @@ def get_content_xl_onesheet(file, sum_field, na_field, header=0, sheet_name=''):
         try:
             szumma = round(df[sum_field].sum(), 3)
         except KeyError as e:
-            print(f"!!!ERROR ---{file.name}--- ERROR!!! Fields changed")
+            print(f"!!!ERROR ---{file.name}--- ERROR!!! Fields changed\n{e}")
             return 0, 0.00
         record_count = df.shape[0]
         # print(df.columns)

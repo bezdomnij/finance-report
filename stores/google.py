@@ -8,7 +8,7 @@ from result import Result
 
 DATA_DIR = 'google'
 TABLE = 'stg_fin2_12_googleplay'
-DATE_FIELD = 'Invoice Date'
+DATE_FIELD = 'Transaction Date'
 
 
 def google(hova=HOVA):
