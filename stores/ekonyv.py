@@ -17,7 +17,7 @@ SUM_FIELD = 'Nettó fizetendő'
 def get_filename_dates(stem):
     # rp = r'\b([0-1][0-9]-publishdrive-202[0-9])-(\w+)(-ekonyv-fogyas)'
     "06-publishdrive-2022-junius-ekonyv_fogyas.xlsx"
-    rp = r'\b([0-1][0-9]-publishdrive-202[0-9])-(\w+)-(ekonyv_fogyas)'
+    rp = r'\b([0-1][0-9]-publishdrive-202[0-9])-(\w+)-(ekonyv-fogyas)'
     pattern = re.compile(rp)
     r = re.match(pattern, stem)
     parts = r.group(1).split('-')
