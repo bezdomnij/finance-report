@@ -1,0 +1,76 @@
+version: 1
+disable_existing_loggers: false
+
+formatters:
+  formatter_ilog:
+    format: "%(asctime)s - %(name)s - %(funcName)s - %(lineno)d - %(levelname)s - %(message)s"
+
+handlers:
+  sh_ilog:
+    class: logging.StreamHandler
+    level: INFO
+    formatter: formatter_ilog
+    stream: ext://sys.stdout
+  
+  fh_ilog:
+    class: logging.handlers.RotatingFileHandler
+    level: INFO
+    formatter: formatter_ilog
+    filename: logs/ingram_write.log
+    #    mode: w
+    maxBytes: 10485760 # 10MB
+    backupCount: 20
+    encoding: utf-8
+
+  ufh:
+    class: logging.FileHandler
+    level: DEBUG
+    formatter: formatter_ilog
+    filename: logs/util.log
+    mode: w
+    #    maxBytes: 10485760 # 10MB
+    #    backupCount: 20
+    encoding: utf-8
+
+  sqwfh:
+    class: logging.FileHandler
+    level: DEBUG
+    formatter: formatter_ilog
+    filename: logs/sqw.log
+    #    mode: w
+    encoding: utf-8
+
+  irfh:
+    class: logging.FileHandler
+    level: DEBUG
+    formatter: formatter_ilog
+    filename: logs/iread.log
+    mode: w
+    encoding: utf-8
+
+root:
+  level: NOTSET
+  handlers: [ fh_ilog, sh_ilog ]
+  propagate: false
+
+
+loggers:
+  writer:
+    level: DEBUG
+    handlers: [ fh_ilog, sh_ilog ]
+    propagate: false
+
+  util.util:
+    level: DEBUG
+    handlers: [ ufh, sh_ilog ]
+    propagate: false
+
+  engineer.sql_writer:
+    level: DEBUG
+    handlers: [ sqwfh, sh_ilog ]
+    propagate: false
+
+  ingram.read_report:
+    level: DEBUG
+    handlers: [ irfh ]
+    propagate: false
