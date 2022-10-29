@@ -1,14 +1,17 @@
 import logging
 import re
 import warnings
-from datetime import datetime
+from pathlib import Path
+
+# from datetime import datetime
 import pandas as pd
 
 from engineer import sql_writer as sqw
-from pathlib import Path
+
+ISO_FORMAT = '%Y-%m-%d'
 
 DATE_FORMAT = {
-    0: '%Y-%m-%d',
+    0: ISO_FORMAT,
     1: '%m/%d/%Y',
     2: '%d/%m/%Y',
     3: '%m/%d/%y',
@@ -34,7 +37,7 @@ MAX_DAYS = {
 
 
 def get_period(fname):
-    g_pattern = r'202[0-2]-[0-1][0-9]'
+    g_pattern = r'202[0-2]-[0-1][\d]'
     prog = re.compile(g_pattern)
     return prog.findall(fname)
 
@@ -126,7 +129,7 @@ def get_df_dates(date_field, date_format, df):
     else:
         min_date = df_temp['Datum'].min().date()
         max_date = df_temp['Datum'].max().date()
-        return min_date.strftime('%Y-%m-%d'), max_date.strftime('%Y-%m-%d')
+        return min_date.strftime(ISO_FORMAT), max_date.strftime(ISO_FORMAT)
 
 
 def get_content_xl_onesheet(file, table, hova, sum_field, na_field, header=0, sheet_name=''):
@@ -148,7 +151,7 @@ def get_content_xl_onesheet(file, table, hova, sum_field, na_field, header=0, sh
         try:
             szumma = round(df[sum_field].sum(), 3)
         except KeyError as e:
-            print(f"!!!ERROR ---{file.name}--- ERROR!!! Fields changed")
+            print(f"!!!ERROR ---{file.name}--- ERROR!!! {e} Fields changed")
             return 0, 0.00
         record_count = df.shape[0]
         # print(df.columns)

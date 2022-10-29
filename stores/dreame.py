@@ -5,7 +5,7 @@ from config import MAIN_DIR, HOVA, REPORT_MONTH
 from result import Result
 
 TABLE = 'stg_fin2_42_Dreame_Q'
-FILENAME = 'PublishDrive-Sales Report-Q'
+FILENAME = 'PublishDrive-Sales Report-2022.Q'
 
 # **************** #  +1 month or +2 months or ZERO (quarterly it's 0)
 # REPORT_MONTH = '2022_03_march'
