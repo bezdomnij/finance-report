@@ -1,11 +1,12 @@
 import logging
 import re
 import warnings
+from pathlib import Path
+
 # from datetime import datetime
 import pandas as pd
 
 from engineer import sql_writer as sqw
-from pathlib import Path
 
 ISO_FORMAT = '%Y-%m-%d'
 

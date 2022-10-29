@@ -8,7 +8,7 @@ from result import Result
 
 TABLE = 'stg_fin2_40_koboplus'
 FILENAME = 'Sub_PublishDrive Kft_CONTENT2CONNECT_DRM_'
-DATA_DIR = 'kobo'
+DATA_DIR = 'kobo_plus'
 SUM_FIELD = 'Total publisher revenue share in payable currency ($)'
 DATE_FIELD = 'Read Period'
 
@@ -48,7 +48,7 @@ def kobo_plus(hova=HOVA):
 
 
 def main():
-    kobo_plus(hova='pd')
+    kobo_plus(hova='0')
 
 
 if __name__ == '__main__':

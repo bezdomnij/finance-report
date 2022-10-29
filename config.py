@@ -1,15 +1,11 @@
 from pathlib import Path
 
-# REPORT_MONTH = '2021_11_november'
-# REPORT_MONTH = '2021_12_december'
-# REPORT_MONTH = '2022_01_january'
-# REPORT_MONTH = '2022_02_february'
-# REPORT_MONTH = '2022_03_march'
 # REPORT_MONTH = '2022_04_april'
 # REPORT_MONTH = '2022_05_may'
 # REPORT_MONTH = '2022_06_june'
 # REPORT_MONTH = '2022_07_july'
-REPORT_MONTH = '2022_08_aug'
+# REPORT_MONTH = '2022_08_aug'
+REPORT_MONTH = '2022_09_sep'
 
 
 def get_main_dir():

@@ -129,7 +129,7 @@ def ciando(hova=HOVA):
                     df_orig = df_orig[df_orig['Data convers'].notna()]
                 except KeyError as e:
                     print(f"KEY error, {e}, nothing is written.")
-                print(df_orig.columns)
+                # print(df_orig.columns)
                 try:
                     szumma = round(df_orig[SUM_FIELD].sum(), 3)
                 except KeyError as e:

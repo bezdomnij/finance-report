@@ -173,7 +173,7 @@ def use_merge(files, pattern):  # not used in live, just an experiment
 
 def main():
     # perlego('/Users/frank/pd/Nextcloud', hova='0')
-    esentral(hova='pd')
+    esentral(hova='0')
 
 
 if __name__ == '__main__':
