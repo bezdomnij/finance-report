@@ -8,7 +8,7 @@ from engineer import sql_writer as sqw
 from result import Result
 
 TABLE = 'stg_fin2_45_jd'
-FILENAME = 'Order JD_PublishDrive_202204(Jan to Mar,2022)'
+FILENAME = 'Order JD_PublishDrive_202210(Jul to Sep,2022)'
 DATA_DIR = 'JD'
 SUM_FIELD = 'Payment Amount'
 DATE_FIELD = 'Sales Date'
@@ -34,7 +34,7 @@ def jd(hova='0'):
                 df0 = pd.read_excel(f, header=7, index_col=None)
                 df = get_proper_df(df0)
                 df = df.iloc[:-2]
-                df.info()
+                # df.info()
                 szumma = round(df[SUM_FIELD].sum(), 3)
                 df['Sales Date'] = pd.to_datetime(df['Sales Date']).dt.date
                 begin = df['Sales Date'].min()
@@ -50,7 +50,7 @@ def jd(hova='0'):
 
 
 def main():
-    jd('pd')
+    jd('19')
 
 
 if __name__ == '__main__':
