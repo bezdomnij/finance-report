@@ -7,8 +7,6 @@ from result import Result
 
 TABLE = 'stg_fin2_20032_bookmate_audio'
 FILENAME = 'PublishDrive__Content_2_Connect__Audio_'
-# SOURCE_DIR = REPORT_MONTH
-# REPORT_MONTH = '2022_05_may'
 DATA_DIR = 'bookmate_audio'
 SUM_FIELD = 'Converted Revenue'
 
@@ -31,9 +29,9 @@ def bookmate_audio(hova=HOVA):
                 szum_all += szumma
                 df_all = pd.concat([df_all, df], ignore_index=True)
                 res.append(Result(DATA_DIR.upper(), REPORT_MONTH, record_count, 'USD', '', szumma))
+                print(f"{DATA_DIR.upper()}, file: {f.stem}, {record_count} records, total: {szumma:-10,.2f}")
         sqw.write_to_db(df_all, TABLE, db_name='stage', action='replace', field_lens='vchall', hova=hova)
-        print(f"{DATA_DIR.upper()}, file: {f.stem},\t, report: {REPORT_MONTH}, "
-              f", {rc_all} records, total: {szum_all:-10,.2f}\n")
+        print(f"{DATA_DIR.upper()},\treport: {REPORT_MONTH}, {rc_all} records, total: {szum_all:-10,.2f}\n")
     else:
         util.empty(DATA_DIR)
     return res
@@ -45,7 +43,6 @@ def work_on_df(f):
     cols_map = dict(zip(df.columns, new_cols))
     df.rename(columns=cols_map, inplace=True)
     df = df.drop(df[df['Book title'] == 'Grand total:'].index)
-    # df = df[df['EAN'].notna()]
     df['sale_date'] = REPORT_MONTH[:4] + '-' + REPORT_MONTH[5:7] + '-15'
     szumma = df[SUM_FIELD].sum()
     record_count = df.shape[0]
