@@ -70,7 +70,7 @@ def read_file_content(c):
 
 def find_am(sor):
     try:
-        amount = float(sor[-2][1:-1])
+        amount = float(sor[2][1:-1])  # sor[-2] usd am., sor[2] original amt.
     except ValueError as e:
         print(f"{e}: {sor}")
         return 0

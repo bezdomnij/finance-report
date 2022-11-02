@@ -1,9 +1,10 @@
-import logging
 from pathlib import Path
-import util
+
 import pandas as pd
-from config import MAIN_DIR, REPORT_MONTH, HOVA
+
+import util
 from checker import data_checker
+from config import MAIN_DIR, REPORT_MONTH, HOVA
 from engineer import sql_writer as sqw
 from result import Result
 
@@ -29,6 +30,8 @@ def make_df(files, amazon, hova=HOVA):
 
         if 'KEP_DASH' in f.stem.upper():
             # for BRL currency there is a 15% tax, we do not want to give it to the user, as we don't get it either
+            # df updated for BRL only, to 85% of the original amount
+            # df is written to sql with reduced by 15% BRL amounts ->
             df.loc[df['Payment Amount Currency'] == 'BRL', 'Payment Amount'] *= 0.85
             currencies = df['Payment Amount Currency'].unique()
             currencies.sort()
