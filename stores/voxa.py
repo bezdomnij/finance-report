@@ -51,7 +51,7 @@ def voxa(hova=HOVA):
 
 
 def main():
-    voxa(hova='pd')
+    voxa(hova='0')
 
 
 if __name__ == '__main__':
