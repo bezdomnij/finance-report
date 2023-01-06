@@ -102,4 +102,4 @@ def amz_read(hova=HOVA):
 
 
 if __name__ == '__main__':
-    amz_read(hova='pd')
+    amz_read(hova='0')
