@@ -17,6 +17,9 @@ FILENAME = 'letoltheto_riport_C2C_2022'
 DATA_DIR = 'eletoltes'
 SUM_FIELD = 'Content 2  Connect részesedés (nettó)'
 FILE_MONTH = {
+    'okt': '10',
+    'szept': '09',
+    'aug': '08',
     'jul': '07',
     'jun': '06',
     'maj': '05',
@@ -30,9 +33,10 @@ def get_files(stem):
     year, month = None, None
     parts = stem.split('_')
     print(parts[-1])
-    pattern = r"(202[0-9])(\w{3}|\w{4}|\w{6})$"
+    pattern = r"(202[0-9])_(\w{3}|\w{4}|\w{5}|\w{6})$"
     p = re.compile(pattern)
-    m = re.match(p, parts[-1])
+    # m = re.match(p, parts[-1])
+    m = re.search(p, stem)
     if m:
         year = m.group(1)
         month = FILE_MONTH[m.group(2)]
@@ -53,7 +57,7 @@ def eletoltes(hova=HOVA):
     record_count = 0
     print(p)
     files = util.get_file_list(p)
-    files = util.get_latest_files(files, 2)
+    files = util.get_latest_files(files, 3)
     df_all = pd.DataFrame()
     if files is None:
         return
@@ -86,7 +90,7 @@ def eletoltes(hova=HOVA):
 
 
 def main():
-    eletoltes(hova='19')
+    eletoltes(hova='pd')
 
 
 if __name__ == '__main__':

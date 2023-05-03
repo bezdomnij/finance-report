@@ -86,7 +86,7 @@ def amz_read(hova=HOVA):
         if len(files) == 2:
             for item in files:
                 if 'kep_print_dashboard' in item.stem or 'amazon_POD' in item.stem:
-                    amazon[item] = 'stg_fin2_30666_AmazonPOD'
+                    amazon[item] = 'stg_fin2_30666_Amazon_pod'
                 elif 'kep_dashboard' in item.stem or 'amazon_KEP' in item.stem:
                     amazon[item] = 'stg_fin2_10666_Amazon_kep'
                 else:
@@ -102,4 +102,4 @@ def amz_read(hova=HOVA):
 
 
 if __name__ == '__main__':
-    amz_read(hova='19')
+    amz_read(hova='0')
