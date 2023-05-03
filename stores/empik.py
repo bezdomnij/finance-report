@@ -65,7 +65,10 @@ def empik(hova=HOVA):
                 szumma += szm
                 df_all = df_all.append(df)
         date_borders = util.get_df_dates(DATE_FIELD, 0, df_all)
-        sqw.write_to_db(df_all, TABLE, action='replace', hova=HOVA, field_lens='vchall')
+        df_all.info()
+        print(df_all.head())
+        print(df_all.tail())
+        sqw.write_to_db(df_all, TABLE, action='replace', hova=hova, field_lens='vchall')
         print(f"{DATA_DIR.upper()}, report: {REPORT_MONTH}, total: {round(szumma, 3)}, {record_count} records")
         try:
             res.append(Result(DATA_DIR.upper(), REPORT_MONTH, record_count,
@@ -78,7 +81,7 @@ def empik(hova=HOVA):
 
 
 def main():
-    empik(hova='19')
+    empik(hova='0')
 
 
 if __name__ == '__main__':

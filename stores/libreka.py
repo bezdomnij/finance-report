@@ -81,7 +81,7 @@ def libreka(hova=HOVA):
 
 
 def main():
-    libreka(hova='19')
+    libreka(hova='pd')
 
 
 if __name__ == '__main__':
